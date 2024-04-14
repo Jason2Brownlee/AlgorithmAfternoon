@@ -1,0 +1,8 @@
+# git ignore
+**/.DS_Store
+public
+dist
+tmp
+resources
+bin
+.hugo_build.lock
