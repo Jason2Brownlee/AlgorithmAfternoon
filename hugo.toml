@@ -2,6 +2,7 @@ baseURL = 'https://example.org/'
 languageCode = 'en-us'
 title = 'Algorithm Afternoon'
 theme = 'hugo-book'
+enableEmoji = true
 
 # Book configuration
 disablePathToLower = true
