@@ -9,9 +9,9 @@ Grab a hot beverage (:coffee:) and spend an afternoon implementing a clever algo
 
 ## Algorithms
 
-The algorithms in this project are drawn from across computer science, including: [computational intelligence](/docs/terms/#computational-intelligence), [biologically-inspired computation](/docs/terms/#biologically-inspired-computation), and [metaheuristics](/docs/terms/#metaheuristics). You could call them machine learning or artificial intelligence algorithms, if you like.
+The algorithms in this project are drawn from across computer science, including: [computational intelligence](/docs/glossary/#computational-intelligence), [biologically-inspired computation](/docs/glossary/#biologically-inspired-computation), and [metaheuristics](/docs/glossary/#metaheuristics). You could call them machine learning or artificial intelligence algorithms, if you like.
 
-You may know the names of some of the subfields of study such as [stochastic optimization](/docs/terms/#stochastic-optimization), [swarm intelligence](/docs/terms/#swarm-intelligence), [evolutionary computation](/docs/terms/#evolutionary-computation), and so on.
+You may know the names of some of the subfields of study such as [stochastic optimization](/docs/glossary/#stochastic-optimization), [swarm intelligence](/docs/glossary/#swarm-intelligence), [evolutionary computation](/docs/glossary/#evolutionary-computation), and so on.
 
 Algorithms are listed in the table of contents (left) and organized in a rough grouping by type.
 
@@ -33,12 +33,10 @@ Share your code on GitHub, share on social (e.g. twitter, reddit, linkedin etc.)
 
 ## Contact
 
-Do you have a question or suggestion?
+Do you have a question or suggestion? Send me an email:
 
-Send me an email:
+Jason Brownlee: Jason.Brownlee05@gmail.com
 
-Jason Brownlee\
-Jason.Brownlee05@gmail.com
 
-or, connect on [LinkedIn](https://www.linkedin.com/in/jasonbrownlee) and [Twitter](https://twitter.com/jason2brownlee).
+
 

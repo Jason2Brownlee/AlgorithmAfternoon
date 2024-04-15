@@ -1,5 +1,7 @@
 # About
 
+Hi, I'm Jason Brownlee. Yes, I'm a real person, connect with me on [LinkedIn](https://www.linkedin.com/in/jasonbrownlee) and [Twitter](https://twitter.com/jason2brownlee).
+
 I love learning about and developing implementations of algorithms, specifically algorithms from the fields of computational intelligence and metaheuristics.
 
 Some past projects include:
@@ -13,7 +15,7 @@ Some past projects include:
 
 **Algorithm Afternoon** is another project along these lines.
 
-It is an experiment using LLMs (chatgpt4 and claude3) to design, develop, and use a standardized template to describe computational intelligence algorithms.
+It is an experiment using LLMs (chatgpt4 and claude3) to design, develop, and apply a standardized template to describe computational intelligence algorithms.
 
 The goal is to provide a large number of algorithm descriptions that developers may then use to learn about, get inspired by, and implement the algorithms.
 
