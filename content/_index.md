@@ -5,7 +5,11 @@ type: docs
 
 # Welcome to Algorithm Afternoon!
 
-Grab a hot beverage (:coffee:) and spend an afternoon implementing a clever algorithm (:heart:).
+**Algorithm Afternoon** is a home for algorithm lovers (you!) to learn about, get excited by, and spend lazy afternoons coding up clever algorithms.
+
+1. Grab a hot beverage (:coffee:)
+2. Pick an algorithm (:point_left:)
+3. Start coding (:heart:)
 
 ## Algorithms
 
@@ -23,19 +27,21 @@ Once you have chosen an interesting clever algorithm, code it up in your favorit
 
 Python is popular, why not start there?
 
-You may need a test problem on which to test your algorithm implementation. Don't reinvent the wheel, there are hundreds of test problems to choose from.
+You may need a test problem on which to test your algorithm implementation. Don't reinvent the wheel, there are hundreds of test problems to choose from (e.g. [function optimization](https://en.wikipedia.org/wiki/Test_functions_for_optimization)).
 
-The great thing about many of these algorithms, is they will work inspite of the bugs. Get your algorithm "working" first, then try to make it "correct".
+There are often many varieties of each algorithm, rather than a canonical definition. Also, many of these algorithms often work despite bugs. As such, this gives you flexibility in development and implementation. Get your algorithm "working" first, then try to make it "correct".
 
-If you get stuck, ask ChatGPT for some ideas or sample functions.
+If you get stuck, ask ChatGPT for some ideas or sample functions. If you get really stuck, email me.
 
-Share your code on GitHub, share on social (e.g. twitter, reddit, linkedin etc.), and send me an email. I may link to your implementations from the algorithm description.
+Share your code on GitHub, share it on social (e.g. twitter, reddit, linkedin etc.), and send me an email. I may link to your implementation from the algorithm description or create an implementations page, depending on interest.
+
 
 ## Contact
 
-Do you have a question or suggestion? Send me an email:
+Do you have a question or suggestion? Let's chat. I'm a creature of email:
 
-Jason Brownlee: Jason.Brownlee05@gmail.com
+Jason Brownlee\
+Jason.Brownlee05@gmail.com
 
 
 
