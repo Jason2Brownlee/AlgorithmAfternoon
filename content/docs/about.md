@@ -1,6 +1,12 @@
 # About
 
-Hi, I'm Jason Brownlee. Yes, I'm a real person, connect with me on [LinkedIn](https://www.linkedin.com/in/jasonbrownlee) and [Twitter](https://twitter.com/jason2brownlee).
+## Jason Brownlee
+
+Hi, I'm Jason Brownlee.
+
+Yes, I'm a real person, connect with me on [LinkedIn](https://www.linkedin.com/in/jasonbrownlee) and [Twitter](https://twitter.com/jason2brownlee).
+
+## Algorithms
 
 I love learning about and developing implementations of algorithms, specifically algorithms from the fields of computational intelligence and metaheuristics.
 
@@ -13,9 +19,26 @@ Some past projects include:
 * Book of 45+ algorithm descriptions titled [Clever Algorithms](https://github.com/clever-algorithms/CleverAlgorithms).
 * 20+ books and 1,000+ tutorials on machine learning algorithms for my company [Machine Learning Mastery](https://MachineLearningMastery.com) (sold 2021)
 
-**Algorithm Afternoon** is another project along these lines.
+## Algorithm Love
+Computational intelligence algorithms are out of favor these days, in preference for neural nets.
+
+I think this is great!
+
+I also think that computational intelligence algorithms are a lot of fun. Especially for students and early career developers that still love! Love! LOVE! coding things up.
+
+## Algorithm Afternoon
+
+**Algorithm Afternoon** is a project along these lines.
 
 It is an experiment using LLMs (chatgpt4 and claude3) to design, develop, and apply a standardized template to describe computational intelligence algorithms.
 
-The goal is to provide a large number of algorithm descriptions that developers may then use to learn about, get inspired by, and implement the algorithms.
+The goal is to provide a large number of algorithm descriptions that developers may then use to learn about, get excited by, and implement the algorithms.
 
+I built this site using [Hugo](https://gohugo.io/) and [Book Theme](https://themes.gohugo.io/themes/hugo-book/) hosted on [GitHub Pages](https://pages.github.com/). I'm new to this stack and I'm open to ideas on how to make this site cooler.
+
+## Contact
+
+Email me any time:
+
+Jason Brownlee\
+Jason.Brownlee05@gmail.com

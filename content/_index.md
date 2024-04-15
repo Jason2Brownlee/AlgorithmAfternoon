@@ -21,19 +21,21 @@ Algorithms are listed in the table of contents (left) and organized in a rough g
 
 Each individual algorithm description includes a Name (common, abbreviations), Taxonomy (where it fits), Strategy (readable description), Procedure (steps, data structures, parameters), Considerations (pros and cons), and Heuristics (configure and use).
 
-## Implementations
+[Learn more](/docs/about/) about this project.
+
+## Code
 
 Once you have chosen an interesting clever algorithm, code it up in your favorite programming language.
 
-Python is popular, why not start there?
+Python is popular and easy to use, why not start there?
 
-You may need a test problem on which to test your algorithm implementation. Don't reinvent the wheel, there are hundreds of test problems to choose from (e.g. [function optimization](https://en.wikipedia.org/wiki/Test_functions_for_optimization)).
+You may need a test problem on which to test your algorithm code. Don't reinvent the wheel, there are hundreds of test problems to choose from (e.g. [function optimization](https://en.wikipedia.org/wiki/Test_functions_for_optimization)).
 
 There are often many varieties of each algorithm, rather than a canonical definition. Also, many of these algorithms often work despite bugs. As such, this gives you flexibility in development and implementation. Get your algorithm "working" first, then try to make it "correct".
 
 If you get stuck, ask ChatGPT for some ideas or sample functions. If you get really stuck, email me.
 
-Share your code on GitHub, share it on social (e.g. twitter, reddit, linkedin etc.), and send me an email. I may link to your implementation from the algorithm description or create an implementations page, depending on interest.
+Share your code on GitHub, share it on social (e.g. twitter, reddit, linkedin etc.), and send me an email. I may link to your code from the algorithm description or create an implementations page, depending on interest.
 
 
 ## Contact
