@@ -1,3 +1,3 @@
 # Algorithm Afternoon
 
-Visit: https://jason2brownlee.github.io/AlgorithmAfternoon/
+Visit: https://AlgorithmAfternoon.com
