@@ -5,9 +5,9 @@ type: docs
 
 ![Algorithm Afternoon](algorithmafternoon.png)
 
-# Welcome Algorithm Lover
+# Welcome Algorithm Lover!
 
-**Algorithm Afternoon** is a home for algorithm lovers (you) to learn about, get excited by, and spend lazy afternoons coding up clever learning algorithms.
+This is your home on lazy afternoons to learn about and code-up clever learning algorithms.
 
 1. Grab a hot beverage (:coffee:)
 2. Pick an algorithm (:point_left:)
@@ -31,7 +31,7 @@ You may need a test problem on which to test your algorithm code. Don't reinvent
 
 There are often many versions of each algorithm, rather than a canonical definition. Also, many of these algorithms often work despite bugs. This gives you flexibility in development and implementation. Get your algorithm "working" first, then try to make it "correct".
 
-Code the algorithms yourself, it's more fun. If you get stuck, ask ChatGPT for some ideas or sample functions.
+Code the algorithms yourself, it's more fun. If you get stuck, ask an LLM for some ideas or sample functions.
 
 Share your code with fellow algorithm lovers, e.g. github, twitter, reddit, etc. Share a link to your code with me - I may set something up (e.g. code page, comments, forum, etc.)
 
