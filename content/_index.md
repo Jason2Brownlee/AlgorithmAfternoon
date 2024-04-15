@@ -7,7 +7,7 @@ type: docs
 
 # Welcome Algorithm Lover!
 
-This is your home on lazy afternoons to learn about and code-up clever learning algorithms.
+This is your home on **lazy afternoons** to learn about and **code-up clever algorithms**.
 
 1. Grab a hot beverage (:coffee:)
 2. Pick an algorithm (:point_left:)

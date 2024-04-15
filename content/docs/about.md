@@ -1,10 +1,12 @@
 # About
 
-## Jason Brownlee
+## About Me
 
 Hi, I'm Jason Brownlee.
 
-Yes, I'm a real person, connect with me on [LinkedIn](https://www.linkedin.com/in/jasonbrownlee) and [Twitter](https://twitter.com/jason2brownlee).
+Yes, I'm a real person. Connect with me on [LinkedIn](https://www.linkedin.com/in/jasonbrownlee) and [Twitter](https://twitter.com/jason2brownlee).
+
+![Jason Brownlee](/jasonbrownlee.jpg)
 
 ## Algorithms
 
