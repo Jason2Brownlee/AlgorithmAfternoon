@@ -9,20 +9,36 @@ Grab a hot beverage (:coffee:) and spend an afternoon implementing a clever algo
 
 ## Algorithms
 
-The algorithms are drawn from a wide fields from across computer science, including: computational intelligence, biologically-inspired computation, ad metaheuristics.
+The algorithms in this project are drawn from across computer science, including: [computational intelligence](/docs/terms/#computational-intelligence), [biologically-inspired computation](/docs/terms/#biologically-inspired-computation), and [metaheuristics](/docs/terms/#metaheuristics). You could call them machine learning or artificial intelligence algorithms, if you like.
 
-You may know many of the subfields such as stochastic optimization, swarm intelligence, evolutionary computation, artificial immune systems, and more.
+You may know the names of some of the subfields of study such as [stochastic optimization](/docs/terms/#stochastic-optimization), [swarm intelligence](/docs/terms/#swarm-intelligence), [evolutionary computation](/docs/terms/#evolutionary-computation), and so on.
 
-Algorithms are listed in the table of contents (left) and organized in a rough taxonomy by type.
+Algorithms are listed in the table of contents (left) and organized in a rough grouping by type.
+
+Each individual algorithm description includes a Name (common, abbreviations), Taxonomy (where it fits), Strategy (readable description), Procedure (steps, data structures, parameters), Considerations (pros and cons), and Heuristics (configure and use).
 
 ## Implementations
 
 Once you have chosen an interesting clever algorithm, code it up in your favorite programming language.
 
-Python is popular, why not start there.
+Python is popular, why not start there?
 
-You may need a test problem on which to test your algorithm implementation. Don't reinvent the wheel, there are hundreds of test problems to chose from.
+You may need a test problem on which to test your algorithm implementation. Don't reinvent the wheel, there are hundreds of test problems to choose from.
 
 The great thing about many of these algorithms, is they will work inspite of the bugs. Get your algorithm "working" first, then try to make it "correct".
 
 If you get stuck, ask ChatGPT for some ideas or sample functions.
+
+Share your code on GitHub, share on social (e.g. twitter, reddit, linkedin etc.), and send me an email. I may link to your implementations from the algorithm description.
+
+## Contact
+
+Do you have a question or suggestion?
+
+Send me an email:
+
+Jason Brownlee\
+Jason.Brownlee05@gmail.com
+
+or, connect on [LinkedIn](https://www.linkedin.com/in/jasonbrownlee) and [Twitter](https://twitter.com/jason2brownlee).
+
