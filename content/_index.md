@@ -5,7 +5,7 @@ type: docs
 
 # Welcome to Algorithm Afternoon!
 
-**Algorithm Afternoon** is a home for algorithm lovers (you!) to learn about, get excited by, and spend lazy afternoons coding up clever algorithms.
+**Algorithm Afternoon** is a home for algorithm lovers (you!) to learn about, get excited by, and spend lazy afternoons coding up clever learning algorithms.
 
 1. Grab a hot beverage (:coffee:)
 2. Pick an algorithm (:point_left:)
