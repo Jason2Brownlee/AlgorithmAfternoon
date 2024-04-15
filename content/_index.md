@@ -5,7 +5,9 @@ type: docs
 
 ![Algorithm Afternoon](algorithmafternoon.png)
 
-## Welcome to Algorithm Afternoon!
+# Algorithm Afternoon
+
+## Welcome!
 
 **Algorithm Afternoon** is a home for algorithm lovers (you!) to learn about, get excited by, and spend lazy afternoons coding up clever learning algorithms.
 
