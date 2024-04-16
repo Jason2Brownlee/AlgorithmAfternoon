@@ -42,4 +42,3 @@ The goal is to provide a large number of algorithm descriptions that developers 
 It is also an experiment in the effective usage of LLMs (chatgpt4 and claude3) to design, develop, and apply a standardized template to describe computational intelligence algorithms.
 
 I built this site using [Hugo](https://gohugo.io/) and [Book Theme](https://themes.gohugo.io/themes/hugo-book/). I'm new to this stack and I'm open to ideas on how to make this site cooler.
-

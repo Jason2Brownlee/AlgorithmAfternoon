@@ -49,4 +49,3 @@ Some free and open books I recommend include:
 	* [Amazon](https://amzn.to/3xEpjRT), [Free Version](https://github.com/clever-algorithms/CleverAlgorithms)
 * _Essentials of Metaheuristics_, Sean Luke, 2013.
 	* [Amazon](https://amzn.to/3Q23rpP), [Free Version](https://cs.gmu.edu/~sean/book/metaheuristics/)
-

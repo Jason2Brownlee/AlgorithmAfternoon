@@ -34,4 +34,3 @@ Share your code with fellow algorithm lovers!
 - Share a link to your code with algorithm loving communities on twitter, reddit, and linkedin.
 
 If there is interest, I may set up something, e.g. code page, forum, etc. Collaboration with fellow algorithm geeks might be even more fun!
-
