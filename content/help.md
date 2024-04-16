@@ -35,6 +35,7 @@ Here are some ideas of where to search for more information on the algorithm you
 * Search [Google Scholar](https://scholar.google.com/) for papers that describe the algorithm.
 * Search [Scholarpedia](http://www.scholarpedia.org/) for an algorithm description.
 * Search [Wikipedia](https://www.wikipedia.org/) for an algorithm description.
+	* [Table of metaheuristics](https://en.wikipedia.org/wiki/Table_of_metaheuristics)
 * Search [StackOverflow](https://stackoverflow.com/) or [CrossValidated](https://stats.stackexchange.com/) for an algorithm description.
 
 ## Books
@@ -45,9 +46,16 @@ Nevertheless, reading a book of about descriptions can be a lot of fun for an al
 
 Some books I recommend include:
 
-* _Clever Algorithms: Nature-Inspired Programming Recipes_, Jason Brownlee, 2011 (my book).
-	* [Amazon](https://amzn.to/3xEpjRT), [Free Version](https://github.com/clever-algorithms/CleverAlgorithms)
-* _Essentials of Metaheuristics_, Sean Luke, 2013.
-	* [Amazon](https://amzn.to/3Q23rpP), [Free Version](https://cs.gmu.edu/~sean/book/metaheuristics/)
-* _Algorithms for Optimization_, Mykel J. Kochenderfer, Tim A. Wheeler, 2019.
-	* [Amazon](https://amzn.to/3VWRW6Q)
+* **[Clever Algorithms: Nature-Inspired Programming Recipes](https://amzn.to/3xEpjRT)**, Jason Brownlee, 2011.
+	* [Free version](https://github.com/clever-algorithms/CleverAlgorithms), my book.
+* **[Essentials of Metaheuristics](https://amzn.to/3Q23rpP)**, Sean Luke, 2013.
+	* [Free version](https://cs.gmu.edu/~sean/book/metaheuristics/), just fantastic.
+* **[Algorithms for Optimization](https://amzn.to/3VWRW6Q)**, Mykel J. Kochenderfer, Tim A. Wheeler, 2019.
+	* Fantastic modern book that covers many optimization algorithms
+* Evolutionary Computation Series
+	* **[Evolutionary Computation 1: Basic Algorithms and Operators](https://amzn.to/3Jm4zAP)**, 2000.
+	* **[Evolutionary Computation 2: Advanced Algorithms and Operations](https://amzn.to/49KL9QJ)**, 2000.
+	* Together, these are the best introductory series on evolutionary computation.
+* **[Computational Intelligence: An Introduction](https://amzn.to/44ixYWt)**, Andries P. Engelbrecht, 2007.
+	* A great introduction to the field.
+
