@@ -18,8 +18,6 @@ Algorithms are listed in the table of contents (left) and organized in a rough g
 
 The focus is on optimization algorithms drawn from across subfields of computer science, such as: [computational intelligence](/glossary/#computational-intelligence) and [metaheuristics](/glossary/#metaheuristics). You could call them machine learning (ML) or artificial intelligence (AI) algorithms if you like.
 
-Each individual algorithm description includes a Name (abbreviations), Taxonomy (where it fits), Strategy (readable description), Procedure (steps, data structures, parameters), Considerations (pros and cons), and Heuristics (configure and use).
-
 - If you get lost, see [Glossary](/glossary/).
 - If you get stuck while coding, see [Help](/help/).
 - If you get curious about this project, see [About](/about/).
@@ -34,3 +32,5 @@ Share your code with fellow algorithm lovers!
 - Share a link to your code with algorithm loving communities on twitter, reddit, and linkedin.
 
 If there is interest, I may set up something, e.g. code page, forum, etc. Collaboration with fellow algorithm geeks might be even more fun!
+
+[Jason Brownlee](/about), 2024.

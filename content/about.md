@@ -6,10 +6,10 @@
 
 Hi, I'm Jason Brownlee, Ph.D.
 
-Yes, I'm a real person. [Contact](/contact/) me any time, or let's connect on [LinkedIn](https://www.linkedin.com/in/jasonbrownlee) and [Twitter](https://twitter.com/jason2brownlee).
+[Contact](/contact/) me any time, or let's connect on [LinkedIn](https://www.linkedin.com/in/jasonbrownlee) and [Twitter](https://twitter.com/jason2brownlee).
 
 
-## Algorithms
+## Clever Algorithms
 
 I love learning about and developing implementations of algorithms, specifically algorithms from the fields of computational intelligence and metaheuristics.
 
@@ -42,3 +42,24 @@ The goal is to provide a large number of algorithm descriptions that developers 
 It is also an experiment in the effective usage of LLMs (chatgpt4 and claude3) to design, develop, and apply a standardized template to describe computational intelligence algorithms.
 
 I built this site using [Hugo](https://gohugo.io/) and [Book Theme](https://themes.gohugo.io/themes/hugo-book/). I'm new to this stack and I'm open to ideas on how to make this site cooler.
+
+If you want me to add an description for a specific algorithm, [contact me](/contact).
+
+## Algorithm Descriptions
+
+Each individual algorithm description includes the sections:
+
+- **Name**: abbreviations.
+- **Taxonomy**: relationship to fields and other algorithms.
+- **Strategy**: a human-readable description of the algorithm.
+- **Procedure**: algorithm steps, data structures, and parameters.
+- **Considerations**: pros and cons.
+- **Heuristics**: rules of thumb to configure and use.
+
+Algorithm descriptions intentionally do not include code, math, equations, references, history, links, authors, etc.
+
+The descriptions are intentionally terse. The focus is on a human readable description of the method that you can interpret and implement.
+
+If you need more help when implementing an algorithm, see [Help](/help).
+
+If you find an error in an algorithm description, [contact me](/contact).
