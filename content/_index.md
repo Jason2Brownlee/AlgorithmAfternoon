@@ -18,6 +18,8 @@ Algorithms are listed in the table of contents (left) and organized in a rough g
 
 The focus is on optimization algorithms drawn from across subfields of computer science, such as: [computational intelligence](/glossary/#computational-intelligence) and [metaheuristics](/glossary/#metaheuristics). You could call them machine learning (ML) or artificial intelligence (AI) algorithms if you like.
 
+**Can't choose an algorithm?** Consider: [Stochastic Hill Climbing](/stochastic/stochastic_hill_climbing/), [Genetic Algorithm](/evolutionary/genetic_algorithm/), or [Bare Bones Particle Swarm Optimization](/particle/bare_bones_particle_swarm_optimization/).
+
 - If you get lost, see [Glossary](/glossary/).
 - If you get stuck while coding, see [Help](/help/).
 - If you get curious about this project, see [About](/about/).
