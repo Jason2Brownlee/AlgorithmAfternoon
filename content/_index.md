@@ -18,7 +18,7 @@ If you get stuck, see the [help section](/help/).
 
 ## Algorithms
 
-Hi I'm **Jason Brownlee** and I'm an **algorithm geek** like you. [Learn more](/about/) or [let's chat](/contact).
+Hi I'm **Jason Brownlee** and I'm an **algorithm geek** like you. [Learn more](/about/).
 
 Algorithms are listed in the table of contents (left) and organized in a rough grouping by type.
 
