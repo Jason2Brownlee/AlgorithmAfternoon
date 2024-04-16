@@ -12,6 +12,10 @@ enableEmoji = true
 disablePathToLower = true
 enableGitInfo = true
 
+# google analytics
+[services]
+  [services.googleAnalytics]
+    ID = 'G-RB1724F8KC'
 
 # Needed for mermaid/katex shortcodes
 [markup]
