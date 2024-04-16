@@ -1,9 +1,8 @@
 ---
 title: Home
-type: docs
 ---
 
-![Algorithm Afternoon](algorithmafternoon.png)
+![Algorithm Afternoon](/algorithmafternoon.png)
 
 # Welcome Algorithm Lover!
 
@@ -17,14 +16,14 @@ type: docs
 
 Algorithms are listed in the table of contents (left) and organized in a rough grouping by type.
 
-The focus is on optimization algorithms drawn from across subfields of computer science, such as: [computational intelligence](/docs/glossary/#computational-intelligence) and [metaheuristics](/docs/glossary/#metaheuristics). You could call them machine learning (ML) or artificial intelligence (AI) algorithms if you like.
+The focus is on optimization algorithms drawn from across subfields of computer science, such as: [computational intelligence](/glossary/#computational-intelligence) and [metaheuristics](/glossary/#metaheuristics). You could call them machine learning (ML) or artificial intelligence (AI) algorithms if you like.
 
 Each individual algorithm description includes a Name (abbreviations), Taxonomy (where it fits), Strategy (readable description), Procedure (steps, data structures, parameters), Considerations (pros and cons), and Heuristics (configure and use).
 
-- If you get lost, see [Glossary](/docs/glossary/).
-- If you get stuck while coding, see [Help](/docs/help/).
-- If you get curious about this project, see [About](/docs/about/).
-- If you want to contact me, see [Contact](/docs/contact).
+- If you get lost, see [Glossary](/glossary/).
+- If you get stuck while coding, see [Help](/help/).
+- If you get curious about this project, see [About](/about/).
+- If you want to contact me, see [Contact](/contact).
 
 ## Share Your Code
 

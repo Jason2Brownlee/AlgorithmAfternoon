@@ -6,7 +6,7 @@
 
 Hi, I'm Jason Brownlee, Ph.D.
 
-Yes, I'm a real person. [Contact](/docs/contact/) me any time, or let's connect on [LinkedIn](https://www.linkedin.com/in/jasonbrownlee) and [Twitter](https://twitter.com/jason2brownlee).
+Yes, I'm a real person. [Contact](/contact/) me any time, or let's connect on [LinkedIn](https://www.linkedin.com/in/jasonbrownlee) and [Twitter](https://twitter.com/jason2brownlee).
 
 
 ## Algorithms

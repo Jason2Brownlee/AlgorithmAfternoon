@@ -1,10 +1,8 @@
 # Help
 
-Implementing algorithms can be challenging.
+Implementing algorithms can be challenging at times. This page offers some help.
 
-This page provides some help.
-
-## Tips
+## Coding Tips
 
 * Use your favorite programming language. Python is popular, why not start there?
 * Apply the algorithm to a standard test problem. Don't reinvent the wheel, there are hundreds of test problems to choose from (e.g. [function optimization](https://en.wikipedia.org/wiki/Test_functions_for_optimization)).
