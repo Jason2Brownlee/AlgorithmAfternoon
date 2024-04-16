@@ -43,9 +43,11 @@ You don't need a book to implement these algorithms.
 
 Nevertheless, reading a book of about descriptions can be a lot of fun for an algorithm geek like us.
 
-Some free and open books I recommend include:
+Some books I recommend include:
 
 * _Clever Algorithms: Nature-Inspired Programming Recipes_, Jason Brownlee, 2011 (my book).
 	* [Amazon](https://amzn.to/3xEpjRT), [Free Version](https://github.com/clever-algorithms/CleverAlgorithms)
 * _Essentials of Metaheuristics_, Sean Luke, 2013.
 	* [Amazon](https://amzn.to/3Q23rpP), [Free Version](https://cs.gmu.edu/~sean/book/metaheuristics/)
+* _Algorithms for Optimization_, Mykel J. Kochenderfer, Tim A. Wheeler, 2019.
+	* [Amazon](https://amzn.to/3VWRW6Q)
