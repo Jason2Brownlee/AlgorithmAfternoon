@@ -5,6 +5,7 @@ Implementing algorithms can be challenging at times. This page offers some help.
 ## Coding Tips
 
 * Use your favorite programming language. Python is popular, why not start there?
+* Get to know the pseudo-random number generator library in your programming language. You will use it a lot.
 * Apply the algorithm to a standard test problem. Don't reinvent the wheel, there are hundreds of test problems to choose from (e.g. [function optimization](https://en.wikipedia.org/wiki/Test_functions_for_optimization)).
 * Split behaviors into sub-functions and unit test each. Often these algorithms will "work" despite bugs, just not the way you intended.
 * Get something "working" first, then make it "correct". This might mean substituting complex behaviors and functions for simple functions initially.
@@ -32,19 +33,17 @@ You're not alone. Countless developers, students, and academics have been where 
 
 Here are some ideas of where to search for more information on the algorithm you're implementing.
 
-* Search [Google Scholar](https://scholar.google.com/) for papers that describe the algorithm.
-* Search [Scholarpedia](http://www.scholarpedia.org/) for an algorithm description.
-* Search [Wikipedia](https://www.wikipedia.org/) for an algorithm description.
-	* [Table of metaheuristics](https://en.wikipedia.org/wiki/Table_of_metaheuristics)
-* Search [StackOverflow](https://stackoverflow.com/) or [CrossValidated](https://stats.stackexchange.com/) for an algorithm description.
+* Search [Google Scholar](https://scholar.google.com/).
+* Search [Scholarpedia](http://www.scholarpedia.org/).
+* Search [Wikipedia](https://www.wikipedia.org/).
+	* Also, see: [Table of metaheuristics](https://en.wikipedia.org/wiki/Table_of_metaheuristics)
+* Search [StackOverflow](https://stackoverflow.com/) and/or [CrossValidated](https://stats.stackexchange.com/).
 
 ## Books
 
-You don't need a book to implement these algorithms.
+You don't need a book to implement these algorithms. Nevertheless, reading a book of about descriptions can be a lot of fun for algorithm geeks like us.
 
-Nevertheless, reading a book of about descriptions can be a lot of fun for an algorithm geek like us.
-
-Some books I recommend include:
+Some books I like include:
 
 * **[Clever Algorithms: Nature-Inspired Programming Recipes](https://amzn.to/3xEpjRT)**, Jason Brownlee, 2011.
 	* [Free version](https://github.com/clever-algorithms/CleverAlgorithms), my book.
