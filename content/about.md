@@ -39,11 +39,9 @@ Coding up a genetic algorithm and watching it solve a problem for the very first
 
 The goal is to provide a large number of algorithm descriptions that developers may then use to learn about, get excited by, and implement the algorithms.
 
-It is also an experiment in the effective usage of LLMs (chatgpt4 and claude3) to design, develop, and apply a standardized template to describe computational intelligence algorithms.
+It is also an experiment in the effective usage of LLMs (chatgpt4 and claude3) to design, develop, and apply a [standardized template](/template.md) to describe computational intelligence algorithms.
 
-I built this site using [Hugo](https://gohugo.io/) and [Book Theme](https://themes.gohugo.io/themes/hugo-book/). I'm new to this stack and I'm open to ideas on how to make this site cooler.
-
-If you want me to add an description for a specific algorithm, [contact me](/contact).
+I built this site using [Hugo](https://gohugo.io/) and [Book Theme](https://themes.gohugo.io/themes/hugo-book/) hosted on [github pages](https://github.com/Jason2Brownlee/AlgorithmAfternoon). I'm new to this stack and I'm open to ideas on how to make this site cooler.
 
 ## Algorithm Descriptions
 
