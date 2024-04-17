@@ -1,7 +1,7 @@
-# Clonal Selection Algorithm
+# CLONALG
 
 ## Name
-Clonal Selection Algorithm, CLONALG
+CLONALG, Clonal Selection Algorithm
 
 ## Taxonomy
 The Clonal Selection Algorithm (CLONALG) is a biologically inspired computational technique that falls under the umbrella of Artificial Immune Systems (AIS) and Computational Intelligence. It is closely related to other immune-inspired algorithms such as Negative Selection and Immune Network Theory.
