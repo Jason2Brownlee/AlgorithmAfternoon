@@ -1,124 +1,113 @@
 # Genetic Algorithm
 
 ## Name
-
-Genetic Algorithm, GA, Genetic Optimization, Genetic Search
+Genetic Algorithm,  Simple Genetic Algorithm (SGA), Canonical Genetic Algorithm, Basic Genetic Algorithm
 
 ## Taxonomy
-
-Genetic Algorithms are a class of Evolutionary Algorithms, which are a subfield of Computational Intelligence and Biologically Inspired Computation, used for optimization and search problems. They are closely related to other Evolutionary Algorithms such as Evolution Strategies, Evolutionary Programming, and Genetic Programming.
+The Simple Genetic Algorithm is a foundational technique in the field of Evolutionary Computation, which is a subfield of Computational Intelligence. It is closely related to other Evolutionary Algorithms such as Genetic Programming, Evolution Strategies, and Evolutionary Programming.
 
 - Computational Intelligence
   - Biologically Inspired Computation
     - Evolutionary Computation
       - Evolutionary Algorithms
-        - Genetic Algorithms
+        - Simple Genetic Algorithm
 
 ## Strategy
+The Simple Genetic Algorithm is based on the principles of natural selection and genetic inheritance. It maintains a population of candidate solutions, each represented as a string of genes (typically binary). The algorithm iteratively evolves the population by applying genetic operators such as selection, crossover, and mutation.
 
-### Population-based Search
+### Selection
+In each generation, the algorithm evaluates the fitness of each individual in the population using a problem-specific fitness function. It then selects a subset of the population to serve as parents for the next generation. Common selection methods include tournament selection, where a fixed number of individuals compete based on their fitness, and fitness-proportionate selection, where individuals are chosen with a probability proportional to their relative fitness.
 
-Genetic Algorithms maintain a population of candidate solutions, often referred to as individuals or chromosomes. Each individual represents a potential solution to the problem at hand. The population evolves over generations, with the fittest individuals surviving and reproducing, leading to increasingly better solutions.
+### Crossover
+Selected parents are paired up to produce offspring through the crossover operator. Crossover involves exchanging genetic material between the parents to create new individuals. The most common crossover technique is single-point crossover, where a random point is chosen, and the genes beyond that point are swapped between the parents. Other variations include multi-point crossover and uniform crossover.
 
-### Fitness Evaluation
+### Mutation
+After crossover, the offspring undergo mutation, where individual genes are randomly altered with a small probability. Mutation introduces new genetic diversity into the population, preventing premature convergence and allowing the algorithm to explore new regions of the search space. In binary representations, mutation typically involves flipping bits.
 
-The quality of each individual in the population is evaluated using a fitness function. The fitness function assigns a score to each individual based on how well it solves the problem. This fitness score guides the selection process, favoring the survival and reproduction of fitter individuals.
+### Replacement
+The newly created offspring are then used to replace a portion of the existing population. Common replacement strategies include generational replacement, where the entire population is replaced by the offspring, and steady-state replacement, where only a few individuals are replaced in each generation.
 
-### Genetic Operators
-
-Genetic Algorithms employ genetic operators inspired by biological evolution to create new individuals:
-
-- Selection: Fitter individuals are selected to become parents for the next generation. Common selection methods include tournament selection, roulette wheel selection, and rank-based selection.
-
-- Crossover: Selected parents are combined to create offspring that inherit traits from both parents. Crossover operators exchange genetic material between parents, enabling the exploration of new solutions. Common crossover techniques include one-point crossover, two-point crossover, and uniform crossover.
-
-- Mutation: After crossover, offspring may undergo random mutations that introduce small changes to their genetic material. Mutation helps maintain diversity in the population and allows the exploration of new areas in the search space.
-
-### Generational Replacement
-
-After the creation of offspring through selection, crossover, and mutation, the new individuals are added to the population. The population size is typically kept constant, so a portion of the previous generation is replaced by the new offspring. This process continues for a specified number of generations or until a satisfactory solution is found.
+The process of selection, crossover, mutation, and replacement continues for a specified number of generations or until a termination criterion is met, such as finding a satisfactory solution or reaching a computational budget.
 
 ## Procedure
+### Data Structures
+- Population: An array of individuals, each represented as a string of genes (typically binary).
+- Fitness: An array storing the fitness value of each individual in the population.
 
-1. Initialize the population:
-   1. Determine the population size and the representation of individuals (e.g., binary strings, real-valued vectors).
-   2. Create a population of random individuals.
-
-2. Evaluate the fitness of each individual in the population using the fitness function.
-
-3. Repeat until the termination condition is met (e.g., maximum number of generations, satisfactory solution found):
-   1. Selection:
-      1. Select parents from the population based on their fitness scores.
-      2. Common selection methods: tournament selection, roulette wheel selection, rank-based selection.
-   2. Crossover:
-      1. Perform crossover on the selected parents to create offspring.
-      2. Common crossover techniques: one-point crossover, two-point crossover, uniform crossover.
-   3. Mutation:
-      1. Apply mutation to the offspring with a certain probability.
-      2. Mutation introduces small random changes to the genetic material of the offspring.
-   4. Evaluate the fitness of the new offspring using the fitness function.
-   5. Replace a portion of the population with the new offspring.
-
-4. Return the best solution found.
-
-### Data Structures and Parameters
-
-- Population: An array or list of individuals representing candidate solutions.
-- Individual: Represents a single solution, typically encoded as a binary string, real-valued vector, or other suitable representation.
-- Fitness Function: Evaluates the quality of an individual and assigns a fitness score.
+### Parameters
 - Population Size: The number of individuals in the population.
-- Crossover Probability: The probability of applying crossover to selected parents.
-- Mutation Probability: The probability of applying mutation to an offspring.
-- Termination Condition: Determines when the algorithm should stop (e.g., maximum number of generations, satisfactory solution found).
+- Crossover Probability: The probability of applying crossover to a pair of parents.
+- Mutation Probability: The probability of mutating each gene in an offspring.
+- Termination Criterion: The condition for stopping the algorithm, such as a maximum number of generations or a target fitness value.
+
+### Steps
+1. Initialize the population
+   1. Create an empty population array
+   2. For each individual in the population size:
+      1. Generate a random string of genes
+      2. Add the individual to the population array
+2. Evaluate the fitness of each individual in the population
+   1. For each individual in the population:
+      1. Calculate the fitness value using the problem-specific fitness function
+      2. Store the fitness value in the fitness array
+3. While the termination criterion is not met:
+   1. Select parents from the population
+      1. Choose a selection method (e.g., tournament selection or fitness-proportionate selection)
+      2. Select a subset of individuals as parents based on their fitness
+   2. Create offspring through crossover
+      1. Pair up the selected parents
+      2. For each pair of parents:
+         1. If a random number is less than the crossover probability:
+            1. Apply crossover to create two offspring
+         2. Else:
+            1. Copy the parents as offspring without crossover
+   3. Apply mutation to the offspring
+      1. For each offspring:
+         1. For each gene in the offspring:
+            1. If a random number is less than the mutation probability:
+               1. Mutate the gene (e.g., flip the bit)
+   4. Replace a portion of the population with the offspring
+      1. Choose a replacement strategy (e.g., generational or steady-state)
+      2. Replace individuals in the population with the offspring based on the chosen strategy
+   5. Evaluate the fitness of the new individuals in the population
+      1. For each new individual in the population:
+         1. Calculate the fitness value using the problem-specific fitness function
+         2. Store the fitness value in the fitness array
+4. Return the best solution found in the population
 
 ## Considerations
-
 ### Advantages
-
-- Adaptability: Genetic Algorithms can be applied to a wide range of optimization problems, including those with complex, non-linear, and multimodal search spaces.
-- Robustness: They are less susceptible to getting stuck in local optima compared to gradient-based optimization methods.
-- Parallelizability: Genetic Algorithms are inherently parallel and can be easily distributed across multiple processors or machines for improved performance.
+- Simplicity: The Simple Genetic Algorithm is relatively easy to understand and implement compared to other optimization techniques.
+- Versatility: Genetic Algorithms can be applied to a wide range of optimization problems, including those with discrete, continuous, or mixed-integer variables.
+- Robustness: Genetic Algorithms are capable of handling noisy, complex, and multimodal fitness landscapes, making them suitable for problems where traditional optimization methods may struggle.
 
 ### Disadvantages
-
-- Parameter Tuning: Genetic Algorithms require careful tuning of various parameters, such as population size, crossover and mutation probabilities, to achieve optimal performance for a specific problem.
-- Computational Cost: Evaluating the fitness of individuals can be computationally expensive, especially for large populations and complex problems.
-- Premature Convergence: If the selection pressure is too high or the population diversity is not maintained, Genetic Algorithms may converge prematurely to suboptimal solutions.
+- Parameter Sensitivity: The performance of the Simple Genetic Algorithm can be sensitive to the choice of parameters, such as population size, crossover probability, and mutation probability. Selecting appropriate values for these parameters often requires experimentation and domain knowledge.
+- Premature Convergence: If the population loses diversity too quickly, the algorithm may converge to a suboptimal solution. This can occur when the selection pressure is too high or the mutation rate is too low.
+- Computational Cost: Genetic Algorithms can be computationally expensive, especially for problems with large search spaces or costly fitness evaluations. The algorithm may require a significant number of generations and fitness evaluations to find a satisfactory solution.
 
 ## Heuristics
-
 ### Population Size
+- Choose a population size that balances exploration and exploitation. A larger population size allows for more diversity and exploration but increases computational cost.
+- As a rule of thumb, start with a population size between 50 and 200 individuals and adjust based on the problem complexity and available computational resources.
 
-- Start with a population size that is not too small to avoid premature convergence and not too large to avoid excessive computational cost.
-- A common heuristic is to use a population size that is 10 times the number of variables or dimensions in the problem.
-- Experiment with different population sizes and observe the convergence behavior and solution quality.
+### Crossover Probability
+- Set the crossover probability high enough to promote the exchange of genetic material between individuals. A typical range is between 0.6 and 0.9.
+- If the crossover probability is too low, the algorithm may not efficiently combine promising solutions, leading to slow convergence.
 
-### Selection Method
+### Mutation Probability
+- Use a low mutation probability to introduce small amounts of random variation into the population. A common range is between 0.01 and 0.1 per gene.
+- If the mutation probability is too high, the algorithm may become too random and fail to converge to a good solution.
 
-- Tournament selection is a popular choice due to its simplicity and effectiveness. It selects the best individual from a randomly chosen subset of the population.
-- Roulette wheel selection assigns selection probabilities proportional to the fitness scores of individuals, favoring fitter individuals.
-- Rank-based selection assigns selection probabilities based on the rank of individuals in the population, reducing the influence of extreme fitness values.
+### Termination Criterion
+- Define a termination criterion that strikes a balance between solution quality and computational resources.
+- Common options include setting a maximum number of generations, a target fitness value, or a convergence threshold (e.g., stopping when the best fitness value has not improved for a certain number of generations).
 
-### Crossover and Mutation Probabilities
-
-- Crossover probability typically ranges from 0.6 to 0.9. Higher values promote exploration of new solutions, while lower values focus on exploitation of existing solutions.
-- Mutation probability is usually set to a low value, often in the range of 0.01 to 0.1, to introduce small variations without disrupting the overall structure of the solutions.
-- Adaptively adjusting the crossover and mutation probabilities based on the progress of the search can help balance exploration and exploitation.
-
-### Termination Condition
-
-- Set a maximum number of generations as a termination condition to prevent the algorithm from running indefinitely.
-- Monitor the progress of the best fitness value over generations and terminate if no significant improvement is observed for a certain number of generations.
-- Define a target fitness value or acceptable solution quality as a termination condition if the problem's optimal solution or desired performance is known.
-
-### Representation and Operators
-
-- Choose a representation that naturally encodes the problem's variables and constraints, such as binary strings for discrete problems or real-valued vectors for continuous problems.
-- Design crossover and mutation operators that respect the problem's constraints and produce valid offspring.
-- Consider using problem-specific heuristics or local search techniques to improve the quality of solutions generated by the genetic operators.
+### Fitness Function Design
+- Design a fitness function that accurately measures the quality of solutions in the context of the problem being solved.
+- Ensure that the fitness function is computationally efficient, as it will be evaluated multiple times during the algorithm's execution.
+- Consider normalizing or scaling the fitness values to prevent extreme differences in fitness from dominating the selection process.
 
 ### Diversity Maintenance
-
-- Incorporate mechanisms to maintain population diversity, such as niching, crowding, or fitness sharing, to prevent premature convergence and explore multiple optima.
-- Introduce new randomly generated individuals into the population at regular intervals to inject fresh genetic material and promote exploration.
-
+- Employ techniques to maintain population diversity and prevent premature convergence.
+- Options include using a larger population size, increasing the mutation probability, implementing diversity-preserving selection methods (e.g., crowding or niching), or periodically introducing new random individuals into the population.
