@@ -35,37 +35,51 @@ The clearing procedure is applied at regular intervals (clearing rounds) to main
 By incorporating the clearing procedure, the Clearing Genetic Algorithm promotes the formation and maintenance of stable niches, enabling the exploration of multiple optima in parallel. This makes it particularly suitable for multimodal optimization problems where multiple good solutions are desired.
 
 ## Procedure
+### Data Structures
+- Individual: A structure representing a candidate solution, which consists of:
+  - Genotype: An array or string representing the genetic encoding of the solution.
+  - Fitness: The fitness value of the individual.
+- Population: An array of individuals.
+- Clearing Radius: The distance threshold used to determine the niching or clearing of individuals.
 
+### Parameters
+- Population Size: The number of individuals in the population.
+- Maximum Number of Generations: The maximum number of generations to run the algorithm.
+- Crossover Probability: The probability of applying the crossover operator to create offspring.
+- Mutation Probability: The probability of applying the mutation operator to modify an individual.
+- Clearing Radius: The distance threshold for determining the niching or clearing of individuals.
+- Niche Capacity: The maximum number of individuals allowed within a niche.
+
+### Steps
 1. Initialize the population
-   1.1. Create a population of N individuals with randomly generated genotypes
-   1.2. Evaluate the fitness of each individual in the population
+   1. For each individual in the population:
+      1. Randomly initialize the genotype.
+      2. Evaluate the fitness of the individual.
+2. For each generation until the maximum number of generations is reached:
+   1. Create a new population
+      1. While the new population is not full:
+         1. Select parent individuals using a selection method (e.g., tournament selection).
+         2. Create offspring using genetic operators
+            1. If a random number is less than the crossover probability:
+               1. Apply the crossover operator to the selected parents to create two offspring.
+            2. If a random number is less than the mutation probability:
+               1. Apply the mutation operator to the offspring.
+         3. Evaluate the fitness of the offspring.
+         4. Add the offspring to the new population.
+   2. Apply the clearing procedure
+      1. Sort the individuals in the population based on their fitness values in descending order.
+      2. For each individual in the sorted population:
+         1. If the individual has not been cleared:
+            1. Mark the individual as a niche winner.
+            2. Clear the individuals within the clearing radius of the niche winner.
+               1. For each individual within the clearing radius:
+                  1. If the number of individuals in the niche exceeds the niche capacity:
+                     1. Remove the individual from the population.
+                  2. Else:
+                     1. Mark the individual as cleared.
+   3. Replace the old population with the new population.
+3. Return the best individual found in the population.
 
-2. While termination criteria not met, repeat:
-   2.1. Apply the clearing procedure
-       2.1.1. Divide the population into niches based on a similarity measure (e.g., Euclidean distance)
-       2.1.2. Within each niche:
-           2.1.2.1. Identify the individual with the highest fitness (dominant or winner)
-           2.1.2.2. Reset the fitness of all other individuals (subordinates) to zero
-   2.2. Select parents for reproduction using a selection method (e.g., tournament selection)
-   2.3. Create offspring by applying genetic operators
-       2.3.1. Apply crossover operator to selected parents to create offspring
-       2.3.2. Apply mutation operator to offspring with a given mutation probability
-   2.4. Evaluate the fitness of the offspring
-   2.5. Replace the population with the offspring using a replacement strategy (e.g., elitist replacement)
-
-3. Return the best solution found
-
-### Data Structures:
-- Population: An array or list of individuals representing potential solutions
-- Individual: Represents a single solution, typically encoded as a string of bits, real numbers, or other data types
-- Niche: A subset of individuals in the population that are similar based on a predefined similarity measure
-
-### Parameters:
-- Population Size: The number of individuals in the population
-- Niche Radius: The maximum distance between individuals to be considered part of the same niche
-- Clearing Interval: The number of generations between each application of the clearing procedure
-- Crossover Probability: The probability of applying the crossover operator to selected parents
-- Mutation Probability: The probability of applying the mutation operator to offspring
 
 ## Considerations
 

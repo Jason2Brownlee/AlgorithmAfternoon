@@ -31,34 +31,51 @@ Pheromone evaporation is a crucial component of EAS, as it helps to avoid premat
 
 ## Procedure
 
-Data Structures:
-- Pheromone matrix: A 2D matrix storing the pheromone levels on each edge of the graph.
-- Best-so-far tour: A data structure (e.g., array or list) storing the best solution found so far.
+### Data Structures
+- Pheromone Matrix: A 2D matrix storing the pheromone levels between each pair of nodes in the graph.
+- Ant: A structure representing an ant, which contains the following attributes:
+  - Current Node: The node where the ant is currently located.
+  - Tour: An array storing the nodes visited by the ant in the current iteration.
+  - Tour Length: The total length of the ant's tour.
+- Best Tour: An array storing the best tour found so far.
+- Best Tour Length: The length of the best tour found so far.
 
-Parameters:
-- Number of ants (m): The number of ants in the colony.
-- Alpha (α): The importance of pheromone in the probabilistic transition rule.
-- Beta (β): The importance of heuristic information in the probabilistic transition rule.
-- Rho (ρ): The pheromone evaporation rate.
-- Elitist weight (e): The weight given to the best-so-far solution in the elitist pheromone update.
+### Parameters
+- Number of Ants: The number of ants in the colony.
+- Number of Iterations: The maximum number of iterations to run the algorithm.
+- Alpha: The weight of the pheromone trail in the probabilistic transition rule.
+- Beta: The weight of the heuristic information in the probabilistic transition rule.
+- Rho: The pheromone evaporation rate.
+- Q: A constant used to update the pheromone levels.
+- Elitist Weight: The weight given to the best-so-far tour in the pheromone update.
 
-1. Initialize:
-   1.1. Set the pheromone levels on all edges to an initial value.
-   1.2. Set the best-so-far tour to empty.
-
+### Steps
+1. Initialize the pheromone matrix
+   1. Set all elements of the pheromone matrix to a small positive value.
 2. For each iteration:
-   2.1. For each ant:
-      2.1.1. Construct a solution by probabilistically selecting the next node based on pheromone levels and heuristic information.
-      2.1.2. Update the ant's tour with the selected node.
-   2.2. Update the best-so-far tour if a better solution is found.
-   2.3. Update pheromone levels:
-      2.3.1. Evaporate pheromone on all edges by a factor of ρ.
-      2.3.2. For each ant:
-         2.3.2.1. Deposit pheromone on the edges traversed by the ant proportional to the solution quality.
-      2.3.3. Perform the elitist pheromone update:
-         2.3.3.1. Deposit an additional amount of pheromone (weighted by e) on the edges belonging to the best-so-far tour.
-
-3. Return the best-so-far tour as the solution.
+   1. Construct ant solutions
+      1. For each ant:
+         1. Place the ant on a randomly selected starting node.
+         2. While the ant's tour is not complete:
+            1. Select the next node to visit based on the probabilistic transition rule, considering the pheromone levels and heuristic information.
+            2. Move the ant to the selected node and add it to the ant's tour.
+         3. Calculate the length of the ant's tour.
+   2. Update the best tour
+      1. For each ant:
+         1. If the ant's tour length is shorter than the best tour length:
+            1. Update the best tour and best tour length with the ant's tour and tour length.
+   3. Update pheromone levels
+      1. Evaporate pheromone on all edges
+         1. For each pair of nodes (i, j):
+            1. Reduce the pheromone level on the edge (i, j) by a factor of (1 - rho).
+      2. Deposit pheromone on the edges used by the ants
+         1. For each ant:
+            1. For each edge (i, j) in the ant's tour:
+               1. Increase the pheromone level on the edge (i, j) by an amount proportional to the inverse of the ant's tour length.
+      3. Deposit additional pheromone on the edges of the best-so-far tour
+         1. For each edge (i, j) in the best tour:
+            1. Increase the pheromone level on the edge (i, j) by an amount proportional to the inverse of the best tour length multiplied by the elitist weight.
+3. Return the best tour and best tour length.
 
 ## Considerations
 

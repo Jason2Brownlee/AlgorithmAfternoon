@@ -28,22 +28,42 @@ To guide the search process, HBOA employs an acquisition function that balances 
 HBOA leverages the hierarchical structure of the surrogate model to perform a multi-level search. It starts by exploring the search space at a coarse level using low-fidelity models and gradually refines the search using higher-fidelity models in promising regions. This approach allows for efficient allocation of computational resources and faster convergence to the optimal solution.
 
 ## Procedure
+### Data Structures
+- Search Space: A hierarchical structure representing the search space, where each level corresponds to a different level of abstraction or granularity.
+- Gaussian Process: A probabilistic model used to model the objective function at each level of the hierarchy.
+- Acquisition Function: A function that balances exploration and exploitation to guide the search process.
 
-1. Initialize the hierarchical surrogate model with initial data points.
-   1.1. Define the hierarchy of fidelity levels for the surrogate model.
-   1.2. Collect initial data points at different fidelity levels.
-   1.3. Fit Gaussian Process models to the data points at each fidelity level.
+### Parameters
+- Number of Levels: The number of levels in the hierarchical search space.
+- Number of Iterations: The maximum number of iterations to run the algorithm at each level.
+- Initial Points: The number of initial points to evaluate at each level before starting the optimization process.
+- Kernel Function: The covariance function used in the Gaussian Process model.
+- Acquisition Function Type: The type of acquisition function to use (e.g., Expected Improvement, Upper Confidence Bound).
 
-2. While stopping criteria not met:
-   2.1. Select the next point to evaluate using the acquisition function.
-       2.1.1. Compute the acquisition function values for candidate points at each fidelity level.
-       2.1.2. Choose the point with the highest acquisition function value.
-   2.2. Evaluate the objective function at the selected point.
-   2.3. Update the hierarchical surrogate model with the new data point.
-       2.3.1. Incorporate the new data point into the corresponding fidelity level.
-       2.3.2. Update the Gaussian Process models at each fidelity level.
+### Steps
+1. Initialize the hierarchical search space
+   1. Define the number of levels and the corresponding search space at each level.
+2. For each level in the hierarchy, starting from the highest level:
+   1. Initialize the Gaussian Process model
+      1. Select the initial points to evaluate at the current level.
+      2. Evaluate the objective function at the selected points.
+      3. Fit the Gaussian Process model to the evaluated points.
+   2. For each iteration at the current level:
+      1. Optimize the acquisition function
+         1. Find the point that maximizes the acquisition function based on the current Gaussian Process model.
+      2. Evaluate the objective function at the selected point
+         1. Evaluate the objective function at the point that maximizes the acquisition function.
+         2. Add the evaluated point and its objective value to the set of evaluated points.
+      3. Update the Gaussian Process model
+         1. Refit the Gaussian Process model to the updated set of evaluated points.
+   3. If the current level is not the lowest level:
+      1. Refine the search space
+         1. Use the results from the current level to refine the search space for the next lower level.
+         2. Define the refined search space for the next level based on the most promising regions identified at the current level.
+   4. If the current level is the lowest level:
+      1. Return the best solution found at the lowest level.
 
-3. Return the best solution found.
+Note: The specific implementation details of the Hierarchical Bayesian Optimization Algorithm may vary depending on the problem domain and the chosen acquisition function and kernel function. The procedure outlined above provides a general framework for the algorithm.
 
 ### Data Structures
 

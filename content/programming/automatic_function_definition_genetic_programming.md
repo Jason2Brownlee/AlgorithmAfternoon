@@ -21,40 +21,52 @@ The evolutionary process in AFDGP begins with a population of individuals, each 
 During the evolution process, the ADFs can be called from the main program tree or other ADFs, allowing for the creation of hierarchical and modular solutions. The evolutionary process encourages the reuse of useful code fragments by promoting the survival and propagation of individuals with well-performing ADFs.
 
 ## Procedure
-Data Structures:
-- Individual: Represents a program composed of a main tree and a set of ADFs.
-- Main Tree: The primary program tree that represents the overall solution.
-- ADF: An automatically defined function that can be called from the main tree or other ADFs.
-- Population: A collection of individuals in the current generation.
+### Data Structures
+- Function Set: A set of primitive functions and operators used to construct the program trees.
+- Terminal Set: A set of variables and constants used as leaf nodes in the program trees.
+- Individual: A structure representing a candidate solution, which consists of:
+  - Main Program Tree: A tree structure representing the main program.
+  - Automatically Defined Functions (ADFs): An array of tree structures representing the automatically defined functions.
+  - Fitness: The fitness value of the individual.
+- Population: An array of individuals.
 
-Parameters:
-- Population Size: The number of individuals in each generation.
-- Max Generations: The maximum number of generations to evolve.
-- Crossover Probability: The probability of applying crossover to selected individuals.
-- Mutation Probability: The probability of applying mutation to selected individuals.
-- Max Tree Depth: The maximum depth allowed for the main tree and ADFs.
-- Number of ADFs: The number of automatically defined functions to evolve.
+### Parameters
+- Population Size: The number of individuals in the population.
+- Maximum Number of Generations: The maximum number of generations to run the algorithm.
+- Crossover Probability: The probability of applying the crossover operator to create offspring.
+- Mutation Probability: The probability of applying the mutation operator to modify an individual.
+- Maximum Tree Depth: The maximum allowed depth of the program trees.
+- Maximum Number of ADFs: The maximum number of automatically defined functions allowed per individual.
 
-Pseudocode:
-1. Initialize the population with randomly generated individuals.
-   1.1. For each individual:
-      1.1.1. Create a main tree with random program primitives.
-      1.1.2. Create a set of ADFs with random program primitives.
-2. Evaluate the fitness of each individual in the population.
-3. Repeat until the maximum number of generations is reached or a satisfactory solution is found:
-   3.1. Select parents from the population based on their fitness.
-   3.2. Create new offspring by applying genetic operators:
-      3.2.1. Crossover:
-         3.2.1.1. With a given probability, select two parents.
-         3.2.1.2. Swap randomly selected subtrees between the main trees of the parents.
-         3.2.1.3. Swap randomly selected subtrees between the corresponding ADFs of the parents.
-      3.2.2. Mutation:
-         3.2.2.1. With a given probability, select an individual.
-         3.2.2.2. Randomly select a subtree in the main tree or an ADF.
-         3.2.2.3. Replace the selected subtree with a randomly generated subtree.
-   3.3. Evaluate the fitness of the new offspring.
-   3.4. Replace the population with the new offspring.
-4. Return the best individual found during the evolution process.
+### Steps
+1. Initialize the population
+   1. For each individual in the population:
+      1. Create the main program tree
+         1. Randomly generate a program tree using the function set and terminal set.
+         2. Ensure that the depth of the tree does not exceed the maximum tree depth.
+      2. Create the automatically defined functions (ADFs)
+         1. For each ADF (up to the maximum number of ADFs):
+            1. Randomly generate a program tree using the function set and terminal set.
+            2. Ensure that the depth of the tree does not exceed the maximum tree depth.
+      3. Evaluate the fitness of the individual.
+2. For each generation until the maximum number of generations is reached:
+   1. Create a new population
+      1. While the new population is not full:
+         1. Select parent individuals using a selection method (e.g., tournament selection).
+         2. Create offspring using genetic operators
+            1. If a random number is less than the crossover probability:
+               1. Apply the crossover operator to the selected parents.
+                  1. Randomly select crossover points in the main program trees and ADF trees of the parents.
+                  2. Exchange the subtrees at the selected crossover points between the parents to create two offspring.
+            2. If a random number is less than the mutation probability:
+               1. Apply the mutation operator to the offspring.
+                  1. Randomly select mutation points in the main program trees and ADF trees of the offspring.
+                  2. Replace the subtrees at the selected mutation points with randomly generated subtrees.
+         3. Evaluate the fitness of the offspring.
+         4. Add the offspring to the new population.
+   2. Replace the old population with the new population.
+3. Return the best individual found in the population.
+
 
 ## Considerations
 Advantages:

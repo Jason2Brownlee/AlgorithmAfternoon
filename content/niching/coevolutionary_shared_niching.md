@@ -31,37 +31,63 @@ CSN introduces the concept of shared fitness, where the fitness of an individual
 To maintain diversity within each niche, CSN employs a crowding mechanism based on the niche radius. The niche radius determines the distance threshold within which individuals are considered to be in the same niche. When the number of individuals within a niche exceeds a certain limit, the crowding mechanism removes the least fit individuals to prevent overcrowding and maintain diversity.
 
 ## Procedure
-1. Initialize the population
-   1.1. Divide the population into `N` subpopulations
-   1.2. Initialize individuals in each subpopulation randomly
-2. Evaluate the population
-   2.1. For each subpopulation `i`, evaluate individuals against individuals from other subpopulations
-   2.2. Calculate the shared fitness of each individual based on its performance and the performance of individuals in the same niche
-3. While termination criteria are not met, repeat:
-   3.1. For each subpopulation `i`, do:
-       3.1.1. Select parents using a selection operator (e.g., tournament selection)
-       3.1.2. Apply genetic operators (e.g., crossover and mutation) to create offspring
-       3.1.3. Evaluate the offspring against individuals from other subpopulations
-       3.1.4. Calculate the shared fitness of the offspring
-       3.1.5. Apply the crowding mechanism to maintain diversity within the niche
-             3.1.5.1. If the number of individuals in the niche exceeds the limit, remove the least fit individuals
-       3.1.6. Update the subpopulation by replacing the least fit individuals with the offspring
-4. Return the best individual from each subpopulation
-
 ### Data Structures
-- Population: A collection of subpopulations, each representing a different niche
-- Subpopulation: A group of individuals focusing on a specific subproblem or niche
-- Individual: A candidate solution to the problem, encoded as a set of parameters or decision variables
-- Niche: A subset of the search space characterized by a specific subproblem or a set of similar solutions
+- Individual: A structure representing a candidate solution, which consists of:
+  - Genotype: An array or string representing the genetic encoding of the solution.
+  - Fitness: The fitness value of the individual.
+  - Species: The species to which the individual belongs.
+- Population: An array of individuals.
+- Species: A set of individuals that share similar characteristics or belong to the same niche.
+- Shared Fitness: The fitness value of an individual after applying the shared niching mechanism.
 
 ### Parameters
-- Population Size: The total number of individuals in the population
-- Number of Subpopulations: The number of subpopulations or niches in the algorithm
-- Niche Radius: The distance threshold used to determine if individuals belong to the same niche
-- Crowding Limit: The maximum number of individuals allowed within a niche before the crowding mechanism is applied
-- Genetic Operators: The crossover and mutation operators used to create offspring
-- Selection Operator: The operator used to select parents for reproduction (e.g., tournament selection)
-- Termination Criteria: The conditions under which the algorithm stops (e.g., maximum number of generations, convergence threshold)
+- Population Size: The number of individuals in the population.
+- Maximum Number of Generations: The maximum number of generations to run the algorithm.
+- Crossover Probability: The probability of applying the crossover operator to create offspring.
+- Mutation Probability: The probability of applying the mutation operator to modify an individual.
+- Niche Radius: The distance threshold for determining the sharing of fitness among individuals.
+- Sharing Function: A function that determines the degree of sharing between individuals based on their distance.
+
+### Steps
+1. Initialize the population
+   1. For each individual in the population:
+      1. Randomly initialize the genotype.
+      2. Evaluate the fitness of the individual.
+      3. Assign the individual to a species based on its characteristics.
+2. For each generation until the maximum number of generations is reached:
+   1. Apply the shared niching mechanism
+      1. For each species:
+         1. Calculate the shared fitness of individuals within the species
+            1. For each individual in the species:
+               1. Calculate the niche count
+                  1. For each other individual in the population:
+                     1. Calculate the distance between the individuals.
+                     2. If the distance is within the niche radius:
+                        1. Increment the niche count of the individual.
+               2. Calculate the shared fitness of the individual
+                  1. Divide the individual's fitness by its niche count.
+   2. Create a new population
+      1. While the new population is not full:
+         1. Select parent individuals using a selection method based on shared fitness (e.g., tournament selection).
+         2. Create offspring using genetic operators
+            1. If a random number is less than the crossover probability:
+               1. Apply the crossover operator to the selected parents to create two offspring.
+            2. If a random number is less than the mutation probability:
+               1. Apply the mutation operator to the offspring.
+         3. Evaluate the fitness of the offspring.
+         4. Assign the offspring to a species based on its characteristics.
+         5. Add the offspring to the new population.
+   3. Replace the old population with the new population.
+   4. Perform coevolutionary operations
+      1. Migrate individuals between species
+         1. Select a subset of individuals from each species.
+         2. Move the selected individuals to different species based on their characteristics.
+      2. Adapt species based on their performance
+         1. Evaluate the overall fitness of each species.
+         2. Adjust the species parameters (e.g., niche radius) based on their performance.
+         3. Create new species or merge existing species if necessary.
+3. Return the best individual found in the population.
+
 
 ## Considerations
 ### Advantages

@@ -12,7 +12,7 @@ title: Home
 2. Pick an algorithm (:point_left:)
 3. Start coding (:heart:)
 
-Can't choose? Try: [Hill Climbing](/stochastic/stochastic_hill_climbing/), [Genetic Algorithm](/genetic/genetic_algorithm/), or [Particle Swarm Optimization](/particle/bare_bones_particle_swarm_optimization/).
+Can't choose? Try: [Hill Climbing](/stochastic/stochastic_hill_climbing/), or [Genetic Algorithm](/genetic/genetic_algorithm/), or [Particle Swarm Optimization](/particle/bare_bones_particle_swarm_optimization/).
 
 If you get stuck, see the [help section](/help/).
 
@@ -20,9 +20,9 @@ If you get stuck, see the [help section](/help/).
 
 Hi I'm **Jason Brownlee** and I'm an **algorithm geek** like you. [Learn more](/about/).
 
-Algorithms are listed in the table of contents (left) and organized in a rough grouping by type.
+Algorithms are listed in the table of contents (left) and are roughly grouped by type.
 
-I chose mostly stochastic optimization algorithms drawn from across subfields of computer science, such as: [computational intelligence](/glossary/#computational-intelligence) and [metaheuristics](/glossary/#metaheuristics). You could call them machine learning (ML) or artificial intelligence (AI) algorithms if you like.
+I included mostly stochastic optimization algorithms drawn from across subfields of computer science, such as: [computational intelligence](/glossary/#computational-intelligence) and [metaheuristics](/glossary/#metaheuristics). You could call them machine learning (ML) or artificial intelligence (AI) algorithms if you like.
 
 ## Code
 
