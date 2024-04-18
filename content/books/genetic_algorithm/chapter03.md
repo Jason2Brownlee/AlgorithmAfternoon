@@ -247,7 +247,7 @@ These exercises will guide you through implementing key components of genetic al
 
 
 ## Summary
-Chapter 3 delved into the concept of mutation and its crucial role in genetic algorithms. The chapter explained how mutation maintains genetic diversity and enables the exploration of new solutions, drawing parallels to biological mutations. Bit flip mutation was introduced as a fundamental mutation operator, with a detailed explanation of its mechanics and probability. The chapter discussed the importance of balancing exploration and exploitation through mutation rates, presenting common values and their impact on the search process.
+Chapter 3 explored the concept of mutation and its crucial role in genetic algorithms. The chapter explained how mutation maintains genetic diversity and enables the exploration of new solutions, drawing parallels to biological mutations. Bit flip mutation was introduced as a fundamental mutation operator, with a detailed explanation of its mechanics and probability. The chapter discussed the importance of balancing exploration and exploitation through mutation rates, presenting common values and their impact on the search process.
 
 The chapter then introduced hill climbing as a local search technique, comparing it to random search and outlining its limitations, such as getting stuck in local optima. To address these limitations, the parallel hill climbing algorithm was presented, which maintains a population of solutions evolving simultaneously. The chapter concluded with a comparison between parallel hill climbing and genetic algorithms, highlighting their similarities and differences.
 
