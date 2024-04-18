@@ -111,3 +111,5 @@ The process of selection, crossover, mutation, and replacement continues for a s
 ### Diversity Maintenance
 - Employ techniques to maintain population diversity and prevent premature convergence.
 - Options include using a larger population size, increasing the mutation probability, implementing diversity-preserving selection methods (e.g., crowding or niching), or periodically introducing new random individuals into the population.
+
+**Update**: if you need more help, you might be interested in the new [Genetic Algorithm Mini-Book](/books/genetic_algorithm)

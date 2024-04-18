@@ -24,6 +24,8 @@ Algorithms are listed in the table of contents (left) and are roughly grouped by
 
 I included mostly stochastic optimization algorithms drawn from across subfields of computer science, such as: [computational intelligence](/glossary/#computational-intelligence) and [metaheuristics](/glossary/#metaheuristics). You could call them machine learning (ML) or artificial intelligence (AI) algorithms if you like.
 
+**Update**: after requests, I'm experimening with [algorithm mini-books](/books/).
+
 ## Code
 
 Why not **share your code** with fellow algorithm lovers?
