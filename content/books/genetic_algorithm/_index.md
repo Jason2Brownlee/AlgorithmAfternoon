@@ -1,5 +1,5 @@
 ---
-title: Genetic Algorithm
+title: Genetic Algorithm Afternoon
 bookCollapseSection: true
 ---
 

@@ -34,21 +34,156 @@ By leveraging the power of GAs for continuous function optimization, practitione
 
 Rastrigin's function is a classic optimization problem that serves as a benchmark for testing the performance of optimization algorithms, including genetic algorithms. This function, named after Russian mathematician Leonid Rastrigin, is known for its complex landscape featuring numerous local minima and a single global minimum.
 
-Mathematically, Rastrigin's function in one dimension is defined as:
+Here's a pure Python function to evaluate Rastrigin’s function in one dimension:
 
 ```python
-def rastrigin(x):
-    return 10 + x**2 - 10 * np.cos(2 * np.pi * x)
+import math
+
+# Evaluate the one-dimensional Rastrigin function.
+def rastrigin_1d(x, A=10):
+    return A + (x ** 2) - A * math.cos(2 * math.pi * x)
+
+# Example usage:
+x_value = 0.5
+result = rastrigin_1d(x_value)
+print("Rastrigin's function value at x =", x_value, "is", result)
 ```
 
-where `x` is a real number. In higher dimensions, the function is defined as the sum of the one-dimensional Rastrigin's function applied to each dimension independently:
+This function takes a single input `x`, and evaluates Rastrigin’s function at that point, returning the result. The constant `A` is set with a default of 10 but can be adjusted if needed.
+
+To evaluate Rastrigin’s function for a list of numerical values, where each value in the list represents a different dimension, we can generalize the function.
+
+For a list of values `values`, where `n` is the number of dimensions represented by the length of the list, the function can be defined in Python as follows:
 
 ```python
-def rastrigin_nd(x):
-    return 10 * len(x) + sum(xi**2 - 10 * np.cos(2 * np.pi * xi) for xi in x)
+import math
+
+# Evaluate the Rastrigin function for a list of numerical values.
+def rastrigin(values, A=10):
+    n = len(values)
+    return A * n + sum(x**2 - A * math.cos(2 * math.pi * x) for x in values)
+
+# Example usage:
+values = [0.5, -1.5, 2.0]
+result = rastrigin(values)
+print("Rastrigin's function value at", values, "is", result)
 ```
 
-where `x` is a list or array of real numbers. The global minimum of Rastrigin's function is located at `x = [0, 0, ..., 0]` in any dimension, with a function value of 0.
+This function, `rastrigin`, takes a list of numerical values and computes the value of Rastrigin’s function across all dimensions specified in the list. The use of list comprehension makes it easy to apply the function's formula to each element in the list and sum the results.
+
+
+### Visualizing Rastrigin's Function
+
+#### Visualizing Rastrigin's Function in 1D
+
+To visualize Rastrigin’s Function, particularly in one dimension, we can use Matplotlib, a popular Python library for data visualization. We'll generate a plot of Rastrigin's function over a range of values to see its characteristic wavy, non-convex shape with many local minima. Here's a Python code snippet that demonstrates this:
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+import math
+
+def rastrigin_1d(x, A=10):
+    """
+    Evaluate the one-dimensional Rastrigin function.
+
+    Parameters:
+    - x (float): The point at which to evaluate the function.
+    - A (float, optional): The constant value A in the function. Default is 10.
+
+    Returns:
+    - float: The value of the Rastrigin function at point x.
+    """
+    return A + (x ** 2) - A * math.cos(2 * math.pi * x)
+
+# Generate a range of x values from -5.5 to 5.5
+x_values = np.linspace(-5.5, 5.5, 400)
+
+# Compute the Rastrigin function values for each x
+y_values = np.array([rastrigin_1d(x) for x in x_values])
+
+# Create the plot
+plt.figure(figsize=(10, 5))
+plt.plot(x_values, y_values, label='Rastrigin Function')
+plt.title('Rastrigin Function Visualization')
+plt.xlabel('x')
+plt.ylabel('f(x)')
+plt.grid(True)
+plt.legend()
+plt.show()
+```
+
+The output looks as follows:
+
+![Visualizing Rastrigin's Function in 1D](/book_ga_1d.png)
+
+This script does the following:
+
+1. **Function Definition**: Defines `rastrigin_1d`, which computes Rastrigin’s function for a single value of `x`.
+2. **Data Generation**: Generates a range of `x` values between -5.5 and 5.5, which is typically sufficient to observe the multiple minima and maxima of the function.
+3. **Function Evaluation**: Applies the `rastrigin_1d` function to each `x` value in the range using a list comprehension.
+4. **Visualization**: Uses Matplotlib to plot the results. The plot settings ensure that the grid, labels, and legend are properly configured for better understanding and visualization.
+
+You can run this script in any Python environment that has NumPy and Matplotlib installed. It will display the plot directly if you are using a Jupyter notebook or similar interactive environment. If you're running it in a script file, the plot will appear in a separate window when you execute the script.
+
+#### Visualizing Rastrigin's Function in 2D
+
+To visualize the Rastrigin function as a surface plot for two dimensions, we can use Matplotlib's `mpl_toolkits.mplot3d` module. This will help in demonstrating the complex topography of the function, highlighting its peaks and valleys more effectively in a 3D space. Here is a Python code snippet to create a 3D surface plot of the Rastrigin function:
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+import math
+
+def rastrigin_2d(x, y, A=10):
+    """
+    Evaluate the two-dimensional Rastrigin function.
+
+    Parameters:
+    - x, y (float): The points at which to evaluate the function.
+    - A (float, optional): The constant value A in the function. Default is 10.
+
+    Returns:
+    - float: The value of the Rastrigin function at point (x, y).
+    """
+    return A*2 + (x ** 2 - A * np.cos(2 * np.pi * x)) + (y ** 2 - A * np.cos(2 * np.pi * y))
+
+# Generate a mesh grid of x and y values
+x = np.linspace(-5.5, 5.5, 400)
+y = np.linspace(-5.5, 5.5, 400)
+X, Y = np.meshgrid(x, y)
+
+# Compute the Rastrigin function values for each (x, y) pair
+Z = rastrigin_2d(X, Y)
+
+# Create a 3D plot
+fig = plt.figure(figsize=(14, 9))
+ax = fig.add_subplot(111, projection='3d')
+surf = ax.plot_surface(X, Y, Z, cmap='viridis', edgecolor='none')
+ax.set_title('3D Surface Plot of Rastrigin Function')
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.set_zlabel('f(X, Y)')
+fig.colorbar(surf, ax=ax, shrink=0.5, aspect=10)  # Add a color bar which maps values to colors.
+
+plt.show()
+```
+
+The output looks as follows:
+
+![Visualizing Rastrigin's Function in 2D](/book_ga_2d.png)
+
+This script does the following:
+
+1. **Function Definition**: The function `rastrigin_2d` is defined to compute the Rastrigin function for two variables \( x \) and \( y \).
+2. **Grid Generation**: Using `numpy.linspace` and `numpy.meshgrid`, a grid of \( x \) and \( y \) values is created. This grid covers the domain from -5.5 to 5.5 for both variables, which is suitable for observing the function's characteristics.
+3. **Function Evaluation**: The Rastrigin function is evaluated at each point on the grid. The computation leverages vectorized operations for efficiency.
+4. **3D Plotting**: The plot is set up with a 3D projection, and `plot_surface` is used to create the surface plot. The colormap 'viridis' is applied for visual appeal, and edges are smoothed for clarity.
+5. **Display**: Labels and titles are added for clarity, and a color bar is included to interpret the function values visually.
+
+This code will generate a detailed 3D surface plot of the Rastrigin function, clearly depicting its complex topology.
+
 
 ### Challenges of Optimization
 
@@ -62,7 +197,7 @@ Rastrigin's function is also considered a deceptive function. Deceptive function
 
 ## Decoding Mechanisms in GAs
 
-In the realm of continuous function optimization, genetic algorithms (GAs) often require a means to bridge the gap between the discrete world of bitstrings and the continuous domain of real numbers. This is where decoding mechanisms come into play. By transforming bitstrings into continuous values, GAs can effectively explore and optimize functions defined on continuous spaces. In this section, we'll delve into binary decoding, its limitations, and an alternative encoding scheme called Gray code.
+Genetic algorithms often require a means to bridge the gap between the discrete world of bitstrings and the continuous domain of real numbers. This is where decoding mechanisms come into play. By transforming bitstrings into continuous values, GAs can effectively explore and optimize functions defined on continuous spaces. In this section, we'll look into binary decoding, its limitations, and an alternative encoding scheme called Gray code.
 
 ### Introduction to Binary Decoding
 
@@ -85,20 +220,25 @@ The function takes the `bitstring`, the minimum and maximum values of the desire
 To demonstrate the encoding and decoding process, let's consider a continuous value of 0.75 in the range [0, 1]. To encode this value using 8 bits, we first convert it to a decimal integer:
 
 ```python
-decimal = round(0.75 * (2**8 - 1)) = 191
+decimal = round(0.75 * (2**8 - 1)) # 191
 ```
 
 The decimal value 191 is then converted to its binary representation:
 
 ```python
-bitstring = bin(191)[2:].zfill(8) = "10111111"
+bitstring = bin(191)[2:].zfill(8) # "10111111"
 ```
 
 To decode the bitstring back to the continuous value, we apply the binary decoding function:
 
 ```python
-decoded_value = binary_decode("10111111", 0, 1, 8) = 0.75
+decoded_value = binary_decode("10111111", 0, 1, 8) # 0.75
 ```
+
+The result is 0.7490196078431373, not exactly the original value 0.75.
+
+In this case, we have lost some precision with our chosen representation in 8 bits. This is an important concern when choosing the precision required for the floating point values.
+
 
 ### Limitations of Binary Encoding/Decoding
 
@@ -177,17 +317,11 @@ In this exercise, you'll implement binary and Gray code encoding and decoding fu
 
 5. **Discussion**: Based on your results, discuss the advantages and disadvantages of binary and Gray code encoding for optimizing Rastrigin's function. Consider factors such as convergence speed, solution quality, and robustness to local optima.
 
-### Extension: Experimenting with GA Parameters
-
-1. **Parameter Sweep**: Conduct a parameter sweep to investigate the impact of different GA parameters, such as population size, mutation rate, and crossover rate, on the performance of each encoding scheme. Run the GA with different combinations of parameters and analyze the results.
-
-2. **Adaptive Mechanisms**: Implement adaptive mechanisms for the GA, such as adaptive mutation rates or population sizing, and evaluate their impact on the performance of each encoding scheme.
-
 By completing this exercise, you'll gain practical experience in implementing binary and Gray code encoding/decoding, applying a GA to optimize a continuous function, and analyzing the performance of different encoding schemes. This knowledge will equip you to tackle more complex continuous optimization problems using genetic algorithms.
 
 
 ## Summary
-Chapter 7 introduced the concept of continuous function optimization using genetic algorithms (GAs). It explored the importance of continuous optimization in various fields, such as engineering, machine learning, and economics. The chapter presented Rastrigin's function as a challenging benchmark problem, explaining its complex landscape and the difficulties it poses for optimization algorithms. The concept of deception in optimization was also discussed. The chapter then delved into decoding mechanisms, focusing on binary decoding and its limitations. Gray code was introduced as an alternative encoding scheme that addresses some of the drawbacks of binary encoding. The impact of encoding choices on GA performance was highlighted, emphasizing the need for experimentation and problem-specific considerations.
+Chapter 7 introduced the concept of continuous function optimization using genetic algorithms (GAs). It explored the importance of continuous optimization in various fields, such as engineering, machine learning, and economics. The chapter presented Rastrigin's function as a challenging benchmark problem, explaining its complex landscape and the difficulties it poses for optimization algorithms. The concept of deception in optimization was also discussed. The chapter then explored decoding mechanisms, focusing on binary decoding and its limitations. Gray code was introduced as an alternative encoding scheme that addresses some of the drawbacks of binary encoding. The impact of encoding choices on GA performance was highlighted, emphasizing the need for experimentation and problem-specific considerations.
 
 ### Key Takeaways
 1. Continuous function optimization is crucial in many real-world applications, and GAs can be effective tools for solving these problems.
