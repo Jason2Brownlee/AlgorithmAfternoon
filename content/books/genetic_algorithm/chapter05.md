@@ -285,7 +285,7 @@ By understanding the complementary roles of crossover and mutation and employing
 
 These exercises will guide you through implementing key components of genetic algorithms - generating all combinations of crossover between two extreme bitstrings, implementing one-point crossover, building a crossover-only hill climber, and testing the hill climber with different initial population sizes to understand the role of diversity. By the end, you'll have a hands-on understanding of crossover and its impact on search performance.
 
-### Part 1: Generating Crossover Combinations
+### Exercise 1: Generating Crossover Combinations
 
 1. **All Crossover Combinations**: Write a function `generate_crossover_combinations(length)` that generates all possible bitstrings that can result from crossing over a bitstring of all 1s with a bitstring of all 0s of the given `length`. The function should return a list of these bitstrings.
 
@@ -293,7 +293,7 @@ These exercises will guide you through implementing key components of genetic al
 
 3. **Analyzing Crossover Outcomes**: For each bitstring length, calculate the average number of 1s in the generated bitstrings. Discuss how this average relates to the original parent bitstrings.
 
-### Part 2: Implementing One-Point Crossover
+### Exercise 2: Implementing One-Point Crossover
 
 1. **One-Point Crossover**: Implement a function `one_point_crossover(parent1, parent2)` that takes two parent bitstrings and performs one-point crossover. The function should choose a random crossover point, split the parents at this point, and create two offspring by combining the respective parts of the parents.
 
@@ -304,7 +304,7 @@ These exercises will guide you through implementing key components of genetic al
 
 3. **Crossover Point Distribution**: Modify your `one_point_crossover` function to record the crossover point used in each operation. Perform 1000 crossover operations on bitstrings of length 50, and plot a histogram of the crossover points. Discuss the distribution of crossover points.
 
-### Part 3: Building a Crossover-Only Hill Climber for OneMax
+### Exercise 3: Building a Crossover-Only Hill Climber for OneMax
 
 1. **Crossover-Only Hill Climber**: Implement a hill climber for the OneMax problem that uses only crossover to generate new solutions. The climber should maintain a population of bitstrings, select two parents in each iteration, perform one-point crossover, and replace the worst individual in the population with the best offspring if the offspring is better.
 

@@ -214,11 +214,11 @@ The choice between parallel hill climbing and genetic algorithms depends on the 
 
 
 
-## Exercise
+## Exercises
 
 These exercises will guide you through implementing key components of genetic algorithms - bit flip mutation, building a hill climber, and finally a parallel hill climber to solve the OneMax problem. By the end, you'll have a hands-on understanding of mutation and its role in both local and population-based search.
 
-### Part 1: Implementing Bit Flip Mutation
+### Exercise 1: Implementing Bit Flip Mutation
 
 1. **Basic Bit Flip**: Implement a function `bitflip_mutation(bitstring, prob)` that takes a bitstring (as a list of 0s and 1s) and a probability `prob`, and performs bit flip mutation. Each bit should be flipped with probability `prob`.
 
@@ -226,7 +226,7 @@ These exercises will guide you through implementing key components of genetic al
 
 3. **Mutation Rate Experiment**: Create a bitstring of length 100 with all 0s. Apply bit flip mutation to this bitstring 1000 times, each time with a different mutation probability ranging from 0.001 to 1.0. For each probability, count the average number of bits that were flipped. Plot the mutation probability against the average number of bits flipped.
 
-### Part 2: Building a Hill Climber for OneMax
+### Exercise 2: Building a Hill Climber for OneMax
 
 1. **Hill Climber**: Implement a hill climber for the OneMax problem. Your hill climber should take a bitstring as input, make a copy, apply bit flip mutation to the copy, and accept the mutated copy if it has a higher OneMax score. The climber should iterate until no improvement is found for a specified number of iterations.
 
@@ -234,7 +234,7 @@ These exercises will guide you through implementing key components of genetic al
 
 3. **Mutation Rate and Performance**: Repeat the previous test with different mutation rates (e.g., 0.001, 0.01, 0.1). Observe and discuss how the mutation rate affects the performance of the hill climber.
 
-### Part 3: Implementing Parallel Hill Climbing for OneMax
+### Exercise 3: Implementing Parallel Hill Climbing for OneMax
 
 1. **Parallel Hill Climber**: Implement a parallel hill climber for the OneMax problem. This climber should maintain a population of bitstrings, apply bit flip mutation to each one independently, and select the best bitstrings to carry forward to the next generation. The climber should iterate for a specified number of generations.
 
@@ -242,7 +242,7 @@ These exercises will guide you through implementing key components of genetic al
 
 3. **Population Size and Performance**: Repeat the previous test with different population sizes (e.g., 10, 50, 100). Observe and discuss how the population size affects the performance of the parallel hill climber.
 
-4. **Comparing with the Basic Hill Climber**: Compare the performance of the parallel hill climber with the basic hill climber from Part 2. Discuss the advantages and disadvantages of each approach.
+4. **Comparing with the Basic Hill Climber**: Compare the performance of the parallel hill climber with the basic hill climber from Exercise 2. Discuss the advantages and disadvantages of each approach.
 
 
 

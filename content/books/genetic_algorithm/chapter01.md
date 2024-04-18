@@ -3,17 +3,17 @@ title: Chapter 1 - Introduction to Genetic Algorithms
 ---
 # Chapter 1: Introduction to Genetic Algorithms
 
-# What Are Genetic Algorithms?
+## What Are Genetic Algorithms?
 
-## Definition and Purpose
+### Definition and Purpose
 Genetic Algorithms (GAs) are a powerful class of optimization algorithms that draw inspiration from the principles of biological evolution. At their core, GAs are designed to solve complex optimization and search problems by mimicking the processes of natural selection, genetic recombination, and mutation. By harnessing these evolutionary mechanisms, GAs can efficiently explore vast solution spaces and find near-optimal solutions to challenging real-world problems.
 
-## Genetic Algorithms within the Optimization Landscape
+### Genetic Algorithms within the Optimization Landscape
 Within the broad landscape of optimization algorithms, GAs stand out as a prominent metaheuristic approach. Unlike traditional optimization methods that work with a single solution, GAs operate on a population of candidate solutions, allowing for a more comprehensive exploration of the search space. This population-based approach enables GAs to avoid getting stuck in local optima and discover globally optimal solutions.
 
 GAs have spawned several subfields and variants, each tailored to specific problem domains. Genetic Programming, for example, focuses on evolving computer programs, while Evolutionary Strategies specialize in continuous optimization tasks. These offshoots showcase the versatility and adaptability of the core GA framework.
 
-## Relation to Other Fields
+### Relation to Other Fields
 GAs find applications beyond traditional optimization, particularly in the realm of Machine Learning (ML). In ML, GAs can be employed to optimize model parameters, evolve neural network architectures, or even generate rule-based systems. By framing learning as an optimization problem, GAs offer a powerful tool for automated model discovery and improvement.
 
 Moreover, GAs are a key technique within the broader field of Evolutionary Computation (EC), which encompasses other nature-inspired optimization algorithms such as Particle Swarm Optimization (PSO). As part of the Computational Intelligence toolkit, GAs work alongside neural networks and fuzzy systems to tackle complex problems that defy conventional algorithmic approaches.
@@ -156,7 +156,7 @@ The significance of OneMax lies in its known optimal solution (a bitstring consi
 
 
 
-## Exercise
+## Exercises
 
 This exercise aims to deepen your understanding of preliminaries for genetic algorithms and the importance of choosing an appropriate representation for genetic information. You will implement different ways to represent bitstrings in Python and then use these representations to implement and test the OneMax function—a fundamental benchmark in genetic algorithm studies.
 

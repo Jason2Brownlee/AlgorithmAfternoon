@@ -144,12 +144,12 @@ As a rule of thumb, it's recommended to experiment with both encoding schemes an
 
 
 
-(rewrite)
+
 ## Exercises
 
 In this exercise, you'll implement binary and Gray code encoding and decoding functions for floating-point values, and then use them in a genetic algorithm to optimize Rastrigin's function. By comparing the performance of each encoding/decoding scheme, you'll gain insights into their impact on the GA's effectiveness in solving continuous optimization problems.
 
-### Part 1: Implementing Binary and Gray Code Encoding/Decoding
+### Exercise 1: Implementing Binary and Gray Code Encoding/Decoding
 
 1. **Binary Encoding and Decoding**: Implement the functions `binary_encode(value, min_val, max_val, num_bits)` and `binary_decode(bitstring, min_val, max_val, num_bits)` that encode a floating-point value to a binary bitstring and decode a binary bitstring back to a floating-point value, respectively. The `min_val` and `max_val` parameters specify the range of values, and `num_bits` determines the precision of the encoding.
 
@@ -157,7 +157,7 @@ In this exercise, you'll implement binary and Gray code encoding and decoding fu
 
 3. **Testing the Functions**: Test your encoding and decoding functions by encoding a set of floating-point values, decoding the resultant bitstrings, and verifying that the decoded values match the original values. Perform this test for both binary and Gray code encoding.
 
-### Part 2: Implementing the Genetic Algorithm for Rastrigin's Function
+### Exercise 2: Implementing the Genetic Algorithm for Rastrigin's Function
 
 1. **Fitness Function**: Implement the fitness function `rastrigin(x)` that takes a list of floating-point values `x` and returns the value of Rastrigin's function for those inputs.
 
@@ -165,7 +165,7 @@ In this exercise, you'll implement binary and Gray code encoding and decoding fu
 
 3. **Running the GA**: Run the genetic algorithm to optimize Rastrigin's function in a fixed number of dimensions (e.g., 2, 5, 10) using both binary and Gray code encoding. Set appropriate values for population size, mutation rate, crossover rate, and termination criteria.
 
-### Part 3: Comparing Performance and Analyzing Results
+### Exercise 3: Comparing Performance and Analyzing Results
 
 1. **Performance Metrics**: For each run of the GA, record relevant performance metrics such as the best fitness value found, the number of generations to convergence, and the computation time.
 

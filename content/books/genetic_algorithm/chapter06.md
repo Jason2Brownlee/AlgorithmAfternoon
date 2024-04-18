@@ -174,7 +174,7 @@ By addressing premature convergence, maintaining diversity, and fine-tuning para
 
 In this exercise, you'll implement a complete genetic algorithm to solve the OneMax problem and conduct experiments to analyze the impact of population size, crossover rate, and mutation rate on the algorithm's performance. By the end, you'll have a hands-on understanding of how to build and tune a genetic algorithm for optimization tasks.
 
-### Part 1: Implementing the Genetic Algorithm for OneMax
+### Exercise 1: Implementing the Genetic Algorithm for OneMax
 
 1. **Initialization**: Implement a function `initialize_population(pop_size, bitstring_length)` that generates a population of `pop_size` random bitstrings, each of length `bitstring_length`.
 
@@ -190,7 +190,7 @@ In this exercise, you'll implement a complete genetic algorithm to solve the One
 
 7. **GA Loop**: Implement the main GA loop that initializes the population, evaluates fitness, performs selection, crossover, mutation, and replacement for a specified number of generations. Track the best fitness in each generation.
 
-### Part 2: Experiments and Analysis
+### Exercise 2: Experiments and Analysis
 
 1. **Population Size Experiment**:
    - Run the GA with different population sizes (e.g., 20, 50, 100, 200) on the OneMax problem with a bitstring length of 100.
