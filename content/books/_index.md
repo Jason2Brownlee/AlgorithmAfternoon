@@ -15,6 +15,8 @@ This section provides access to mini-books on specific algorithms.
 
 ## Genetic Algorithm
 
-Mini-book on the genetic algorithm.
+Mini-book dedicated to the genetic algorithm.
+
+[![Genetic Algorithm Afternoon](/book_ga_cover.png)](/books/genetic_algorithm)
 
 * [Genetic Algorithm Afternoon](/books/genetic_algorithm)

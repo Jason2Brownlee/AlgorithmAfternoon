@@ -9,6 +9,8 @@ bookCollapseSection: true
 
 A mini-book dedicated to the genetic algorithm.
 
+![Genetic Algorithm Afternoon](/book_ga_cover.png)
+
 ## Table of Contents
 
 * [Chapter 1: Introduction to Genetic Algorithms](chapter01.md)
