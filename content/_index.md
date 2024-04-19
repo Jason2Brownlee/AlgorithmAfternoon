@@ -24,8 +24,6 @@ Algorithms are listed in the table of contents (left) and are roughly grouped by
 
 I included mostly stochastic optimization algorithms drawn from across subfields of computer science, such as: [computational intelligence](/glossary/#computational-intelligence) and [metaheuristics](/glossary/#metaheuristics). You could call them machine learning (ML) or artificial intelligence (AI) algorithms if you like.
 
-**Update**: after requests, I'm experimening with [algorithm mini-books](/books/).
-
 ## Code
 
 Why not **share your code** with fellow algorithm lovers?
@@ -37,3 +35,12 @@ Why not **share your code** with fellow algorithm lovers?
 If there's interest, I may set up code page, comments, forum, etc. Collaboration with fellow algorithm geeks might be even more fun!
 
 
+## Mini-Books
+
+After requests, I'm experimenting with [algorithm mini-books](/books/), e.g.:
+
+{{< columns >}}
+[![Genetic Algorithm Afternoon](/book_ga_cover.png)](/books/genetic_algorithm)
+<--->
+[![Particle Swarm Afternoon](/book_pso_cover.png)](/books/particle_swarm)
+{{< /columns >}}

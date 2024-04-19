@@ -15,8 +15,13 @@ This section provides access to mini-books on specific algorithms.
 
 ## Genetic Algorithm
 
-Mini-book dedicated to the genetic algorithm.
+Mini-book on the genetic algorithm: [Genetic Algorithm Afternoon](/books/genetic_algorithm)
 
 [![Genetic Algorithm Afternoon](/book_ga_cover.png)](/books/genetic_algorithm)
 
-* [Genetic Algorithm Afternoon](/books/genetic_algorithm)
+
+## Particle Swarm
+
+Mini-book on particle swarm: [Particle Swarm Afternoon](/books/particle_swarm)
+
+[![Particle Swarm Afternoon](/book_pso_cover.png)](/books/particle_swarm)
