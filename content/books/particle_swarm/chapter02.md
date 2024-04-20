@@ -102,7 +102,7 @@ This exercise builds upon the basic PSO model introduced in Chapter 1, focusing 
 
 ### Exercise 1: Enhancing the Basic Model
 
-Modify your initial Python script from Chapter 1 to include a `Particle` class that keeps track of each particle's current position, velocity, current fitness, and personal best tracking. Follow these steps:
+Modify your initial Python script from Chapter 1 to include a `Particle` class that keeps track of each particle's current position, velocity, current fitness, and personal best tracking. Use the following suggestions to guide your implementation:
 
 1. Create a new attributes, including the new `personal_best_position` and `personal_best_fitness`, for each particle, initialized to the particle's starting position.
 
@@ -129,7 +129,7 @@ new_velocity = w * particle.velocity + cognitive_component
 particle.current_position += new_velocity
 ```
 
-4. Ensure that the particle's position remains within the defined search space boundaries. If a particle exceeds the boundaries, you can either clip its position to the nearest boundary or implement a boundary handling technique like reflection or wrapping.
+4. Ensure that the particle's position remains within the defined search space boundaries. If a particle exceeds the boundaries, you can either clip its position to the nearest boundary or implement a boundary handling technique like reflection or wrapping. Also clip the particle velocity to a reasonable bound, such as [-1, 1].
 
 ### Exercise 3: Visualization and Observation
 
@@ -180,7 +180,8 @@ class Particle:
 
 ```python
 def pso(num_particles, num_iterations, search_space):
-    particles = [Particle(np.random.uniform(search_space[0], search_space[1])) for _ in range(num_particles)]
+    low, high = (search_space[0,0],search_space[1,0]), (search_space[0,1],search_space[1,1])
+    particles = [Particle(np.random.uniform(low, high, 2)) for _ in range(num_particles)]
 
     for _ in range(num_iterations):
         for particle in particles:
@@ -301,10 +302,6 @@ search_space = np.array([[-2, 2], [-1, 3]])  # Define the search space boundarie
 # Execute PSO
 pso(num_particles, num_iterations, search_space)
 ```
-
-**Running and Observing**:
-- Execute the PSO algorithm and use the plotting function to visualize the movement and convergence patterns of the particles. Experiment with different values for `c1` and `w` to observe how these parameters influence the behavior of the swarm.
-
 {{< /details >}}
 
 
