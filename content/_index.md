@@ -37,7 +37,7 @@ If there's interest, I may set up code page, comments, forum, etc. Collaboration
 
 ## Mini-Books
 
-After requests, I'm experimenting with [algorithm mini-books](/books/), e.g.:
+As requested, I'm experimenting with [algorithm mini-books](/books/), e.g.:
 
 {{< columns >}}
 [![Genetic Algorithm Afternoon](/book_ga_cover.png)](/books/genetic_algorithm)
