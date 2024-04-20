@@ -311,6 +311,7 @@ This script sets up a plot with the particle positions marked as scatter points,
 
 3. **Importance of initial random distribution**:
    - The initial random distribution of particles is crucial in PSO as it impacts the exploration capabilities of the swarm. A well-distributed initial population can explore various regions of the search space, potentially escaping local minima and improving the chances of finding the global optimum early in the optimization process.
+
 {{< /expand >}}
 
 ## Summary
@@ -338,5 +339,5 @@ Dive into the world of PSO by implementing particle initialization and visualiza
 - **Acceleration Coefficients**: Parameters that balance the influence of personal and social experiences on particle movement.
 
 ### Next Chapter:
-In Chapter 2, we'll explore the concept of personal best and its role in guiding particle movement, diving deeper into the velocity update mechanism and the influence of individual experiences on the optimization process.
+In [Chapter 2](chapter02.md), we'll explore the concept of personal best and its role in guiding particle movement, diving deeper into the velocity update mechanism and the influence of individual experiences on the optimization process.
 

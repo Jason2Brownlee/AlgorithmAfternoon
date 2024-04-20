@@ -12,8 +12,9 @@ In Particle Swarm Optimization (PSO), the global best, or gBest, is a crucial co
 Unlike personal best (pBest), which is specific to each particle, gBest is a swarm-wide parameter. It encapsulates the collective knowledge of the entire swarm, representing the most successful position encountered by any particle so far. The updating of gBest occurs as follows:
 
 ```python
-if particle.current_position.fitness < swarm.global_best.fitness:
-    swarm.global_best = particle.current_position
+if particle.current_fitness < global_best_fitness:
+    global_best_fitness = particle.current_fitness
+    global_best_position = particle.current_position.copy()
 ```
 
 The concept of gBest in PSO bears a resemblance to the notion of "collective wisdom" in human societies. Just as individuals in a group can benefit from the knowledge and experiences of others, particles in PSO leverage the information shared through gBest to enhance their search performance.
@@ -23,7 +24,9 @@ The concept of gBest in PSO bears a resemblance to the notion of "collective wis
 The global best plays a vital role in guiding the convergence behavior of the swarm. By acting as a beacon, gBest attracts particles to explore regions near the current best solution. This attraction is incorporated into the velocity update equation of each particle:
 
 ```python
-particle.velocity += social_coefficient * (swarm.global_best - particle.current_position)
+cognitive_component = c1 * random.random() * (particle.personal_best_position - particle.current_position)
+social_component = c2 * random.random() * (global_best_position - particle.current_position)
+particle.velocity = w * particle.velocity + cognitive_component + social_component
 ```
 
 The social coefficient determines the strength of the attraction towards gBest. A higher value encourages particles to more closely follow the global best, while a lower value allows for more independent exploration.
@@ -127,14 +130,6 @@ Extend your existing PSO implementation to incorporate the global best (gBest) f
 
 2. After updating the personal best for each particle in the main PSO loop, compare the fitness of each particle's current position with the fitness of the `global_best`. If a particle's current fitness is better than the `global_best` fitness, update the `global_best` to the particle's current position.
 
-```python
-# Pseudocode for updating global best
-for particle in swarm:
-    if particle.current_fitness < swarm.global_best_fitness:
-        swarm.global_best = particle.current_position
-        swarm.global_best_fitness = particle.current_fitness
-```
-
 3. Ensure that the `global_best` is accessible to all particles in the swarm, as it will be used in the modified velocity update mechanism.
 
 ### Exercise 2: Modifying the Velocity Update Mechanism
@@ -143,14 +138,7 @@ Adapt the velocity update formula in your PSO script to incorporate the influenc
 
 1. Define the social coefficient (`c2`) as a constant or parameter in your script, similar to the cognitive coefficient (`c1`).
 
-2. Modify the velocity update calculation to include the global best influence:
-
-```python
-# Pseudocode for modified velocity update
-cognitive_component = c1 * random.random() * (particle.personal_best - particle.current_position)
-social_component = c2 * random.random() * (swarm.global_best - particle.current_position)
-new_velocity = w * particle.velocity + cognitive_component + social_component
-```
+2. Modify the velocity update calculation to include the global best influence.
 
 3. Update the particle's position based on the new velocity, as done in the previous exercise.
 
@@ -172,6 +160,152 @@ Enhance your visualization code to showcase the impact of gBest on particle move
 4. Vary the values of the cognitive coefficient (`c1`) and social coefficient (`c2`) to analyze their impact on the swarm's behavior. Discuss your observations and any insights gained.
 
 By completing this exercise, you'll gain hands-on experience in implementing the global best concept and modifying the velocity update mechanism to incorporate social interaction in PSO. The visualization will provide a clear understanding of how the swarm's collective knowledge guides the particles towards optimal solutions. Through experimentation with different parameter settings, you'll develop intuition for tuning PSO to achieve the desired balance between individual exploration and social exploitation.
+
+## Answers
+{{< expand >}}
+### Exercise 1: Integration of Global Best
+
+To integrate the global best functionality, we can modify the existing PSO implementation as follows:
+
+1. **Initialize Global Best**: Initialize the global best position and fitness values.
+
+```python
+global_best_position = None
+global_best_fitness = float('inf')
+```
+
+2. **Update Global Best**: After updating the personal best for each particle, compare each particle's fitness with the global best fitness and update the global best if a better solution is found.
+
+```python
+if particle.current_fitness < global_best_fitness:
+    global_best_fitness = particle.current_fitness
+    global_best_position = particle.current_position.copy()
+```
+
+3. **Ensure Accessibility**: Make sure that the `global_best` is accessible to all particles for the velocity update.
+
+This can be achieved by maintaining the global best position and fitness as local variables in the `pso()` function.
+
+
+### Exercise 2: Modifying the Velocity Update Mechanism
+
+To modify the velocity update mechanism to include both personal best and global best influences:
+
+1. **Introduce Social Coefficient (`c2`)**: Define a new coefficient for the social influence of the global best.
+
+```python
+c1 = c2 = 2.05
+```
+
+2. **Update Velocity Formula**: Adjust the velocity update calculation to include the social component.
+
+```python
+cognitive_component = c1 * random.random() * (particle.personal_best_position - particle.current_position)
+social_component = c2 * random.random() * (global_best_position - particle.current_position)
+particle.velocity = w * particle.velocity + cognitive_component + social_component
+```
+
+3. **Update Particle Velocity**: Add the particle's velocity to the particle's position.
+
+```python
+particle.current_position += particle.velocity
+```
+
+
+### Exercise 3: Visualization of Swarm Dynamics
+
+For visualization:
+
+1. **Highlight Global Best**: Use a unique marker or color to denote the `global_best`.
+
+Here is an example of how you could visualize the swarm and show the global best using a green star:
+
+```python
+def plot_particles(particles, iteration, global_best_position):
+    fig, ax = plt.subplots()
+    for particle in particles:
+        ax.scatter(*particle.current_position, color='blue', marker='o')
+        ax.scatter(*particle.personal_best_position, color='red', marker='x')
+    ax.scatter(*global_best_position, color='green', marker='*', s=100)  # Show global best as a larger star
+    ax.set_xlim([-2, 2])
+    ax.set_ylim([-1, 3])
+    ax.set_title(f'Iteration {iteration}')
+    plt.show()
+```
+
+Tying this together, the complete PSO algorithm with the local and global best tracking is listed below.
+
+```python
+import numpy as np
+import random
+import matplotlib.pyplot as plt
+
+class Particle:
+    def __init__(self, position):
+        self.current_position = np.array(position)
+        self.velocity = np.random.uniform(-1, 1, size=np.shape(position))
+        self.current_fitness = float('inf')
+        self.personal_best_position = np.array(position)
+        self.personal_best_fitness = float('inf')
+
+    def update_personal_best(self):
+        if self.current_fitness < self.personal_best_fitness:
+            self.personal_best_position = self.current_position.copy()
+            self.personal_best_fitness = self.current_fitness
+
+def rosenbrock(x, y):
+    return (1 - x)**2 + 100 * (y - x**2)**2
+
+def pso(num_particles, num_iterations, search_space):
+    low, high = (search_space[0,0],search_space[1,0]), (search_space[0,1],search_space[1,1])
+    particles = [Particle(np.random.uniform(low, high, 2)) for _ in range(num_particles)]
+    c1 = c2 = 2.05
+    w = 0.7
+    global_best_position = None
+    global_best_fitness = float('inf')
+
+    for i in range(num_iterations):
+        for particle in particles:
+            particle.current_fitness = rosenbrock(*particle.current_position)
+            particle.update_personal_best()
+
+            if particle.current_fitness < global_best_fitness:
+                global_best_fitness = particle.current_fitness
+                global_best_position = particle.current_position.copy()
+
+            cognitive_component = c1 * random.random() * (particle.personal_best_position - particle.current_position)
+            social_component = c2 * random.random() * (global_best_position - particle.current_position)
+            particle.velocity = w * particle.velocity + cognitive_component + social_component
+            particle.current_position += particle.velocity
+            particle.current_position = np.clip(particle.current_position, search_space[0], search_space[1])
+            particle.current_position = np.clip(particle.velocity, -1, 1)
+
+        if i % 10 == 0:  # Plot every 10 iterations
+            plot_particles(particles, i, global_best_position)
+
+def plot_particles(particles, iteration, global_best_position):
+    fig, ax = plt.subplots()
+    for particle in particles:
+        ax.scatter(*particle.current_position, color='blue', marker='o')
+        ax.scatter(*particle.personal_best_position, color='red', marker='x')
+    ax.scatter(*global_best_position, color='green', marker='*', s=100)  # Show global best as a larger star
+    ax.set_xlim([-2, 2])
+    ax.set_ylim([-1, 3])
+    ax.set_title(f'Iteration {iteration}')
+    plt.show()
+
+# PSO parameters
+num_particles = 20
+num_iterations = 50
+search_space = np.array([[-2, 2], [-1, 3]])  # Define the search space boundaries for x and y
+
+# Execute PSO
+pso(num_particles, num_iterations, search_space)
+```
+
+
+{{< /expand >}}
+
 
 
 ## Summary

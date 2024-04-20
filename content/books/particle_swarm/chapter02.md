@@ -78,9 +78,9 @@ When particles have discovered good personal bests, they can quickly converge to
 
 ```python
 # Pseudocode illustrating the influence of personal best on particle movement
-if particle.current_position.fitness < particle.personal_best.fitness:
-    particle.personal_best = particle.current_position
-    particle.velocity += cognitive_coefficient * (particle.personal_best - particle.current_position)
+if self.current_fitness < self.personal_best_fitness:
+    self.personal_best_position = self.current_position.copy()
+    self.personal_best_fitness = self.current_fitness
 ```
 
 #### 2.3.2.2 Limitations of Strong Personal Experience
@@ -102,18 +102,11 @@ This exercise builds upon the basic PSO model introduced in Chapter 1, focusing 
 
 ### Exercise 1: Enhancing the Basic Model
 
-Modify your initial Python script from Chapter 1 to include personal best tracking for each particle. Follow these steps:
+Modify your initial Python script from Chapter 1 to include a `Particle` class that keeps track of each particle's current position, velocity, current fitness, and personal best tracking. Follow these steps:
 
-1. Create a new attribute, `personal_best`, for each particle, initialized to the particle's starting position.
+1. Create a new attributes, including the new `personal_best_position` and `personal_best_fitness`, for each particle, initialized to the particle's starting position.
 
 2. After evaluating each particle's fitness in the main PSO loop, compare the current fitness with the fitness of the particle's `personal_best`. If the current fitness is better, update the `personal_best` to the current position.
-
-```python
-# Pseudocode for updating personal best
-if particle.current_fitness < particle.personal_best_fitness:
-    particle.personal_best = particle.current_position
-    particle.personal_best_fitness = particle.current_fitness
-```
 
 ### Exercise 2: Coding the Velocity Update
 
@@ -121,7 +114,7 @@ Incorporate the velocity update formula into your PSO script, focusing on calcul
 
 1. Define the cognitive coefficient (`c1`) and the inertia weight (`w`) as constants or parameters in your script.
 
-2. Inside the main PSO loop, after updating the personal best, calculate the new velocity for each particle using the velocity update formula:
+2. Inside the main PSO loop, after updating the personal best, calculate the new velocity for each particle using the velocity update formula that includes the personal best information:
 
 ```python
 # Pseudocode for velocity update
@@ -154,6 +147,167 @@ Enhance your visualization code to represent the changes in particle movement du
 4. Experiment with different values for the cognitive coefficient (`c1`) and inertia weight (`w`) to see how they affect the particles' behavior and convergence. Discuss your findings and any interesting observations.
 
 By completing this exercise, you will gain practical experience in implementing personal best tracking and velocity updates in PSO. You'll witness firsthand how personal best influences particle movement and contributes to the optimization process. The visualization will provide valuable insights into the convergence patterns and the impact of personal experience on the swarm's behavior.
+
+
+## Answers
+{{< expand >}}
+### Exercise 1: Enhancing the Basic Model
+
+To enhance the basic PSO model by tracking the personal best for each particle, we can modify the Python script as follows:
+
+1. **Define the Particle Class**:
+   Start by defining a `Particle` class to include the current position, velocity, current fitness, and personal best attributes. We can also add a method to update the personal best.
+
+```python
+import numpy as np
+
+class Particle:
+    def __init__(self, position):
+        self.current_position = np.array(position)
+        self.velocity = np.random.uniform(0, 1, size=np.shape(position))
+        self.current_fitness = float('inf')
+        self.personal_best_position = np.array(position)
+        self.personal_best_fitness = float('inf')
+
+    def update_personal_best(self):
+        if self.current_fitness < self.personal_best_fitness:
+            self.personal_best_position = self.current_position.copy()
+            self.personal_best_fitness = self.current_fitness
+```
+
+2. **PSO Algorithm Modifications**:
+   In the main PSO loop, after calculating the fitness for each particle, update the personal best.
+
+```python
+def pso(num_particles, num_iterations, search_space):
+    particles = [Particle(np.random.uniform(search_space[0], search_space[1])) for _ in range(num_particles)]
+
+    for _ in range(num_iterations):
+        for particle in particles:
+            particle.current_fitness = evaluate_fitness(particle.current_position)
+            particle.update_personal_best()
+```
+
+Here, `evaluate_fitness` is a function you would define based on your specific optimization problem.
+
+### Exercise 2: Coding the Velocity Update
+
+To incorporate the velocity update based on personal best, follow these steps:
+
+1. **Constants Definition**:
+   Define the cognitive coefficient (`c1`) and inertia weight (`w`) at the start of your PSO function.
+
+```python
+c1 = 2.05
+w = 0.7
+```
+
+2. **Velocity and Position Update**:
+   Inside the main PSO loop, update the velocity and position for each particle using the new formula.
+
+```python
+import random
+
+for _ in range(num_iterations):
+    for particle in particles:
+        cognitive_component = c1 * random.random() * (particle.personal_best_position - particle.current_position)
+        particle.velocity = w * particle.velocity + cognitive_component
+        particle.current_position += particle.velocity
+```
+
+3. **Boundary Handling**:
+   Use `np.clip` to ensure that particles do not exceed the defined boundaries of the search space.
+
+```python
+particle.current_position = np.clip(particle.current_position, search_space[0], search_space[1])
+particle.current_position = np.clip(particle.velocity, -1, 1)
+```
+
+### Exercise 3: Visualization and Observation
+
+For visualization, you can extend the plotting functions to show both the current and personal best positions of the particles:
+
+```python
+import matplotlib.pyplot as plt
+
+def plot_particles(particles):
+    fig, ax = plt.subplots()
+    for particle in particles:
+        ax.scatter(*particle.current_position, color='blue', marker='o', label='Current Position' if particle == particles[0] else "")
+        ax.scatter(*particle.personal_best_position, color='red', marker='x', label='Personal Best' if particle == particles[0] else "")
+    ax.legend()
+    ax.set_title('Particle Positions and Personal Bests')
+    plt.show()
+```
+
+Tying this together, the complete PSO algorithm with local best tracking is listed below:
+
+```python
+import numpy as np
+import random
+import matplotlib.pyplot as plt
+
+class Particle:
+    def __init__(self, position):
+        self.current_position = np.array(position)
+        self.velocity = np.random.uniform(-1, 1, size=np.shape(position))
+        self.current_fitness = float('inf')
+        self.personal_best_position = np.array(position)
+        self.personal_best_fitness = float('inf')
+
+    def update_personal_best(self):
+        if self.current_fitness < self.personal_best_fitness:
+            self.personal_best_position = self.current_position.copy()
+            self.personal_best_fitness = self.current_fitness
+
+def rosenbrock(x, y):
+    return (1 - x)**2 + 100 * (y - x**2)**2
+
+def pso(num_particles, num_iterations, search_space):
+    low, high = (search_space[0,0],search_space[1,0]), (search_space[0,1],search_space[1,1])
+    particles = [Particle(np.random.uniform(low, high, 2)) for _ in range(num_particles)]
+    c1 = 2.05
+    w = 0.7
+
+    for i in range(num_iterations):
+        for particle in particles:
+            particle.current_fitness = rosenbrock(*particle.current_position)
+            particle.update_personal_best()
+
+            cognitive_component = c1 * random.random() * (particle.personal_best_position - particle.current_position)
+            particle.velocity = w * particle.velocity + cognitive_component
+            particle.current_position += particle.velocity
+            particle.current_position = np.clip(particle.current_position, search_space[0], search_space[1])
+            particle.current_position = np.clip(particle.velocity, -1, 1)
+
+        if i % 10 == 0:  # Plot every 10 iterations
+            plot_particles(particles, i)
+
+def plot_particles(particles, iteration):
+    fig, ax = plt.subplots()
+    for particle in particles:
+        ax.scatter(*particle.current_position, color='blue', marker='o')
+        ax.scatter(*particle.personal_best_position, color='red', marker='x')
+    ax.set_xlim([-2, 2])
+    ax.set_ylim([-1, 3])
+    ax.set_title(f'Iteration {iteration}')
+    plt.show()
+
+# PSO parameters
+num_particles = 50
+num_iterations = 100
+search_space = np.array([[-2, 2], [-1, 3]])  # Define the search space boundaries for x and y
+
+# Execute PSO
+pso(num_particles, num_iterations, search_space)
+```
+
+**Running and Observing**:
+- Execute the PSO algorithm and use the plotting function to visualize the movement and convergence patterns of the particles. Experiment with different values for `c1` and `w` to observe how these parameters influence the behavior of the swarm.
+
+{{< /expand >}}
+
+
 
 
 ## Summary
