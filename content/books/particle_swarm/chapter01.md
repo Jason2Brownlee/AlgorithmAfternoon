@@ -164,6 +164,10 @@ plt.title('Rosenbrock Function Contour Plot')
 plt.show()
 ```
 
+The output looks as follows:
+
+![Visualizing Rosenbrock's Function](/book_pso_function.png)
+
 The contour plot reveals the function's valley and the steep gradients surrounding it. The global minimum appears as the center of the concentric contours.
 
 ### 1.4.3 Initializing Particles on the Rosenbrock Function
