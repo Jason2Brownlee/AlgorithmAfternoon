@@ -247,7 +247,7 @@ By completing this exercise, you will gain hands-on experience in initializing p
 
 
 ## Answers
-{{< expand >}}
+{{< details "Show" >}}
 ### Exercise 1: Creating Particles
 
 Here's how you can implement the `create_particles` function:
@@ -312,7 +312,7 @@ This script sets up a plot with the particle positions marked as scatter points,
 3. **Importance of initial random distribution**:
    - The initial random distribution of particles is crucial in PSO as it impacts the exploration capabilities of the swarm. A well-distributed initial population can explore various regions of the search space, potentially escaping local minima and improving the chances of finding the global optimum early in the optimization process.
 
-{{< /expand >}}
+{{< /details >}}
 
 ## Summary
 Chapter 1 introduced Particle Swarm Optimization (PSO), a nature-inspired optimization algorithm that harnesses the collective intelligence of swarms. The chapter explored the origins of PSO, drawing inspiration from the flocking behavior of birds and schooling of fish. Core components of PSO, such as particles, population, position, velocity, and the objective function, were explained in detail. The basic mathematical model governing particle movement was presented, along with the position and velocity update equations. The chapter also discussed the parameters influencing particle movement, like inertia weight and acceleration coefficients. Finally, an exercise was provided to create and visualize random particles in a 2D search space using Python.

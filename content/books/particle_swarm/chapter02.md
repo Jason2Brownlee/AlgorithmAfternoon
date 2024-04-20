@@ -150,7 +150,7 @@ By completing this exercise, you will gain practical experience in implementing 
 
 
 ## Answers
-{{< expand >}}
+{{< details "Show" >}}
 ### Exercise 1: Enhancing the Basic Model
 
 To enhance the basic PSO model by tracking the personal best for each particle, we can modify the Python script as follows:
@@ -305,7 +305,7 @@ pso(num_particles, num_iterations, search_space)
 **Running and Observing**:
 - Execute the PSO algorithm and use the plotting function to visualize the movement and convergence patterns of the particles. Experiment with different values for `c1` and `w` to observe how these parameters influence the behavior of the swarm.
 
-{{< /expand >}}
+{{< /details >}}
 
 
 

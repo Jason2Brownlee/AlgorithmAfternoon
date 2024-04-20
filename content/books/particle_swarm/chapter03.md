@@ -162,7 +162,7 @@ Enhance your visualization code to showcase the impact of gBest on particle move
 By completing this exercise, you'll gain hands-on experience in implementing the global best concept and modifying the velocity update mechanism to incorporate social interaction in PSO. The visualization will provide a clear understanding of how the swarm's collective knowledge guides the particles towards optimal solutions. Through experimentation with different parameter settings, you'll develop intuition for tuning PSO to achieve the desired balance between individual exploration and social exploitation.
 
 ## Answers
-{{< expand >}}
+{{< details "Show" >}}
 ### Exercise 1: Integration of Global Best
 
 To integrate the global best functionality, we can modify the existing PSO implementation as follows:
@@ -302,9 +302,7 @@ search_space = np.array([[-2, 2], [-1, 3]])  # Define the search space boundarie
 # Execute PSO
 pso(num_particles, num_iterations, search_space)
 ```
-
-
-{{< /expand >}}
+{{< /details >}}
 
 
 
