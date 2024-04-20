@@ -331,5 +331,5 @@ Put your understanding of social interaction in PSO into practice by implementin
 - **Multi-swarm Approaches**: Techniques that employ multiple interacting swarms to maintain diversity and balance exploration and exploitation.
 
 ### Next Chapter:
-In Chapter 4, we'll explore the intricacies of parameter tuning in PSO, understanding how different parameter settings influence the behavior and effectiveness of the algorithm, and discovering practical tips for optimal tuning.
+In [Chapter 4](chapter04.md), we'll explore the intricacies of parameter tuning in PSO, understanding how different parameter settings influence the behavior and effectiveness of the algorithm, and discovering practical tips for optimal tuning.
 

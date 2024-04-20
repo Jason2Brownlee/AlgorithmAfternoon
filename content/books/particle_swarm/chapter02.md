@@ -335,5 +335,5 @@ Roll up your sleeves and dive into the world of personal best in PSO! The exerci
 - **Boundary Handling**: Techniques used to ensure that particles remain within the defined search space boundaries during the optimization process.
 
 ### Next Chapter:
-In Chapter 3, we'll explore the concept of global best and its impact on the collective behavior of the swarm, discussing how social interaction influences particle movement and strategies for balancing exploration and exploitation.
+In [Chapter 3](chapter03.md), we'll explore the concept of global best and its impact on the collective behavior of the swarm, discussing how social interaction influences particle movement and strategies for balancing exploration and exploitation.
 

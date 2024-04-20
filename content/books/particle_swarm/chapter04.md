@@ -186,8 +186,10 @@ Put your newfound knowledge of PSO parameter tuning into practice by conducting 
 - **Multimodal Function**: A function with multiple local optima, characterized by a complex landscape.
 - **Parameter Tuning**: The process of adjusting the parameters of an algorithm to optimize its performance for a specific problem.
 
-### Next:
-This was the final chapter. Well done you made it.
+### End
+This was the last chapter of the book. Well done, you made it!
+
+[Review](./) how far you have come.
 
 
 
