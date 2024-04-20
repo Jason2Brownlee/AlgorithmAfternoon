@@ -246,6 +246,73 @@ Use the matplotlib library to visualize the initial positions of the particles i
 By completing this exercise, you will gain hands-on experience in initializing particles and visualizing their initial distribution using Python and matplotlib. This lays the foundation for understanding the dynamic behavior of particles as they explore and converge towards optimal solutions in subsequent chapters.
 
 
+## Answers
+{{< expand >}}
+### Exercise 1: Creating Particles
+
+Here's how you can implement the `create_particles` function:
+
+```python
+import numpy as np
+
+def create_particles(num_particles, search_space):
+    # Unpack the search space boundaries
+    (x_min, x_max), (y_min, y_max) = search_space
+
+    # Generate random positions within the given boundaries
+    x_positions = np.random.uniform(x_min, x_max, num_particles)
+    y_positions = np.random.uniform(y_min, y_max, num_particles)
+
+    # Combine x and y coordinates into a list of tuples
+    particles = list(zip(x_positions, y_positions))
+
+    return particles
+```
+
+This function uses NumPy to efficiently generate random numbers within specified ranges for both x and y coordinates, then zips them together to form a list of particle positions.
+
+### Exercise 2: Visualization of Particles
+
+Here's how to visualize the particles using matplotlib:
+
+```python
+import matplotlib.pyplot as plt
+
+def plot_particles(particles):
+    # Create a new figure and axis
+    fig, ax = plt.subplots()
+
+    # Extract x and y coordinates from particles
+    x_coords, y_coords = zip(*particles)
+
+    # Plot particles as scatter points
+    ax.scatter(x_coords, y_coords, color='blue', marker='o', label='Particles')
+
+    # Set labels and title
+    ax.set_xlabel('X coordinate')
+    ax.set_ylabel('Y coordinate')
+    ax.set_title('Initial Distribution of Particles')
+    ax.legend()
+
+    # Display the plot
+    plt.show()
+```
+
+This script sets up a plot with the particle positions marked as scatter points, adds labels and a title for clarity, and finally displays the plot.
+
+### Exercise 3: Analysis of Initial Setup
+
+1. **Varying the number of particles**:
+   - As the number of particles increases, the distribution across the search space becomes denser, providing a more thorough coverage. This can improve the algorithm’s ability to explore the space effectively but may increase computational load.
+
+2. **Changing search space boundaries**:
+   - Symmetric search spaces (e.g., `((-5, 5), (-5, 5))`) show a uniform distribution centered around the origin, facilitating balanced exploration in all directions.
+   - Asymmetric search spaces (e.g., `((0, 10), (-2, 8))`) shift the concentration of particles, which may require adjustments in the PSO parameters to ensure effective exploration of the entire space.
+
+3. **Importance of initial random distribution**:
+   - The initial random distribution of particles is crucial in PSO as it impacts the exploration capabilities of the swarm. A well-distributed initial population can explore various regions of the search space, potentially escaping local minima and improving the chances of finding the global optimum early in the optimization process.
+{{< /expand >}}
+
 ## Summary
 Chapter 1 introduced Particle Swarm Optimization (PSO), a nature-inspired optimization algorithm that harnesses the collective intelligence of swarms. The chapter explored the origins of PSO, drawing inspiration from the flocking behavior of birds and schooling of fish. Core components of PSO, such as particles, population, position, velocity, and the objective function, were explained in detail. The basic mathematical model governing particle movement was presented, along with the position and velocity update equations. The chapter also discussed the parameters influencing particle movement, like inertia weight and acceleration coefficients. Finally, an exercise was provided to create and visualize random particles in a 2D search space using Python.
 
