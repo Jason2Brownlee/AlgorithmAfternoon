@@ -43,4 +43,6 @@ As requested, you can now explore [algorithm mini-books](/books/), e.g.:
 [![Genetic Algorithm Afternoon](/book_ga_cover.png)](/books/genetic_algorithm)
 <--->
 [![Particle Swarm Afternoon](/book_pso_cover.png)](/books/particle_swarm)
+<--->
+[![Simulated Annealing Afternoon](/book_sa_cover.png)](/books/simulated_annealing)
 {{< /columns >}}
