@@ -6,7 +6,7 @@ weight: 3
 
 # Algorithm Mini-Books
 
-The focus of **Algorithm Afternoon** is consistent algorithm descriptions.
+The focus of **Algorithm Afternoon** is on focused (i.e. one-page) algorithm descriptions.
 
 Nevertheless, there has been some interest in more in-depth descriptions of specific algorithms.
 
