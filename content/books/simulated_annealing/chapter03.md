@@ -235,6 +235,6 @@ Put your knowledge of generating solutions and acceptance criteria into practice
 - **Objective Function**: The function that assigns a cost or fitness value to each solution, guiding the optimization process in SA.
 
 ### Next Chapter:
-In Chapter 4, we'll integrate the previously developed components, such as temperature functions, neighbor generation, and acceptance probability, to create a complete Simulated Annealing algorithm, and learn how to debug and test each part of the algorithm.
+In [Chapter 4](chapter04.md), we'll integrate the previously developed components, such as temperature functions, neighbor generation, and acceptance probability, to create a complete Simulated Annealing algorithm, and learn how to debug and test each part of the algorithm.
 
 

@@ -65,10 +65,14 @@ Lastly, define the stopping criteria to determine when the algorithm should term
 With the initialization done, let's dive into the heart of the algorithm: the main loop. The first step is to generate a neighbor solution using the techniques we covered earlier. Here's an example of how you can implement a simple swap-based neighbor generation in Python:
 
 ```python
-def generate_neighbor(current_solution):
+def generate_neighbor(current_solution, step_size=0.1):
+    # Choose a random index to modify
+    i = random.randint(0, len(current_solution) - 1)
+    # Generate a small change to the selected component of the solution
+    change = random.uniform(-step_size, step_size)
+    # Create a new neighbor solution
     neighbor = current_solution.copy()
-    i, j = random.sample(range(len(neighbor)), 2)
-    neighbor[i], neighbor[j] = neighbor[j], neighbor[i]
+    neighbor[i] += change
     return neighbor
 ```
 
@@ -153,11 +157,11 @@ By being aware of common pitfalls, employing effective debugging strategies, and
 
 In these exercises, you will implement a complete simulated annealing algorithm and visualize its operation on a test problem. By integrating all the components developed in this and previous chapters, you will gain hands-on experience in building a robust optimization algorithm and understanding its behavior through visual feedback.
 
-### Exercise 1: Algorithm Structure Overview
+### Exercise 1: Step-by-Step Implementation
 
-Implement the complete simulated annealing algorithm for the test problem f(x) = sin(x) + sin(10x / 3). Utilize the components developed in this and previous chapters, including the temperature function, neighbor generation, and acceptance probability. Follow these steps:
+Implement the complete simulated annealing algorithm for the test problem `f(x) = sin(x) + sin(10x / 3)`. Utilize the components developed in this and previous chapters, including the temperature function, neighbor generation, and acceptance probability. Follow these steps:
 
-1. Define the objective function `f(x) = sin(x) + sin(10x / 3)` that takes a scalar value `x` as input and returns the corresponding function value.
+1. Define the objective function that takes a scalar value `x` as input and returns the corresponding function value.
 
 2. Initialize the necessary parameters for the simulated annealing algorithm, such as the initial temperature, cooling rate, maximum iterations, and step size for neighbor generation.
 
@@ -169,34 +173,13 @@ Implement the complete simulated annealing algorithm for the test problem f(x) =
    - Update the current solution if the neighboring solution is accepted.
    - Decrease the temperature according to the cooling schedule.
 
-4. Store the best solution found during the search process and its corresponding cost.
-
-Test your implementation by running the simulated annealing algorithm on the given test problem and verifying that it converges to the global minimum.
-
-### Exercise 2: Step-by-Step Implementation
-
-Create a loop that iterates over the simulated annealing algorithm, updating the temperature and generating/accepting points according to the acceptance criteria. Follow these steps:
-
-1. Initialize an empty list to store the accepted solutions at each iteration.
-
-2. Implement a loop that runs for a specified number of iterations or until a termination criterion is met.
-
-3. Inside the loop, perform the following steps:
-   - Generate a neighboring solution using the `generate_neighbor` function.
-   - Evaluate the cost of the neighboring solution using the objective function.
-   - Calculate the acceptance probability using the `acceptance_probability` function.
-   - Generate a random number between 0 and 1 using `numpy.random.random`.
-   - If the random number is less than the acceptance probability, accept the neighboring solution and append it to the list of accepted solutions.
-   - Update the current solution to the accepted solution.
-   - Decrease the temperature according to the cooling schedule.
-
 4. After each iteration, store the current best solution and its corresponding cost.
 
 5. Return the list of accepted solutions, the best solution found, and its cost.
 
-Experiment with different cooling schedules, such as exponential, logarithmic, or custom schedules, and observe how they impact the algorithm's performance and convergence.
+Test your implementation by running the simulated annealing algorithm on the given test problem and verifying that it converges to the global minimum.
 
-### Exercise 3: Debugging, Testing, and Visualization
+### Exercise 2: Debugging, Testing, and Visualization
 
 Enhance your implementation by adding visualization capabilities to monitor the algorithm's progress and debug any issues. Follow these steps:
 
@@ -245,6 +228,6 @@ Put your SA implementation skills to the test by completing the exercises in thi
 - **Hyperparameters**: The set of adjustable parameters in the SA algorithm, such as the initial temperature, cooling rate, and neighbor generation strategy, which can be tuned to optimize performance.
 
 ### Next Chapter:
-In Chapter 5, we'll dive into analyzing and refining the Simulated Annealing algorithm, exploring performance metrics, parameter tuning, and visualization techniques to enhance its efficiency and effectiveness in solving optimization problems.
+In [Chapter 5](chapter05.md), we'll dive into analyzing and refining the Simulated Annealing algorithm, exploring performance metrics, parameter tuning, and visualization techniques to enhance its efficiency and effectiveness in solving optimization problems.
 
 

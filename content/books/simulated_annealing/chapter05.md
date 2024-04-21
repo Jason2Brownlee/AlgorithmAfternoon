@@ -100,7 +100,7 @@ Let's start by recapping the primary parameters that shape the behavior of simul
 
 5. **Acceptance Probability Function**:
    - **Purpose**: Decides whether to accept a worse solution based on the current temperature and the difference in solution quality.
-   - **Suggested Values**: Typically the Metropolis criterion is used, where a worse move is accepted with a probability of `exp(-\Delta E / T)`.
+   - **Suggested Values**: Typically the Metropolis criterion is used, where a worse move is accepted with a probability of `e^(-ΔE / T)`.
 
 6. **Stopping Criterion**:
    - **Purpose**: Determines when the algorithm should terminate. This could be based on the final temperature, a lack of improvement in solution quality, or a fixed number of iterations.

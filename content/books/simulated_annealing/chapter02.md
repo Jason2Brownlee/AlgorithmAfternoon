@@ -217,7 +217,7 @@ Get hands-on with temperature and cooling schedules by implementing the three ma
 - **Problem Complexity**: The characteristics and landscape of the optimization problem, which can impact the choice of cooling schedule and temperature function parameters.
 
 ### Next Chapter:
-In Chapter 3, we'll explore how new solutions are generated in Simulated Annealing and dive into the criteria for their acceptance or rejection, gaining a deeper understanding of the algorithm's decision-making process.
+In [Chapter 3](chapter03.md), we'll explore how new solutions are generated in Simulated Annealing and dive into the criteria for their acceptance or rejection, gaining a deeper understanding of the algorithm's decision-making process.
 
 
 

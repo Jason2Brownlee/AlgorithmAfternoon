@@ -37,9 +37,9 @@ To understand the inspiration behind simulated annealing, let's dive into the ph
 
 The effectiveness of the annealing process depends on several key factors:
 
-1. Initial temperature: The metal must be heated to a sufficiently high temperature to overcome energy barriers and enable atomic movement.
-2. Cooling rate: The rate at which the metal is cooled determines the final crystalline structure. Slower cooling allows atoms more time to find the lowest energy configuration.
-3. Material properties: The specific heat capacity, thermal conductivity, and other properties of the metal influence the annealing process.
+1. **Initial temperature**: The metal must be heated to a sufficiently high temperature to overcome energy barriers and enable atomic movement.
+2. **Cooling rate**: The rate at which the metal is cooled determines the final crystalline structure. Slower cooling allows atoms more time to find the lowest energy configuration.
+3. **Material properties**: The specific heat capacity, thermal conductivity, and other properties of the metal influence the annealing process.
 
 By carefully controlling these factors, metallurgists can optimize the annealing process to achieve the desired material properties.
 
@@ -148,9 +148,11 @@ Once a new solution is generated, the simulated annealing algorithm must decide 
 
 The acceptance probability is calculated using the following formula:
 
-$P(accept) = e^{-\Delta E / T}$
+```
+P(accept) = e^(-ΔE / T)
+```
 
-where $\Delta E$ is the change in the objective function value, and $T$ is the current temperature.
+where `e` is the exponential function, `ΔE` is the change in the objective function value, and `T` is the current temperature.
 
 Occasionally accepting worse solutions allows the algorithm to escape local minima and explore more of the search space, increasing the chances of finding the global optimum.
 
@@ -165,21 +167,19 @@ As the simulated annealing algorithm progresses, the temperature is gradually re
 
 To demonstrate the power and versatility of simulated annealing, we'll be using a multi-modal function as our test problem. The function we've chosen is:
 
-$f(x) = \sin(x) + \sin(\frac{10x}{3})$
+```
+f(x) = sin(x) + sin(10 * x / 3)
+```
 
 This function is particularly well-suited for showcasing simulated annealing's ability to escape local minima and find the global minimum in a complex optimization landscape.
 
-Let's take a look at the graph of this function:
+Let's take a look at the graph of this function with input values between -5 and 5:
 
-TODO
+![Plot of Test Problem](/book_sa_1d.png)
 
 As you can see, the function has multiple local minima (the valleys) and one global minimum (the deepest valley). This is a classic example of a multi-modal optimization problem, where the challenge lies in finding the global minimum among many local minima.
 
-Analytically determining the global minimum for this function is not a trivial task. We can set the derivative of the function to zero and solve for $x$:
-
-$\frac{d}{dx}f(x) = \cos(x) + \frac{10}{3}\cos(\frac{10x}{3}) = 0$
-
-However, solving this equation analytically is challenging due to the presence of trigonometric functions with different periods. This is where numerical methods like simulated annealing come into play, allowing us to find the global minimum without the need for complex mathematical analysis.
+The global minima (lowest output value) is an input value `x ≈ −2.30` with an output value of `f(x) ≈ −1.73`.
 
 
 
@@ -190,7 +190,7 @@ In this exercise, you will implement and visualize the initial stage of the simu
 
 ### Exercise 1: Generating Sample Points
 
-Create a Python function called `generate_sample_points` that randomly generates a set of initial points within a specified range for the function $f(x) = \sin(x) + \sin(\frac{10x}{3})$. Follow these steps:
+Create a Python function called `generate_sample_points` that randomly generates a set of initial points within a specified range for the function `f(x) = sin(x) + sin(10 * x / 3)`. Follow these steps:
 
 1. Define the function `generate_sample_points` that takes the following parameters:
    - `num_points`: The number of sample points to generate.
@@ -203,13 +203,13 @@ Create a Python function called `generate_sample_points` that randomly generates
 
 ### Exercise 2: Plotting the Target Function
 
-Plot the multi-modal test function $f(x) = \sin(x) + \sin(\frac{10x}{3})$ over the range [-5, 5] using the matplotlib library. Follow these steps:
+Plot the multi-modal test function `f(x) = sin(x) + sin(10 * x / 3)` over the range [-5, 5] using the matplotlib library. Follow these steps:
 
-1. Create a new Python script or Jupyter Notebook cell.
+1. Create a new Python script.
 
 2. Import the necessary libraries: `numpy` and `matplotlib.pyplot`.
 
-3. Define the `test_function()` that takes an numerical argumet and returns the computed function value.
+3. Define the `test_function()` that takes an numerical argument and returns the computed function value.
 
 4. Generate a set of evenly spaced points within the range [-5, 5] using `numpy.linspace`.
 
@@ -224,7 +224,7 @@ Plot the multi-modal test function $f(x) = \sin(x) + \sin(\frac{10x}{3})$ over t
 
 Overlay the randomly generated sample points from Exercise 1 on the plot of the target function created in Exercise 2. This will help visualize where the simulated annealing process starts exploring. Follow these steps:
 
-1. In the same script or Jupyter Notebook cell as Exercise 2, call the `generate_sample_points` function from Exercise 1 to create a set of random sample points.
+1. Update the script from Exercise 2, call the `generate_sample_points` function from Exercise 1 to create a set of random sample points.
 
 2. Plot the generated sample points on the same figure as the target function using `matplotlib.pyplot.scatter`.
 
@@ -262,7 +262,7 @@ Dive into the world of Simulated Annealing by implementing the initial stage of 
 - **Numerical Methods**: Techniques for finding approximate solutions to mathematical problems, often used when analytical solutions are difficult or impossible to obtain.
 
 ### Next Chapter:
-In Chapter 2, we'll explore the role of temperature in Simulated Annealing and examine different cooling schedules, understanding how they affect the search process and the algorithm's performance in finding optimal solutions.
+In [Chapter 2](chapter02.md), we'll explore the role of temperature in Simulated Annealing and examine different cooling schedules, understanding how they affect the search process and the algorithm's performance in finding optimal solutions.
 
 
 
