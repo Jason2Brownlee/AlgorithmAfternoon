@@ -209,6 +209,121 @@ Experiment with different temperature values, cooling schedules, and step sizes 
 
 By completing these exercises, you will have implemented key components of the simulated annealing algorithm and integrated them into your existing code. You will gain hands-on experience in generating neighboring solutions, applying acceptance criteria, and visualizing the algorithm's behavior. This understanding will enable you to effectively apply simulated annealing to solve optimization problems in your software engineering projects.
 
+## Answers
+{{< details "Show" >}}
+### Exercise 1: Generating Neighboring Solutions
+
+Here's the Python code for the `generate_neighbor` function, which creates a neighboring solution by perturbing the current solution with a random step. This step simulates the neighbor generation in simulated annealing:
+
+```python
+import numpy as np
+
+def generate_neighbor(solution, step_size):
+    """Generate a neighboring solution by perturbing the current solution with a random step."""
+    perturbation = np.random.uniform(-step_size, step_size)
+    neighbor = solution + perturbation
+    return neighbor
+
+# Example testing of the function
+print("Example Neighbor 1:", generate_neighbor(10, 0.5))
+print("Example Neighbor 2:", generate_neighbor(10, 1))
+```
+
+### Exercise 2: Acceptance Probability Function
+
+This function computes the acceptance probability for a new solution based on the Metropolis criteria, which is crucial in simulated annealing for deciding whether to move to a less optimal solution:
+
+```python
+import numpy as np
+
+def acceptance_probability(current_cost, new_cost, temperature):
+    """Calculate the acceptance probability based on the Metropolis criteria."""
+    cost_diff = new_cost - current_cost
+    probability = np.exp(-cost_diff / temperature)
+    return probability
+
+# Example testing of the function
+print("Acceptance Probability Test 1:", acceptance_probability(5, 10, 1))  # Lower probability
+print("Acceptance Probability Test 2:", acceptance_probability(5, 4, 1))   # Higher probability
+```
+
+### Exercise 3: Integrating Acceptance Criteria
+
+Now, let's integrate the `generate_neighbor` and `acceptance_probability` functions into a simulated annealing loop to fully simulate the annealing process. We'll also visualize the results:
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+import math
+
+def test_function(x):
+    return np.sin(x) + np.sin(10 * x / 3)
+
+def linear_cooling(T_start, alpha, iteration):
+    """ Calculate the temperature using a linear cooling schedule. """
+    return T_start - alpha * iteration
+
+def exponential_cooling(T_start, alpha, iteration):
+    """ Calculate the temperature using an exponential cooling schedule. """
+    return T_start * (alpha ** iteration)
+
+def logarithmic_cooling(C, iteration):
+    """ Calculate the temperature using a logarithmic cooling schedule. """
+    return C / (1e-8 + math.log(1 + iteration))
+
+def generate_neighbor(solution, step_size):
+    """Generate a neighboring solution by perturbing the current solution with a random step."""
+    perturbation = np.random.uniform(-step_size, step_size)
+    neighbor = solution + perturbation
+    return neighbor
+
+def acceptance_probability(current_cost, new_cost, temperature):
+    """Calculate the acceptance probability based on the Metropolis criteria."""
+    cost_diff = new_cost - current_cost
+    probability = np.exp(-cost_diff / temperature)
+    return probability
+
+def simulated_annealing(initial_solution, objective_function, T_start, cooling_schedule, alpha, C, num_iterations):
+    """Simulated annealing process using given cooling schedule and acceptance criteria."""
+    current_solution = initial_solution
+    current_cost = objective_function(current_solution)
+    solutions = [current_solution]
+    costs = [current_cost]
+
+    for iteration in range(num_iterations):
+        if cooling_schedule == 'linear':
+            temperature = linear_cooling(T_start, alpha, iteration)
+        elif cooling_schedule == 'exponential':
+            temperature = exponential_cooling(T_start, alpha, iteration)
+        else:  # Logarithmic
+            temperature = logarithmic_cooling(C, iteration)
+
+        neighbor = generate_neighbor(current_solution, 1)  # Step size of 1
+        neighbor_cost = objective_function(neighbor)
+        acceptance_prob = acceptance_probability(current_cost, neighbor_cost, temperature)
+
+        if np.random.random() < acceptance_prob:
+            current_solution = neighbor
+            current_cost = neighbor_cost
+
+        solutions.append(current_solution)
+        costs.append(current_cost)
+
+    plt.plot(costs)
+    plt.xlabel('Iteration')
+    plt.ylabel('Cost')
+    plt.title('Cost by Iteration')
+    plt.show()
+
+# change cooling_schedule to 'linear', 'exponential', or 'logarithmic'
+simulated_annealing(0, test_function, 10, 'linear', 0.1, 20, 100)
+```
+
+This example uses a simple quadratic function as the objective, with a linear cooling schedule. It visualizes how the costs of solutions evolve over iterations, demonstrating the algorithm's exploration and exploitation of the solution space.
+
+By completing these exercises, you've developed components essential for implementing a simulated annealing algorithm, gaining hands-on experience in how it can be used to solve optimization problems.
+{{< /details >}}
+
 
 ## Summary
 Chapter 3 explored the core aspects of generating solutions and acceptance criteria in Simulated Annealing (SA). The chapter introduced the concept of neighborhoods in optimization, explaining how local perturbations create new potential solutions and enable the algorithm to explore different regions of the solution space. Various techniques for generating neighboring solutions were discussed, including small perturbations for continuous variables, swapping elements in combinatorial problems, and adjusting discrete variables. The acceptance probability function, based on the Metropolis criterion, was then introduced, highlighting its role in allowing SA to accept worse solutions probabilistically and escape local minima. The chapter also emphasized the importance of striking the right balance between exploration and exploitation, discussing the benefits and pitfalls of accepting worse solutions and providing strategies for effective exploration and exploitation.

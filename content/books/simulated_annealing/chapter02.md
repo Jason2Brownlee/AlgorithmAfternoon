@@ -192,6 +192,110 @@ By completing these exercises, you will gain hands-on experience in implementing
 Experiment with different parameter values for the cooling schedules and observe how they influence the visualization. Discuss your findings and insights with your peers or in a group setting to deepen your understanding of temperature and cooling schedules in simulated annealing.
 
 
+## Answers
+{{< details "Show" >}}
+### Exercise 1: Implementing Cooling Schedules
+
+Here are the Python functions for the three different cooling schedules:
+
+```python
+import math
+
+def linear_cooling(T_start, alpha, iteration):
+    """ Calculate the temperature using a linear cooling schedule. """
+    return T_start - alpha * iteration
+
+def exponential_cooling(T_start, alpha, iteration):
+    """ Calculate the temperature using an exponential cooling schedule. """
+    return T_start * (alpha ** iteration)
+
+def logarithmic_cooling(C, iteration):
+    """ Calculate the temperature using a logarithmic cooling schedule. """
+    # Ensure we never divide by zero
+    return C / (1e-8 + math.log(1 + iteration))
+```
+
+### Exercise 2: Temperature-Controlled Point Generation
+
+Let's modify the `generate_sample_points` function to generate points based on the current temperature:
+
+```python
+import numpy as np
+
+def generate_sample_points(num_points, x_min, x_max, temperature):
+    """ Generate sample points based on the current temperature. """
+    # Calculate the midpoint of the range
+    midpoint = (x_min + x_max) / 2
+    # Generate points from a normal distribution centered at midpoint with std dev proportional to temperature
+    sample_points = np.random.normal(midpoint, temperature, num_points)
+    return sample_points
+```
+
+### Exercise 3: Visualizing Temperature Effects
+
+Finally, we'll create a visualization to show how the distribution of points changes over iterations with each cooling schedule:
+
+```python
+import matplotlib.pyplot as plt
+import math
+import numpy as np
+
+def linear_cooling(T_start, alpha, iteration):
+    """ Calculate the temperature using a linear cooling schedule. """
+    return T_start - alpha * iteration
+
+def exponential_cooling(T_start, alpha, iteration):
+    """ Calculate the temperature using an exponential cooling schedule. """
+    return T_start * (alpha ** iteration)
+
+def logarithmic_cooling(C, iteration):
+    """ Calculate the temperature using a logarithmic cooling schedule. """
+    return C / (1e-8 + math.log(1 + iteration))
+
+def generate_sample_points(num_points, x_min, x_max, temperature):
+    """ Generate sample points based on the current temperature. """
+    # Calculate the midpoint of the range
+    midpoint = (x_min + x_max) / 2
+    # Generate points from a normal distribution centered at midpoint with std dev proportional to temperature
+    sample_points = np.random.normal(midpoint, temperature, num_points)
+    return sample_points
+
+def visualize_cooling_schedules(num_iterations, num_points, x_min, x_max, T_start, alpha, C):
+    """ Visualize the effect of different cooling schedules on point distributions. """
+    plt.figure(figsize=(15, 5))
+
+    # Prepare subplots for each cooling schedule
+    schedules = ['Linear', 'Exponential', 'Logarithmic']
+    for i, schedule in enumerate(schedules, 1):
+        plt.subplot(1, 3, i)
+        for iteration in range(num_iterations):
+            if schedule == 'Linear':
+                temperature = linear_cooling(T_start, alpha, iteration)
+            elif schedule == 'Exponential':
+                temperature = exponential_cooling(T_start, alpha, iteration)
+            else:  # Logarithmic
+                temperature = logarithmic_cooling(C, iteration)
+
+            points = generate_sample_points(num_points, x_min, x_max, temperature)
+            plt.scatter([iteration] * num_points, points, alpha=0.6, s=10)
+
+        plt.title(f'{schedule} Cooling Schedule')
+        plt.xlabel('Iteration')
+        plt.ylabel('Point Distribution')
+
+    plt.tight_layout()
+    plt.show()
+
+# Example usage
+visualize_cooling_schedules(50, 100, -5, 5, 10, 0.1, 20)
+```
+
+This code plots the progression of point distributions for each cooling schedule over a specified number of iterations. It demonstrates the narrowing of point spreads as the temperature decreases, following each cooling schedule.
+
+This setup allows us to visually compare the impact of different cooling strategies on the exploration capabilities of a simulated annealing-like algorithm.
+{{< /details >}}
+
+
 ## Summary
 Chapter 2 explored the crucial role of temperature and cooling schedules in Simulated Annealing (SA). The chapter explained how temperature serves as a control parameter, guiding the exploration of the search space and influencing the acceptance of new solutions. The Metropolis criterion was introduced, demonstrating how the acceptance probability of worse solutions is calculated based on the current temperature and the change in the objective function value. The chapter then explored three main types of cooling schedules: linear, exponential, and logarithmic. Each schedule's characteristics, implementation, and suitability for different optimization scenarios were discussed in detail. Finally, the chapter provided guidance on designing and evaluating the effectiveness of temperature functions, considering factors such as starting temperature, total iterations, and problem complexity.
 

@@ -82,7 +82,7 @@ As a software developer or engineer working with simulated annealing, you know t
 
 Let's start by recapping the primary parameters that shape the behavior of simulated annealing:
 
-1. **Initial Temperature (T₀)**:
+1. **Initial Temperature (T0)**:
    - **Purpose**: Controls the probability of accepting worse solutions at the beginning of the algorithm, facilitating exploration.
    - **Suggested Values**: Typically set high to allow acceptance of worse solutions initially, promoting exploration. The exact value can depend on the specific characteristics of the problem, but a common practice is to set it such that the acceptance probability of bad moves is about 0.8 to 0.95.
 
@@ -90,7 +90,7 @@ Let's start by recapping the primary parameters that shape the behavior of simul
    - **Purpose**: Determines how the temperature decreases over iterations. A slower cooling rate allows more thorough exploration of the search space.
    - **Suggested Values**: Common strategies include exponential decay (multiplying temperature by a factor slightly less than 1, such as 0.85 to 0.99 per iteration), linear decay, or logarithmic decay. The choice depends on how quickly the algorithm should converge and how much exploration is needed.
 
-3. **Final Temperature (Tₓ)**:
+3. **Final Temperature (Tx)**:
    - **Purpose**: Sets a stopping criterion for the algorithm when this temperature is reached.
    - **Suggested Values**: Often set close to zero, but not exactly zero to avoid premature stopping. It should be low enough that no further significant moves are accepted.
 
@@ -283,14 +283,486 @@ Develop visualizations to compare how each set of parameters affects the perform
 
 4. Add appropriate labels, titles, and legends to the plots to make them easily interpretable. Use font sizes and styles that are legible and consistent with the overall style of your project.
 
-5. Optionally, create interactive visualizations using libraries like Plotly or Bokeh to allow users to explore the results dynamically. Enable features like zooming, panning, and hovering over data points to reveal additional information.
-
-6. Analyze the visualizations to identify the parameter settings that strike the best balance between solution quality, convergence rate, and execution time. Use the insights gained from the visualizations to select the optimal parameter combination for your simulated annealing algorithm.
+5. Analyze the visualizations to identify the parameter settings that strike the best balance between solution quality, convergence rate, and execution time. Use the insights gained from the visualizations to select the optimal parameter combination for your simulated annealing algorithm.
 
 By completing these exercises, you will have implemented performance metrics, conducted parameter tuning experiments, and visualized the results to optimize the performance of your simulated annealing algorithm. The insights gained from these exercises will enable you to make informed decisions about the most effective parameter settings for your specific optimization problem.
 
 Remember to document your code, including comments explaining the purpose of each function and any important observations or conclusions drawn from the experiments. Share your findings with your team or the wider community to contribute to the collective knowledge and advancement of simulated annealing techniques in software development and engineering.
 
+
+## Answers
+{{< details "Show" >}}
+Let's start by implementing the functions and modifications required for Exercise 1 and then proceed through Exercises 2 and 3.
+
+### Exercise 1: Performance Metrics
+
+#### 1. Implementation of `calculate_solution_quality`
+
+```python
+def calculate_solution_quality(current_solution, objective_function, global_optimum=None):
+    current_value = objective_function(current_solution)
+    if global_optimum is not None:
+        return abs(current_value - global_optimum)
+    return current_value
+```
+
+#### 2. Implementation of `calculate_convergence_rate`
+
+```python
+def calculate_convergence_rate(costs, interval=100):
+    improvements = []
+    for i in range(interval, len(costs), interval):
+        improvement = costs[i - interval] - costs[i]
+        improvements.append(improvement)
+    if improvements:
+        return sum(improvements) / len(improvements)
+    return 0
+```
+
+#### 3. Integration with the simulated annealing implementation
+
+We will modify the `simulated_annealing` function to use these metrics:
+
+```python
+# Simulated Annealing main function
+def simulated_annealing(initial_solution, objective_function, min_max, global_optimum, T_start, alpha, num_iterations, step_size):
+    current_solution = initial_solution
+    current_cost = objective_function(current_solution)
+    best_solution = current_solution
+    best_cost = current_cost
+    accepted_solutions = [current_solution]
+    costs = [current_cost]
+
+    temperature = T_start
+    for iteration in range(num_iterations):
+        neighbor = generate_neighbor(current_solution, step_size, min_max)
+        neighbor_cost = objective_function(neighbor)
+        if acceptance_probability(current_cost, neighbor_cost, temperature) > np.random.random():
+            current_solution = neighbor
+            current_cost = neighbor_cost
+            if neighbor_cost < best_cost:
+                best_solution = neighbor
+                best_cost = neighbor_cost
+
+        accepted_solutions.append(current_solution)
+        costs.append(current_cost)
+        temperature *= alpha
+
+        if iteration % 100 == 0:
+            quality = calculate_solution_quality(best_solution, objective_function, global_optimum)
+            convergence_rate = calculate_convergence_rate(costs, 100)
+            print(f"Iteration {iteration}: Temp = {temperature:.2f}, Best Cost = {best_cost:.4f}, Quality = {quality}, Convergence Rate = {convergence_rate}")
+
+    return accepted_solutions, best_solution, best_cost, costs
+```
+
+#### 4. Testing the modified algorithm
+
+We can use a known global optimum for our test function, if available.
+
+```python
+import numpy as np
+
+def test_function(x):
+    return np.sin(x) + np.sin(10 * x / 3)
+
+# Generate a neighboring solution
+def generate_neighbor(solution, step_size, min_max):
+    perturbation = np.random.uniform(-step_size, step_size)
+    candidate = solution + perturbation
+    # limit new solutions to the search space
+    candidate = np.clip(candidate, min_max[0], min_max[1])
+    return candidate
+
+# Calculate acceptance probability
+def acceptance_probability(current_cost, new_cost, temperature):
+    if new_cost < current_cost:
+        return 1.0
+    else:
+        return np.exp(-(new_cost - current_cost) / (1e-8+temperature))
+
+def calculate_solution_quality(current_solution, objective_function, global_optimum=None):
+    current_value = objective_function(current_solution)
+    if global_optimum is not None:
+        return abs(current_value - global_optimum)
+    return current_value
+
+def calculate_convergence_rate(costs, interval=100):
+    improvements = []
+    for i in range(interval, len(costs), interval):
+        improvement = costs[i - interval] - costs[i]
+        improvements.append(improvement)
+    if improvements:
+        return sum(improvements) / len(improvements)
+    return 0
+
+# Simulated Annealing main function
+def simulated_annealing(initial_solution, objective_function, min_max, global_optimum, T_start, alpha, num_iterations, step_size):
+    current_solution = initial_solution
+    current_cost = objective_function(current_solution)
+    best_solution = current_solution
+    best_cost = current_cost
+    accepted_solutions = [current_solution]
+    costs = [current_cost]
+
+    temperature = T_start
+    for iteration in range(num_iterations):
+        neighbor = generate_neighbor(current_solution, step_size, min_max)
+        neighbor_cost = objective_function(neighbor)
+        if acceptance_probability(current_cost, neighbor_cost, temperature) > np.random.random():
+            current_solution = neighbor
+            current_cost = neighbor_cost
+            if neighbor_cost < best_cost:
+                best_solution = neighbor
+                best_cost = neighbor_cost
+
+        accepted_solutions.append(current_solution)
+        costs.append(current_cost)
+        temperature *= alpha
+
+        if iteration % 100 == 0:
+            quality = calculate_solution_quality(best_solution, objective_function, global_optimum)
+            convergence_rate = calculate_convergence_rate(costs, 100)
+            print(f"Iteration {iteration}: Temp = {temperature:.2f}, Best Cost = {best_cost:.4f}, Quality = {quality}, Convergence Rate = {convergence_rate}")
+
+    return accepted_solutions, best_solution, best_cost, costs
+
+# Run the algorithm
+T_start = 100
+alpha = 0.95
+num_iterations = 1000
+step_size = 1.0
+min_max = [-5, 5]
+optimum = -1.73
+initial_solution = np.random.uniform(min_max[0], min_max[1])
+results = simulated_annealing(initial_solution, test_function, min_max, optimum, T_start, alpha, num_iterations, step_size)
+
+print(f"Best solution found: x = {results[1]}, f(x) = {results[2]}")
+```
+
+### Exercise 2: Parameter Tuning
+
+Implementing the parameter tuning:
+
+```python
+def run_parameter_tuning_experiment(temperature_ranges, cooling_rates, step_sizes, objective_function, min_max, num_iterations):
+    experiments = []
+    for T_start in temperature_ranges:
+        for alpha in cooling_rates:
+            for step_size in step_sizes:
+                initial_solution = np.random.uniform(min_max[0], min_max[1])
+                _, best_solution, best_cost, costs = modified_simulated_annealing(
+                    initial_solution, objective_function, min_max, T_start, alpha, num_iterations, step_size
+                )
+                convergence_rate = calculate_convergence_rate(costs, 100)
+                experiments.append({
+                    "T_start": T_start,
+                    "alpha": alpha,
+                    "step_size": step_size,
+                    "best_solution": best_solution,
+                    "best_cost": best_cost,
+                    "convergence_rate": convergence_rate
+                })
+    return experiments
+```
+
+We can then call the `run_parameter_tuning_experiment()` function with the specific parameters to evaluate.
+
+```python
+# Run the algorithm
+num_iterations = 1000
+min_max = [-5, 5]
+temperature_ranges = [1000, 100, 10]
+cooling_rates = [0.99, 0.95, 0.9]
+step_sizes = [5, 1, 0.1]
+
+# Run parameter tuning experiments
+experiments_results = run_parameter_tuning_experiment(temperature_ranges, cooling_rates, step_sizes, test_function, min_max, 500)
+
+# Print the results
+print("Parameter Tuning Results:")
+for result in experiments_results:
+    print(f"Initial Temperature: {result['T_start']}, Cooling Rate: {result['alpha']}, Step Size: {result['step_size']}")
+    print(f"Best Solution: {result['best_solution']}, Best Cost: {result['best_cost']:.4f}, Convergence Rate: {result['convergence_rate']:.4f}\n")
+```
+
+Tying this together:
+
+```python
+import numpy as np
+
+def test_function(x):
+    return np.sin(x) + np.sin(10 * x / 3)
+
+# Generate a neighboring solution
+def generate_neighbor(solution, step_size, min_max):
+    perturbation = np.random.uniform(-step_size, step_size)
+    candidate = solution + perturbation
+    # limit new solutions to the search space
+    candidate = np.clip(candidate, min_max[0], min_max[1])
+    return candidate
+
+# Calculate acceptance probability
+def acceptance_probability(current_cost, new_cost, temperature):
+    if new_cost < current_cost:
+        return 1.0
+    else:
+        return np.exp(-(new_cost - current_cost) / (1e-8+temperature))
+
+def calculate_convergence_rate(costs, interval=100):
+    improvements = []
+    for i in range(interval, len(costs), interval):
+        improvement = costs[i - interval] - costs[i]
+        improvements.append(improvement)
+    if improvements:
+        return sum(improvements) / len(improvements)
+    return 0
+
+# Simulated Annealing main function
+def simulated_annealing(initial_solution, objective_function, min_max, T_start, alpha, num_iterations, step_size):
+    current_solution = initial_solution
+    current_cost = objective_function(current_solution)
+    best_solution = current_solution
+    best_cost = current_cost
+    accepted_solutions = [current_solution]
+    costs = [current_cost]
+
+    temperature = T_start
+    for iteration in range(num_iterations):
+        neighbor = generate_neighbor(current_solution, step_size, min_max)
+        neighbor_cost = objective_function(neighbor)
+        if acceptance_probability(current_cost, neighbor_cost, temperature) > np.random.random():
+            current_solution = neighbor
+            current_cost = neighbor_cost
+            if neighbor_cost < best_cost:
+                best_solution = neighbor
+                best_cost = neighbor_cost
+
+        accepted_solutions.append(current_solution)
+        costs.append(current_cost)
+        temperature *= alpha
+
+    return accepted_solutions, best_solution, best_cost, costs
+
+def run_parameter_tuning_experiment(temperature_ranges, cooling_rates, step_sizes, objective_function, min_max, num_iterations):
+    experiments = []
+    for T_start in temperature_ranges:
+        for alpha in cooling_rates:
+            for step_size in step_sizes:
+                initial_solution = np.random.uniform(min_max[0], min_max[1])
+                _, best_solution, best_cost, costs = simulated_annealing(
+                    initial_solution, objective_function, min_max, T_start, alpha, num_iterations, step_size
+                )
+                convergence_rate = calculate_convergence_rate(costs, 100)
+                experiments.append({
+                    "T_start": T_start,
+                    "alpha": alpha,
+                    "step_size": step_size,
+                    "best_solution": best_solution,
+                    "best_cost": best_cost,
+                    "convergence_rate": convergence_rate
+                })
+    return experiments
+
+# Run the algorithm
+num_iterations = 1000
+min_max = [-5, 5]
+temperature_ranges = [1000, 100, 10]
+cooling_rates = [0.99, 0.95, 0.9]
+step_sizes = [5, 1, 0.1]
+
+# Run parameter tuning experiments
+experiments_results = run_parameter_tuning_experiment(temperature_ranges, cooling_rates, step_sizes, test_function, min_max, 500)
+
+# Print the results
+print("Parameter Tuning Results:")
+for result in experiments_results:
+    print(f"Initial Temperature: {result['T_start']}, Cooling Rate: {result['alpha']}, Step Size: {result['step_size']}")
+    print(f"Best Solution: {result['best_solution']}, Best Cost: {result['best_cost']:.4f}, Convergence Rate: {result['convergence_rate']:.4f}\n")
+```
+
+
+### Exercise 3: Visualization of Results
+
+Using Matplotlib to create visualizations:
+
+```python
+import matplotlib.pyplot as plt
+
+def visualize_parameter_tuning_results(experiments):
+    # Extract the data for plotting
+    T_starts = sorted(set(exp["T_start"] for exp in experiments))
+    alphas = sorted(set(exp["alpha"] for exp in experiments))
+    step_sizes = sorted(set(exp["step_size"] for exp in experiments))
+
+    # Prepare data structures for plotting
+    quality_data = {T: {alpha: [] for alpha in alphas} for T in T_starts}
+    convergence_data = {T: {alpha: [] for alpha in alphas} for T in T_starts}
+    for exp in experiments:
+        quality_data[exp["T_start"]][exp["alpha"]].append(exp["best_cost"])
+        convergence_data[exp["T_start"]][exp["alpha"]].append(exp["convergence_rate"])
+
+    # Set up the figure and axes
+    fig, axs = plt.subplots(2, 1, figsize=(12, 18))
+
+    # Plot best solution quality
+    for i, T_start in enumerate(T_starts):
+        for j, alpha in enumerate(alphas):
+            axs[0].plot(step_sizes, quality_data[T_start][alpha], marker='o', label=f'T={T_start}, α={alpha}')
+    axs[0].set_title('Best Solution Quality by Temperature and Cooling Rate')
+    axs[0].set_xlabel('Step Size')
+    axs[0].set_ylabel('Best Solution Quality')
+    axs[0].legend()
+
+    # Plot convergence rate
+    for i, T_start in enumerate(T_starts):
+        for j, alpha in enumerate(alphas):
+            axs[1].plot(step_sizes, convergence_data[T_start][alpha], marker='o', label=f'T={T_start}, α={alpha}')
+    axs[1].set_title('Convergence Rate by Temperature and Cooling Rate')
+    axs[1].set_xlabel('Step Size')
+    axs[1].set_ylabel('Convergence Rate')
+    axs[1].legend()
+
+    # Add additional plots as necessary, e.g., execution time if data is available
+    # Execution time could be simulated as the length of the 'costs' list for simplicity
+
+    plt.tight_layout()
+    plt.show()
+
+# Example call (assuming `experiments_results` has been populated appropriately)
+visualize_parameter_tuning_results(experiments_results)
+```
+
+We can tie this together:
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+def test_function(x):
+    return np.sin(x) + np.sin(10 * x / 3)
+
+# Generate a neighboring solution
+def generate_neighbor(solution, step_size, min_max):
+    perturbation = np.random.uniform(-step_size, step_size)
+    candidate = solution + perturbation
+    # limit new solutions to the search space
+    candidate = np.clip(candidate, min_max[0], min_max[1])
+    return candidate
+
+# Calculate acceptance probability
+def acceptance_probability(current_cost, new_cost, temperature):
+    if new_cost < current_cost:
+        return 1.0
+    else:
+        return np.exp(-(new_cost - current_cost) / (1e-8+temperature))
+
+def calculate_convergence_rate(costs, interval=100):
+    improvements = []
+    for i in range(interval, len(costs), interval):
+        improvement = costs[i - interval] - costs[i]
+        improvements.append(improvement)
+    if improvements:
+        return sum(improvements) / len(improvements)
+    return 0
+
+# Simulated Annealing main function
+def simulated_annealing(initial_solution, objective_function, min_max, T_start, alpha, num_iterations, step_size):
+    current_solution = initial_solution
+    current_cost = objective_function(current_solution)
+    best_solution = current_solution
+    best_cost = current_cost
+    accepted_solutions = [current_solution]
+    costs = [current_cost]
+
+    temperature = T_start
+    for iteration in range(num_iterations):
+        neighbor = generate_neighbor(current_solution, step_size, min_max)
+        neighbor_cost = objective_function(neighbor)
+        if acceptance_probability(current_cost, neighbor_cost, temperature) > np.random.random():
+            current_solution = neighbor
+            current_cost = neighbor_cost
+            if neighbor_cost < best_cost:
+                best_solution = neighbor
+                best_cost = neighbor_cost
+
+        accepted_solutions.append(current_solution)
+        costs.append(current_cost)
+        temperature *= alpha
+
+    return accepted_solutions, best_solution, best_cost, costs
+
+def run_parameter_tuning_experiment(temperature_ranges, cooling_rates, step_sizes, objective_function, min_max, num_iterations):
+    experiments = []
+    for T_start in temperature_ranges:
+        for alpha in cooling_rates:
+            for step_size in step_sizes:
+                initial_solution = np.random.uniform(min_max[0], min_max[1])
+                _, best_solution, best_cost, costs = simulated_annealing(
+                    initial_solution, objective_function, min_max, T_start, alpha, num_iterations, step_size
+                )
+                convergence_rate = calculate_convergence_rate(costs, 100)
+                experiments.append({
+                    "T_start": T_start,
+                    "alpha": alpha,
+                    "step_size": step_size,
+                    "best_solution": best_solution,
+                    "best_cost": best_cost,
+                    "convergence_rate": convergence_rate
+                })
+    return experiments
+
+def visualize_parameter_tuning_results(experiments):
+    # Extract the data for plotting
+    T_starts = sorted(set(exp["T_start"] for exp in experiments))
+    alphas = sorted(set(exp["alpha"] for exp in experiments))
+    step_sizes = sorted(set(exp["step_size"] for exp in experiments))
+
+    # Prepare data structures for plotting
+    quality_data = {T: {alpha: [] for alpha in alphas} for T in T_starts}
+    convergence_data = {T: {alpha: [] for alpha in alphas} for T in T_starts}
+    for exp in experiments:
+        quality_data[exp["T_start"]][exp["alpha"]].append(exp["best_cost"])
+        convergence_data[exp["T_start"]][exp["alpha"]].append(exp["convergence_rate"])
+
+    # Set up the figure and axes
+    fig, axs = plt.subplots(2, 1, figsize=(12, 18))
+
+    # Plot best solution quality
+    for i, T_start in enumerate(T_starts):
+        for j, alpha in enumerate(alphas):
+            axs[0].plot(step_sizes, quality_data[T_start][alpha], marker='o', label=f'T={T_start}, α={alpha}')
+    axs[0].set_title('Best Solution Quality by Temperature and Cooling Rate')
+    axs[0].set_xlabel('Step Size')
+    axs[0].set_ylabel('Best Solution Quality')
+    axs[0].legend()
+
+    # Plot convergence rate
+    for i, T_start in enumerate(T_starts):
+        for j, alpha in enumerate(alphas):
+            axs[1].plot(step_sizes, convergence_data[T_start][alpha], marker='o', label=f'T={T_start}, α={alpha}')
+    axs[1].set_title('Convergence Rate by Temperature and Cooling Rate')
+    axs[1].set_xlabel('Step Size')
+    axs[1].set_ylabel('Convergence Rate')
+    axs[1].legend()
+
+    plt.tight_layout()
+    plt.show()
+
+# Run the algorithm
+num_iterations = 1000
+min_max = [-5, 5]
+temperature_ranges = [1000, 100, 10]
+cooling_rates = [0.99, 0.95, 0.9]
+step_sizes = [5, 1, 0.1]
+
+# Run parameter tuning experiments
+experiments_results = run_parameter_tuning_experiment(temperature_ranges, cooling_rates, step_sizes, test_function, min_max, 500)
+
+# Visualize results
+visualize_parameter_tuning_results(experiments_results)
+```
+{{< /details >}}
 
 
 ## Summary
@@ -320,6 +792,6 @@ Put your skills to the test by implementing performance metrics, conducting para
 ### End
 This was the last chapter of the book. Well done, you made it!
 
-
+[Review](./) how far you have come.
 
 

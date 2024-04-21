@@ -202,6 +202,179 @@ By completing these exercises, you will have implemented a complete simulated an
 Remember to document your code, including comments explaining the purpose of each function and any important parameters. Share your implementation and visualization results with your peers or in a group setting to discuss insights, challenges, and potential improvements to the algorithm.
 
 
+## Answers
+{{< details "Show" >}}
+### Exercise 1: Step-by-Step Implementation
+
+Here's the Python code to implement the simulated annealing algorithm based on the test problem `f(x) = sin(x) + sin(10x / 3)`.
+
+```python
+import numpy as np
+
+def test_function(x):
+    return np.sin(x) + np.sin(10 * x / 3)
+
+# Generate a neighboring solution
+def generate_neighbor(solution, step_size, min_max):
+    perturbation = np.random.uniform(-step_size, step_size)
+    candidate = solution + perturbation
+    # limit new solutions to the search space
+    candidate = np.clip(candidate, min_max[0], min_max[1])
+    return candidate
+
+# Calculate acceptance probability
+def acceptance_probability(current_cost, new_cost, temperature):
+    if new_cost < current_cost:
+        return 1.0
+    else:
+        return np.exp(-(new_cost - current_cost) / (1e-8+temperature))
+
+# Simulated Annealing main function
+def simulated_annealing(initial_solution, objective_function, min_max, T_start, alpha, num_iterations, step_size):
+    current_solution = initial_solution
+    current_cost = objective_function(current_solution)
+    best_solution = current_solution
+    best_cost = current_cost
+    accepted_solutions = [current_solution]
+    costs = [current_cost]
+
+    temperature = T_start
+    for iteration in range(num_iterations):
+        neighbor = generate_neighbor(current_solution, step_size, min_max)
+        neighbor_cost = objective_function(neighbor)
+        if acceptance_probability(current_cost, neighbor_cost, temperature) > np.random.random():
+            current_solution = neighbor
+            current_cost = neighbor_cost
+            if neighbor_cost < best_cost:
+                best_solution = neighbor
+                best_cost = neighbor_cost
+
+        accepted_solutions.append(current_solution)
+        costs.append(current_cost)
+        temperature *= alpha
+
+    return accepted_solutions, best_solution, best_cost, costs
+
+# Run the algorithm
+T_start = 100
+alpha = 0.95
+num_iterations = 1000
+step_size = 1.0
+min_max = [-5, 5]
+initial_solution = np.random.uniform(min_max[0], min_max[1])
+results = simulated_annealing(initial_solution, test_function, min_max, T_start, alpha, num_iterations, step_size)
+
+print(f"Best solution found: x = {results[1]}, f(x) = {results[2]}")
+```
+
+### Exercise 2: Debugging, Testing, and Visualization
+
+Now, let's enhance the above implementation with visualization capabilities and additional debugging.
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+def test_function(x):
+    return np.sin(x) + np.sin(10 * x / 3)
+
+# Generate a neighboring solution
+def generate_neighbor(solution, step_size, min_max):
+    perturbation = np.random.uniform(-step_size, step_size)
+    candidate = solution + perturbation
+    # limit new solutions to the search space
+    candidate = np.clip(candidate, min_max[0], min_max[1])
+    return candidate
+
+# Calculate acceptance probability
+def acceptance_probability(current_cost, new_cost, temperature):
+    if new_cost < current_cost:
+        return 1.0
+    else:
+        return np.exp(-(new_cost - current_cost) / (1e-8+temperature))
+
+# Function to visualize the progress of the algorithm
+def visualize_progress(accepted_solutions, best_costs, objective_function, min_max):
+    iterations = range(len(accepted_solutions))
+
+    # Create x values for plotting the objective function
+    x_values = np.linspace(min_max[0], min_max[1], 400)
+    y_values = objective_function(x_values)
+
+    plt.figure(figsize=(18, 6))
+
+    # Plotting the objective function and all accepted solutions
+    plt.subplot(1, 3, 1)
+    plt.plot(x_values, y_values, label='Objective Function', color='grey')
+    plt.scatter(accepted_solutions, [objective_function(x) for x in accepted_solutions], color='red', s=10, label='Accepted Solutions')
+    plt.xlabel('x')
+    plt.ylabel('f(x)')
+    plt.title('Objective Function and Accepted Solutions')
+    plt.legend()
+
+    # Plotting all accepted solutions
+    plt.subplot(1, 3, 2)
+    plt.plot(iterations, accepted_solutions, label='Accepted Solutions')
+    plt.xlabel('Iteration')
+    plt.ylabel('Solution')
+    plt.title('Accepted Solutions Over Iterations')
+
+    # Plotting best solution cost over iterations
+    plt.subplot(1, 3, 3)
+    plt.plot(iterations, best_costs, label='Best Cost', color='r')
+    plt.xlabel('Iteration')
+    plt.ylabel('Best Cost')
+    plt.title('Best Solution Cost Over Iterations')
+    plt.legend()
+
+    plt.tight_layout()
+    plt.show()
+
+# Simulated Annealing main function
+def simulated_annealing(initial_solution, objective_function, min_max, T_start, alpha, num_iterations, step_size):
+    current_solution = initial_solution
+    current_cost = objective_function(current_solution)
+    best_solution = current_solution
+    best_cost = current_cost
+    accepted_solutions = [current_solution]
+    costs = [current_cost]
+
+    temperature = T_start
+    for iteration in range(num_iterations):
+        neighbor = generate_neighbor(current_solution, step_size, min_max)
+        neighbor_cost = objective_function(neighbor)
+        if acceptance_probability(current_cost, neighbor_cost, temperature) > np.random.random():
+            current_solution = neighbor
+            current_cost = neighbor_cost
+            if neighbor_cost < best_cost:
+                best_solution = neighbor
+                best_cost = neighbor_cost
+
+        accepted_solutions.append(current_solution)
+        costs.append(current_cost)
+        temperature *= alpha
+
+        if iteration % 100 == 0:
+            print(f"Iteration {iteration}: Temp = {temperature:.2f}, Best Cost = {best_cost:.4f}")
+            visualize_progress(accepted_solutions[:iteration+1], costs[:iteration+1], objective_function, min_max)
+
+    return accepted_solutions, best_solution, best_cost, costs
+
+# Run the algorithm
+T_start = 100
+alpha = 0.95
+num_iterations = 1000
+step_size = 1.0
+min_max = [-5, 5]
+initial_solution = np.random.uniform(min_max[0], min_max[1])
+results = simulated_annealing(initial_solution, test_function, min_max, T_start, alpha, num_iterations, step_size)
+
+print(f"Best solution found: x = {results[1]}, f(x) = {results[2]}")
+```
+
+These modifications allow us to visually track the algorithm's search progress and understand how different parameters affect the optimization process. Testing the complete setup will verify the algorithm's ability to converge towards the global minimum and provide insights into its behavior over iterations.
+{{< /details >}}
+
 
 ## Summary
 Chapter 4 focused on integrating the key components of Simulated Annealing (SA) into a cohesive and functional algorithm. The chapter began by recapping the crucial elements: the temperature function, neighbor solution generation, and the acceptance probability function. It emphasized the interdependencies between these components and their impact on the algorithm's performance. The chapter then provided a step-by-step overview of the SA process, from initialization to the main loop and termination. The implementation details were discussed in-depth, including initializing the algorithm, generating neighbor solutions, calculating acceptance probabilities, and updating the temperature. The chapter also covered debugging strategies, common pitfalls, and testing the algorithm using well-known optimization problems. Finally, the importance of visualization tools for understanding the algorithm's behavior was highlighted.

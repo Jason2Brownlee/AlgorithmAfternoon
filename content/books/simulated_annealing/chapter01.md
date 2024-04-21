@@ -234,7 +234,84 @@ By completing this exercise, you will have implemented the initial stage of the 
 
 Take a moment to observe the distribution of the sample points and consider how they might influence the algorithm's initial exploration. Experiment with different numbers of sample points and observe how the visualization changes.
 
+## Answers
+{{< details "Show" >}}
+### Exercise 1: Generating Sample Points
+We can create a function called `generate_sample_points` that generates a set of initial points within a specified range for the function `f(x) = sin(x) + sin(10 * x / 3)`.
 
+```python
+import numpy as np
+
+def generate_sample_points(num_points, x_min, x_max):
+    # Generate num_points random values between x_min and x_max
+    sample_points = np.random.uniform(x_min, x_max, num_points)
+    return sample_points
+```
+
+This function uses NumPy to create an array of random numbers uniformly distributed within the specified range.
+
+### Exercise 2: Plotting the Target Function
+For plotting the target function, we need to define the function, generate points, and then plot them:
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+def test_function(x):
+    return np.sin(x) + np.sin(10 * x / 3)
+
+# Generate a set of evenly spaced points within the range [-5, 5]
+x_values = np.linspace(-5, 5, 400)
+y_values = test_function(x_values)
+
+# Create a plot to visualize the test function
+plt.plot(x_values, y_values, label='f(x) = sin(x) + sin(10*x/3)')
+plt.title('Plot of the Multi-modal Test Function')
+plt.xlabel('x')
+plt.ylabel('f(x)')
+plt.legend()
+plt.show()
+```
+
+This script sets up the function graphically using `matplotlib`, showing the behavior of the function over a specified range.
+
+### Exercise 3: Plotting Generated Points
+Finally, we'll overlay the randomly generated sample points on the plot of the target function to see where simulated annealing might begin its exploration:
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+def generate_sample_points(num_points, x_min, x_max):
+    # Generate num_points random values between x_min and x_max
+    sample_points = np.random.uniform(x_min, x_max, num_points)
+    return sample_points
+
+def test_function(x):
+    return np.sin(x) + np.sin(10 * x / 3)
+
+# Generate a set of evenly spaced points within the range [-5, 5]
+x_values = np.linspace(-5, 5, 400)
+y_values = test_function(x_values)
+
+# Generate random sample points within the range [-5, 5]
+num_points = 50  # Number of sample points
+sample_points = generate_sample_points(num_points, -5, 5)
+sample_values = test_function(sample_points)
+
+# Plot the target function
+plt.plot(x_values, y_values, label='f(x) = sin(x) + sin(10*x/3)')
+# Add the randomly generated sample points
+plt.scatter(sample_points, sample_values, color='red', label='Sample Points')
+plt.title('Initial Sampling in Simulated Annealing')
+plt.xlabel('x')
+plt.ylabel('f(x)')
+plt.legend()
+plt.show()
+```
+
+This script combines the functions and plotting instructions from previous exercises. It adds a scatter plot overlay of the sample points on the target function plot, effectively showing where the algorithm starts in the function's landscape.
+{{< /details >}}
 
 
 ## Summary
