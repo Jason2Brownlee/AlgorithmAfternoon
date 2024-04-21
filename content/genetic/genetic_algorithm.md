@@ -112,4 +112,85 @@ The process of selection, crossover, mutation, and replacement continues for a s
 - Employ techniques to maintain population diversity and prevent premature convergence.
 - Options include using a larger population size, increasing the mutation probability, implementing diversity-preserving selection methods (e.g., crowding or niching), or periodically introducing new random individuals into the population.
 
-**Update**: if you need more help, you might be interested in the new [Genetic Algorithm Mini-Book](/books/genetic_algorithm)
+## Code
+{{< details "Show" >}}
+
+### Python Genetic Algorithm
+If you are stuck, below is a candidate implementation of the genetic algorithm in pure Python.
+
+```python
+# AlgorithmAfternoon.com
+import random
+
+def onemax(bitstring):
+    """Objective function to maximize. Counts the number of 1s in the bitstring."""
+    return sum(bitstring)
+
+def bit_flip_mutation(bitstring, mutation_rate):
+    """Perform bit flip mutation on a bitstring with a given mutation rate."""
+    for i in range(len(bitstring)):
+        if random.random() < mutation_rate:
+            bitstring[i] = 1 - bitstring[i]  # Flip the bit
+    return bitstring
+
+def one_point_crossover(parent1, parent2):
+    """Perform one point crossover between two bitstrings."""
+    if len(parent1) != len(parent2):
+        raise ValueError("Parents must have the same length.")
+    point = random.randint(1, len(parent1) - 1)
+    child1 = parent1[:point] + parent2[point:]
+    child2 = parent2[:point] + parent1[point:]
+    return child1, child2
+
+def tournament_selection(population, k):
+    """Select one individual using tournament selection."""
+    tournament = random.sample(population, k)
+    tournament.sort(key=lambda x: x[1], reverse=True)  # Sort by fitness descending
+    return tournament[0][0]  # Return the bitstring of the best individual in the tournament
+
+def genetic_algorithm(objective, bitstring_length, population_size, generations, mutation_rate, tournament_size):
+    """Run the genetic algorithm."""
+    # Initial population (random)
+    population = [[random.randint(0, 1) for _ in range(bitstring_length)] for _ in range(population_size)]
+    # Evaluate the initial population
+    population = [(individual, objective(individual)) for individual in population]
+
+    # Evolution
+    for generation in range(generations):
+        # Selection and reproduction
+        new_population = []
+        while len(new_population) < population_size:
+            parent1 = tournament_selection(population, tournament_size)
+            parent2 = tournament_selection(population, tournament_size)
+            child1, child2 = one_point_crossover(parent1, parent2)
+            new_population.append(child1)
+            if len(new_population) < population_size:
+                new_population.append(child2)
+
+        # Mutation
+        population = [bit_flip_mutation(individual, mutation_rate) for individual in new_population]
+        # Evaluate the new population
+        population = [(individual, objective(individual)) for individual in population]
+
+        # Reporting
+        best_individual = max(population, key=lambda x: x[1])
+        print(f"Generation {generation+1}: Best Fitness = {best_individual[1]}")
+
+    return best_individual
+
+# Algorithm parameters
+bitstring_length = 100
+population_size = 100
+generations = 50
+mutation_rate = 0.01
+tournament_size = 5
+
+# Run the genetic algorithm
+best_individual = genetic_algorithm(onemax, bitstring_length, population_size, generations, mutation_rate, tournament_size)
+print(f"Best Individual: {best_individual[0]}, Fitness: {best_individual[1]}")
+```
+{{< /details >}}
+
+
+## Mini-Book
+**Update**: If you need more help, you might be interested in the new [Genetic Algorithm Mini-Book](/books/genetic_algorithm)

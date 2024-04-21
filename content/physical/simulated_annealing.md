@@ -119,3 +119,90 @@ The convergence of Simulated Annealing is controlled by the cooling schedule, wh
 - Use a subset of the problem instances or a smaller problem size for parameter tuning to reduce computational overhead
 - Consider using automated parameter tuning techniques, such as meta-optimization or adaptive cooling schedules, to improve the performance of the algorithm
 
+
+## Code
+
+{{< details "Show" >}}
+
+### Python Simulated Annealing
+If you are stuck, below is a candidate implementation of the simulated annealing in pure Python.
+
+```python
+# AlgorithmAfternoon.com
+import math
+import random
+
+def objective_function(x):
+    """Objective function f(x) = sin(x) + sin(10 * x / 3)."""
+    return math.sin(x) + math.sin(10 * x / 3)
+
+def acceptance_criteria(cost, new_cost, temperature):
+    """Determine if the new solution should be accepted based on the current temperature."""
+    if new_cost > cost:
+        return True
+    # Calculate acceptance probability (Boltzmann distribution)
+    return math.exp((new_cost - cost) / temperature) > random.random()
+
+def exponential_cooling(current_temperature, cooling_rate):
+    """Cool down the temperature exponentially."""
+    return current_temperature * cooling_rate
+
+def uniform_neighbor_generation(current_x, neighborhood_size):
+    """Generate a new solution within the neighborhood of the current solution."""
+    return current_x + random.uniform(-neighborhood_size, neighborhood_size)
+
+def simulated_annealing(objective_function, bounds, initial_temperature, final_temperature, cooling_rate, max_iterations, neighborhood_size):
+    """Run the simulated annealing algorithm."""
+    # Start from a random position within bounds
+    current_x = random.uniform(bounds[0], bounds[1])
+    current_cost = objective_function(current_x)
+    best_x = current_x
+    best_cost = current_cost
+
+    temperature = initial_temperature
+
+    iteration = 0
+    while temperature > final_temperature and iteration < max_iterations:
+        # Generate a neighbor solution
+        candidate_x = uniform_neighbor_generation(current_x, neighborhood_size)
+        # Ensure candidate is within bounds
+        if candidate_x < bounds[0] or candidate_x > bounds[1]:
+            continue
+        candidate_cost = objective_function(candidate_x)
+
+        # Acceptance check
+        if acceptance_criteria(current_cost, candidate_cost, temperature):
+            current_x, current_cost = candidate_x, candidate_cost
+            if candidate_cost > best_cost:
+                best_x, best_cost = candidate_x, candidate_cost
+
+        # Cooling step
+        temperature = exponential_cooling(temperature, cooling_rate)
+
+        # Report progress
+        print(f"Iteration {iteration+1}: Best Cost = {best_cost}")
+
+        iteration += 1
+
+    return best_x, best_cost
+
+# Algorithm parameters
+initial_temperature = 1000
+final_temperature = 1e-3
+cooling_rate = 0.97
+max_iterations = 500
+neighborhood_size = 1.0
+bounds = (-5, 5)
+
+# Run the simulated annealing algorithm
+best_x, best_cost = simulated_annealing(objective_function, bounds, initial_temperature, final_temperature, cooling_rate, max_iterations, neighborhood_size)
+print(f"Best solution: x = {best_x}, Cost = {best_cost}")
+
+```
+{{< /details >}}
+
+
+## Mini-Book
+**Update**: If you need more help, you might be interested in the new [Simulated Annealing Mini-Book](/books/simulated_annealing)
+
+

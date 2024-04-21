@@ -12,7 +12,7 @@ title: Home
 2. Pick an algorithm (:point_left:)
 3. Start coding (:heart:)
 
-Can't choose? Try: [Hill Climbing](/stochastic/stochastic_hill_climbing/), or [Genetic Algorithm](/genetic/genetic_algorithm/), or [Particle Swarm](/particle/standard_particle_swarm_optimization/).
+Can't choose? Try: [Simulated Annealing](/physical/simulated_annealing/), or [Genetic Algorithm](/genetic/genetic_algorithm/), or [Particle Swarm](/particle/standard_particle_swarm_optimization/).
 
 If you get stuck, see the [help section](/help/).
 
