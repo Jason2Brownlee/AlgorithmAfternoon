@@ -13,6 +13,7 @@ A mini-book dedicated to the genetic algorithm.
 
 ## Table of Contents
 
+* [Introduction](chapter00.md)
 * [Chapter 1: Introduction to Genetic Algorithms](chapter01.md)
 * [Chapter 2: Generating Solutions and Random Search](chapter02.md)
 * [Chapter 3: Mutation and Its Role](chapter03.md)
