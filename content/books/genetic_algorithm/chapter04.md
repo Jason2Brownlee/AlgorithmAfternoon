@@ -305,6 +305,244 @@ These exercises will guide you through implementing two key selection strategies
 4. **Comparing Selection Strategies**: Compare the performance of the parallel hill climber using tournament selection with the version using elitism (selecting the best bitstrings). Discuss the advantages and disadvantages of each approach, considering factors such as convergence speed, diversity maintenance, and the risk of premature convergence.
 
 
+## Answers
+{{< details "Show" >}}
+### Exercise 1: Implementing Roulette Wheel Selection
+
+#### 1. Fitness Proportionate Selection
+
+```python
+import random
+
+def roulette_wheel_selection(population, fitnesses):
+    total_fitness = sum(fitnesses)
+    pick = random.uniform(0, total_fitness)
+    current = 0
+    for i, fitness in enumerate(fitnesses):
+        current += fitness
+        if current > pick:
+            return population[i]
+```
+
+#### 2. Testing Roulette Wheel Selection
+
+```python
+import random
+
+def generate_random_bitstring(length):
+    return [random.randint(0, 1) for _ in range(length)]
+
+def evaluate_fitness(bitstring):
+    return sum(bitstring)
+
+def roulette_wheel_selection(population, fitnesses):
+    total_fitness = sum(fitnesses)
+    pick = random.uniform(0, total_fitness)
+    current = 0
+    for i, fitness in enumerate(fitnesses):
+        current += fitness
+        if current > pick:
+            return population[i]
+
+# Generate a population of 10 bitstrings of length 20
+population = [generate_random_bitstring(20) for _ in range(10)]
+fitnesses = [evaluate_fitness(individual) for individual in population]
+
+# Perform roulette wheel selection 100 times
+selection_counts = [0] * len(population)
+for _ in range(100):
+    selected = roulette_wheel_selection(population, fitnesses)
+    index = population.index(selected)
+    selection_counts[index] += 1
+
+print("Fitnesses:", fitnesses)
+print("Selection counts:", selection_counts)
+```
+
+#### 3. Analyzing Selection Pressure
+
+```python
+import random
+
+def generate_random_bitstring(length):
+    return [random.randint(0, 1) for _ in range(length)]
+
+def evaluate_fitness(bitstring):
+    return sum(bitstring)
+
+def roulette_wheel_selection(population, fitnesses):
+    total_fitness = sum(fitnesses)
+    pick = random.uniform(0, total_fitness)
+    current = 0
+    for i, fitness in enumerate(fitnesses):
+        current += fitness
+        if current > pick:
+            return population[i]
+
+# Generate a population of 10 bitstrings of length 20
+population = [generate_random_bitstring(20) for _ in range(10)]
+fitnesses = [evaluate_fitness(individual) for individual in population]
+
+# Create a modified population with one dominant individual
+dominant_individual = [1] * 20  # Highest possible fitness
+population[0] = dominant_individual
+fitnesses = [evaluate_fitness(individual) for individual in population]
+
+# Test selection frequency again
+selection_counts = [0] * len(population)
+for _ in range(100):
+    selected = roulette_wheel_selection(population, fitnesses)
+    index = population.index(selected)
+    selection_counts[index] += 1
+
+print("Modified Fitnesses:", fitnesses)
+print("Modified Selection counts:", selection_counts)
+```
+
+### Exercise 2: Implementing Tournament Selection
+
+#### 1. Tournament Selection
+
+```python
+def tournament_selection(population, fitnesses, tournament_size):
+    contestants = random.sample(list(zip(population, fitnesses)), tournament_size)
+    return max(contestants, key=lambda x: x[1])[0]
+```
+
+#### 2. Testing Tournament Selection
+
+```python
+import random
+
+def generate_random_bitstring(length):
+    return [random.randint(0, 1) for _ in range(length)]
+
+def evaluate_fitness(bitstring):
+    return sum(bitstring)
+
+def tournament_selection(population, fitnesses, tournament_size):
+    contestants = random.sample(list(zip(population, fitnesses)), tournament_size)
+    return max(contestants, key=lambda x: x[1])[0]
+
+# Generate a population of 10 bitstrings of length 20
+population = [generate_random_bitstring(20) for _ in range(10)]
+fitnesses = [evaluate_fitness(individual) for individual in population]
+
+# Using the same population and fitnesses from Exercise 1
+tournament_sizes = [2, 4, 8]
+results = {size: [0] * len(population) for size in tournament_sizes}
+
+for size in tournament_sizes:
+    for _ in range(100):
+        selected = tournament_selection(population, fitnesses, size)
+        index = population.index(selected)
+        results[size][index] += 1
+
+for size, counts in results.items():
+    print(f"Tournament size {size}, Selection counts: {counts}")
+```
+
+#### 3. Selection Pressure and Tournament Size
+
+Larger tournament sizes increase the selection pressure by frequently selecting the individuals with higher fitness. This can speed up convergence but reduce genetic diversity, possibly leading to premature convergence. Smaller tournaments are less aggressive, promoting diversity but potentially slowing convergence.
+
+
+### Exercise 3: Integrating Tournament Selection into a Parallel Hill Climber
+
+#### 1. Parallel Hill Climber with Tournament Selection
+
+```python
+def parallel_hill_climber(population, mutation_prob, generations, tournament_size):
+    for _ in range(generations):
+        mutated_population = [bitflip_mutation(individual, mutation_prob) for individual in population]
+        fitness_scores = [evaluate_fitness(individual) for individual in mutated_population]
+        population = [tournament_selection(mutated_population, fitness_scores, tournament_size) for _ in population]
+    return population, max(fitness_scores)
+```
+
+#### 2. Testing the Parallel Hill Climber
+
+```python
+import random
+
+def generate_random_bitstring(length):
+    # Generate a list of random 0s and 1s using a list comprehension
+    return [random.randint(0, 1) for _ in range(length)]
+
+def evaluate_fitness(bitstring):
+    # The fitness is simply the sum of 1s in the bitstring
+    return sum(bitstring)
+
+def bitflip_mutation(bitstring, prob):
+    # Iterate through each bit in the bitstring
+    return [1 - bit if random.random() < prob else bit for bit in bitstring]
+
+def tournament_selection(population, fitnesses, tournament_size):
+    contestants = random.sample(list(zip(population, fitnesses)), tournament_size)
+    return max(contestants, key=lambda x: x[1])[0]
+
+def parallel_hill_climber(population, mutation_prob, generations, tournament_size):
+    for _ in range(generations):
+        mutated_population = [bitflip_mutation(individual, mutation_prob) for individual in population]
+        fitness_scores = [evaluate_fitness(individual) for individual in mutated_population]
+        population = [tournament_selection(mutated_population, fitness_scores, tournament_size) for _ in population]
+    return population, max(fitness_scores)
+
+for length in [50, 100]:
+    results = []
+    for _ in range(10):
+        initial_population = [generate_random_bitstring(length) for _ in range(50)]
+        _, best_fitness = parallel_hill_climber(initial_population, 0.01, 100, 4)
+        results.append(best_fitness)
+    print(f"Bitstring length {length}, Best Fitnesses: {results}")
+
+```
+
+#### 3. Tournament Size and Performance
+
+```python
+import random
+
+def generate_random_bitstring(length):
+    # Generate a list of random 0s and 1s using a list comprehension
+    return [random.randint(0, 1) for _ in range(length)]
+
+def evaluate_fitness(bitstring):
+    # The fitness is simply the sum of 1s in the bitstring
+    return sum(bitstring)
+
+def bitflip_mutation(bitstring, prob):
+    # Iterate through each bit in the bitstring
+    return [1 - bit if random.random() < prob else bit for bit in bitstring]
+
+def tournament_selection(population, fitnesses, tournament_size):
+    contestants = random.sample(list(zip(population, fitnesses)), tournament_size)
+    return max(contestants, key=lambda x: x[1])[0]
+
+def parallel_hill_climber(population, mutation_prob, generations, tournament_size):
+    for _ in range(generations):
+        mutated_population = [bitflip_mutation(individual, mutation_prob) for individual in population]
+        fitness_scores = [evaluate_fitness(individual) for individual in mutated_population]
+        population = [tournament_selection(mutated_population, fitness_scores, tournament_size) for _ in population]
+    return population, max(fitness_scores)
+
+for tournament_size in [2, 4, 8]:
+    results = []
+    for _ in range(10):
+        initial_population = [generate_random_bitstring(50) for _ in range(50)]
+        _, best_fitness = parallel_hill_climber(initial_population, 0.01, 100, tournament_size)
+        results.append(best_fitness)
+    print(f"Tournament size {tournament_size}, Best Fitnesses: {results}")
+```
+
+#### 4. Comparing Selection Strategies
+
+Tournament selection can offer a balanced approach between elitism and randomness, helping maintain diversity while promoting strong candidates. This can prevent premature convergence seen in elitist strategies while potentially offering faster convergence than random selection.
+
+{{< /details >}}
+
+
+
 ## Summary
 Chapter 4 explored the critical role of selection strategies in guiding genetic algorithms (GAs) towards optimal solutions. It introduced the concept of selection pressure and explored two popular selection methods: roulette wheel selection and tournament selection. The chapter explained the mechanics and pseudocode for each method, highlighting their advantages and drawbacks. It also discussed the importance of balancing exploration and exploitation in GAs and provided strategies for achieving this balance, such as adjusting selection pressure and incorporating diversity-promoting techniques. The chapter concluded with practical exercises on implementing selection strategies and integrating them into a parallel hill climber for the OneMax problem.
 

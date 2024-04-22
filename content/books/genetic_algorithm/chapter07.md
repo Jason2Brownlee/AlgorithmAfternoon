@@ -303,7 +303,7 @@ In this exercise, you'll implement binary and Gray code encoding and decoding fu
 
 2. **GA Components**: Implement the necessary components of the genetic algorithm, including population initialization, selection, crossover, and mutation operators. Use your binary and Gray code encoding/decoding functions to convert between floating-point values and bitstrings.
 
-3. **Running the GA**: Run the genetic algorithm to optimize Rastrigin's function in a fixed number of dimensions (e.g., 2, 5, 10) using both binary and Gray code encoding. Set appropriate values for population size, mutation rate, crossover rate, and termination criteria.
+3. **Running the GA**: Run the genetic algorithm to optimize Rastrigin's function in a fixed number of dimensions (e.g., 1, 2, 3) using either or both a binary and Gray code encoding. Set appropriate values for population size, mutation rate, crossover rate, and termination criteria.
 
 ### Exercise 3: Comparing Performance and Analyzing Results
 
@@ -318,6 +318,243 @@ In this exercise, you'll implement binary and Gray code encoding and decoding fu
 5. **Discussion**: Based on your results, discuss the advantages and disadvantages of binary and Gray code encoding for optimizing Rastrigin's function. Consider factors such as convergence speed, solution quality, and robustness to local optima.
 
 By completing this exercise, you'll gain practical experience in implementing binary and Gray code encoding/decoding, applying a GA to optimize a continuous function, and analyzing the performance of different encoding schemes. This knowledge will equip you to tackle more complex continuous optimization problems using genetic algorithms.
+
+
+## Answers
+{{< details "Show" >}}
+### Exercise 1: Implementing Binary and Gray Code Encoding/Decoding
+
+#### 1. Binary Encoding and Decoding
+
+1. **Binary Encoding**
+```python
+import numpy as np
+
+def binary_encode(value, min_val, max_val, num_bits):
+   # Scale value to the range [0, 2**num_bits - 1]
+   scale = (value - min_val) / (max_val - min_val)
+   integer = int(scale * ((2 ** num_bits) - 1))
+   # Convert integer to binary string
+   return format(integer, f'0{num_bits}b')
+```
+
+2. **Binary Decoding**
+```python
+def binary_decode(bitstring, min_val, max_val, num_bits):
+   # Convert binary string to integer
+   integer = int(bitstring, 2)
+   # Scale integer back to the floating-point value
+   value = integer / ((2 ** num_bits) - 1)
+   return min_val + value * (max_val - min_val)
+```
+
+#### 2. Gray Code Encoding and Decoding
+
+1. **Gray Code Encoding**
+```python
+def gray_encode(bitstring):
+   binary = int(bitstring, 2)
+   gray = binary ^ (binary >> 1)
+   return format(gray, f'0{len(bitstring)}b')
+```
+
+2. **Gray Code Decoding**
+```python
+def gray_decode(gray):
+   binary = int(gray, 2)
+   mask = binary
+   while mask != 0:
+       mask >>= 1
+       binary ^= mask
+   return format(binary, f'0{len(gray)}b')
+```
+
+#### 3. Testing the Functions
+```python
+import numpy as np
+
+def binary_encode(value, min_val, max_val, num_bits):
+   # Scale value to the range [0, 2**num_bits - 1]
+   scale = (value - min_val) / (max_val - min_val)
+   integer = int(scale * ((2 ** num_bits) - 1))
+   # Convert integer to binary string
+   return format(integer, f'0{num_bits}b')
+
+def binary_decode(bitstring, min_val, max_val, num_bits):
+   # Convert binary string to integer
+   integer = int(bitstring, 2)
+   # Scale integer back to the floating-point value
+   value = integer / ((2 ** num_bits) - 1)
+   return min_val + value * (max_val - min_val)
+
+def gray_encode(bitstring):
+   binary = int(bitstring, 2)
+   gray = binary ^ (binary >> 1)
+   return format(gray, f'0{len(bitstring)}b')
+
+def gray_decode(gray):
+   binary = int(gray, 2)
+   mask = binary
+   while mask != 0:
+       mask >>= 1
+       binary ^= mask
+   return format(binary, f'0{len(gray)}b')
+
+# Test values
+values = [0.1, 0.5, 0.9]
+min_val = 0.0
+max_val = 1.0
+num_bits = 16
+
+for value in values:
+   binary = binary_encode(value, min_val, max_val, num_bits)
+   gray = gray_encode(binary)
+   decoded_binary = binary_decode(binary, min_val, max_val, num_bits)
+   decoded_gray = binary_decode(gray_decode(gray), min_val, max_val, num_bits)
+   print(f"Value: {value}\n\tBinary: {binary}, Decoded: {decoded_binary}\n\tGray: {gray}, Gray Decoded: {decoded_gray}")
+```
+
+
+### Exercise 2: Implementing the Genetic Algorithm for Rastrigin's Function
+
+#### 1. Fitness Function
+
+We will use a 1d version of the Rastrigin function.
+
+```python
+def rastrigin(x):
+   A = 10
+   return A * len(x) + sum([(xi**2 - A * np.cos(2 * np.pi * xi)) for xi in x])
+```
+
+We then need to define a fitness function that decodes the bitstring into a numerical value and then calculates the return value from the Rastrigin Function.
+
+In this case, we will use a binary decoding of the bits.
+
+```python
+def binary_decode(bitstring, min_val, max_val, num_bits):
+   # Convert binary string to integer
+   integer = int(bitstring, 2)
+   # Scale integer back to the floating-point value
+   value = integer / ((2 ** num_bits) - 1)
+   return min_val + value * (max_val - min_val)
+
+def evaluate_fitness(bitstring):
+    # convert to string
+    bs = ''.join(bitstring)
+    # decode
+    x = binary_decode(bs, -5.5, 5.5, len(bs))
+    # evaluate
+    return rastrigin(x)
+```
+
+#### 2. GA Components
+
+The target function is a minimization function, unlike OneMax which is a maximizing function. This means we need to choose population members with a minimum fitness instead of a maximum fitness.
+
+This requires updates to the `tournament_selection()`, `replace_population()` and `genetic_algorithm()` functions.
+
+```python
+def tournament_selection(population, tournament_size):
+    tournament = random.sample(population, tournament_size)
+    fittest = min(tournament, key=evaluate_fitness)
+    return fittest
+
+def replace_population(old_pop, new_pop, elitism_count=1):
+    sorted_old_pop = sorted(old_pop, key=evaluate_fitness)
+    new_pop[elitism_count:] = sorted_old_pop[:elitism_count]
+    return new_pop
+
+def genetic_algorithm(pop_size, bitstring_length, generations):
+    population = initialize_population(pop_size, bitstring_length)
+    best_fitness = float('inf')
+    for generation in range(generations):
+        new_population = []
+        while len(new_population) < pop_size:
+            parent1 = tournament_selection(population, 3)
+            parent2 = tournament_selection(population, 3)
+            offspring1, offspring2 = one_point_crossover(parent1, parent2)
+            offspring1 = bitflip_mutation(offspring1, 0.01)
+            offspring2 = bitflip_mutation(offspring2, 0.01)
+            new_population.extend([offspring1, offspring2])
+        population = replace_population(population, new_population, 2)
+        best_fitness = min(best_fitness, min(evaluate_fitness(ind) for ind in population))
+        print(f"Generation {generation}: Best Fitness {best_fitness}")
+```
+
+### 3. Running the GA
+
+Tying this together, the complete example is listed below:
+
+```python
+import random
+import math
+
+def initialize_population(pop_size, bitstring_length):
+    return [['1' if random.random() > 0.5 else '0' for _ in range(bitstring_length)] for _ in range(pop_size)]
+
+def rastrigin(x):
+   A = 10
+   return A + (x ** 2) - A * math.cos(2 * math.pi * x)
+
+def binary_decode(bitstring, min_val, max_val, num_bits):
+   # Convert binary string to integer
+   integer = int(bitstring, 2)
+   # Scale integer back to the floating-point value
+   value = integer / ((2 ** num_bits) - 1)
+   return min_val + value * (max_val - min_val)
+
+def evaluate_fitness(bitstring):
+    # convert to string
+    bs = ''.join(bitstring)
+    # decode
+    x = binary_decode(bs, -5.5, 5.5, len(bs))
+    # evaluate
+    return rastrigin(x)
+
+def tournament_selection(population, tournament_size):
+    tournament = random.sample(population, tournament_size)
+    fittest = min(tournament, key=evaluate_fitness)
+    return fittest
+
+def one_point_crossover(parent1, parent2):
+    point = random.randint(1, len(parent1) - 1)
+    offspring1 = parent1[:point] + parent2[point:]
+    offspring2 = parent2[:point] + parent1[point:]
+    return offspring1, offspring2
+
+def bitflip_mutation(bitstring, prob):
+    return ['1' if (bit == '0' and random.random() < prob) else '0' if (bit == '1' and random.random() < prob) else bit for bit in bitstring]
+
+def replace_population(old_pop, new_pop, elitism_count=1):
+    sorted_old_pop = sorted(old_pop, key=evaluate_fitness)
+    new_pop[elitism_count:] = sorted_old_pop[:elitism_count]
+    return new_pop
+
+def genetic_algorithm(pop_size, bitstring_length, generations):
+    population = initialize_population(pop_size, bitstring_length)
+    best_fitness = float('inf')
+    for generation in range(generations):
+        new_population = []
+        while len(new_population) < pop_size:
+            parent1 = tournament_selection(population, 3)
+            parent2 = tournament_selection(population, 3)
+            offspring1, offspring2 = one_point_crossover(parent1, parent2)
+            offspring1 = bitflip_mutation(offspring1, 0.01)
+            offspring2 = bitflip_mutation(offspring2, 0.01)
+            new_population.extend([offspring1, offspring2])
+        population = replace_population(population, new_population, 2)
+        best_fitness = min(best_fitness, min(evaluate_fitness(ind) for ind in population))
+        print(f"Generation {generation}: Best Fitness {best_fitness}")
+
+# Run the genetic algorithm
+pop_size = 100
+bitstring_length = 32
+generations = 500
+genetic_algorithm(pop_size, bitstring_length, generations)
+```
+{{< /details >}}
+
 
 
 ## Summary

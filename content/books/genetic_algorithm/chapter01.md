@@ -181,6 +181,70 @@ The OneMax problem is defined as maximizing the number of `1`s in a bitstring. I
 3. **Test with a Mix of `0`s and `1`s**: Test your `one_max` function with a bitstring of length 10 that contains an even mix of `0`s and `1`s, such as `1010101010`. Verify that it returns the correct count (which should be 5).
 
 
+## Answers
+{{< details "Show" >}}
+### Exercise 1: Bitstring Representations
+
+#### 1. String Representation
+In Python, a bitstring can be represented as a string of '1' and '0' characters. Here's an example:
+```python
+bitstring_str = "1100101010"
+```
+This representation uses the simplicity of string manipulation in Python, making it easy to iterate, access, and modify individual bits using standard string operations.
+
+#### 2. List Representation
+A bitstring can also be represented using a list of integers, where each integer is either 0 or 1. Here's an example:
+```python
+bitstring_list = [1, 1, 0, 0, 1, 0, 1, 0, 1, 0]
+```
+This representation benefits from list operations such as slicing and is directly compatible with many algorithms that might modify the bitstring.
+
+#### 3. Alternative Representation
+Another way to represent a bitstring in Python is using a NumPy array. This is efficient for operations over large datasets and benefits from the broad range of numerical operations NumPy supports:
+```python
+import numpy as np
+bitstring_array = np.array([1, 1, 0, 0, 1, 0, 1, 0, 1, 0])
+```
+This representation is particularly useful in scientific computing where operations on large arrays of bits are common.
+
+### Exercise 2: Implementing the OneMax Function
+We will now implement the `one_max` function that counts the number of `1`s in the bitstring. It will be designed to handle all types of representations mentioned above.
+```python
+def one_max(bitstring):
+    if isinstance(bitstring, str):
+        return bitstring.count('1')
+    elif isinstance(bitstring, list) or isinstance(bitstring, np.ndarray):
+        return sum(bitstring)
+```
+This function checks the type of the input and applies the most efficient counting method for each type. For strings, it uses the string's `count` method. For lists and NumPy arrays, it uses Python's built-in `sum` function.
+
+### Exercise 3: Testing the OneMax Function
+
+#### 1. Test with All `1`s
+```python
+test_all_ones = "1111111111"  # or [1]*10 or np.ones(10, dtype=int)
+result_all_ones = one_max(test_all_ones)
+print("Count of 1s (all ones):", result_all_ones)  # Expected output: 10
+```
+
+#### 2. Test with All `0`s
+```python
+test_all_zeros = "0000000000"  # or [0]*10 or np.zeros(10, dtype=int)
+result_all_zeros = one_max(test_all_zeros)
+print("Count of 1s (all zeros):", result_all_zeros)  # Expected output: 0
+```
+
+#### 3. Test with a Mix of `0`s and `1`s
+```python
+test_mix = "1010101010"  # or [1, 0, 1, 0, 1, 0, 1, 0, 1, 0] or np.array([1, 0, 1, 0, 1, 0, 1, 0, 1, 0])
+result_mix = one_max(test_mix)
+print("Count of 1s (mixed):", result_mix)  # Expected output: 5
+```
+
+These tests ensure that the `one_max` function operates correctly for different bitstring representations and under various conditions.
+{{< /details >}}
+
+
 
 ## Summary
 Chapter 1 provided an introduction to genetic algorithms (GAs), covering their definition, inspiration from biological evolution, and their role as powerful optimization tools. Key concepts like populations, chromosomes, genes, alleles, fitness functions, and genetic operators were explained. The chapter outlined the overall flow of a GA and provided pseudocode. It discussed how GAs can be used for optimization and search, and their suitability for hard problems. The chapter also covered the limitations of GAs. Finally, it introduced bitstring optimization problems and the OneMax problem as a fundamental benchmark.

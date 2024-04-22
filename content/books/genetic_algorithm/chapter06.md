@@ -219,6 +219,576 @@ In this exercise, you'll implement a complete genetic algorithm to solve the One
 Through these exercises, you'll gain practical experience in implementing a complete genetic algorithm, conducting experiments to analyze the impact of key parameters, and interpreting the results to gain insights into the behavior and performance of the algorithm.
 
 
+## Answers
+{{< details "Show" >}}
+### Exercise 1: Implementing the Genetic Algorithm for OneMax
+
+#### 1. Initialization
+We'll start by creating a function to generate a random population of bitstrings:
+
+```python
+import random
+
+def initialize_population(pop_size, bitstring_length):
+    return [['1' if random.random() > 0.5 else '0' for _ in range(bitstring_length)] for _ in range(pop_size)]
+```
+
+#### 2. Fitness Evaluation
+This function computes the fitness of a bitstring by counting the number of '1's:
+
+```python
+def evaluate_fitness(bitstring):
+    return bitstring.count('1')
+```
+
+#### 3. Selection
+We implement tournament selection to pick the best out of a randomly chosen subset:
+
+```python
+def tournament_selection(population, tournament_size):
+    tournament = random.sample(population, tournament_size)
+    fittest = max(tournament, key=evaluate_fitness)
+    return fittest
+```
+
+#### 4. Crossover
+Using one-point crossover from the previous exercises:
+
+```python
+def one_point_crossover(parent1, parent2):
+    point = random.randint(1, len(parent1) - 1)
+    offspring1 = parent1[:point] + parent2[point:]
+    offspring2 = parent2[:point] + parent1[point:]
+    return offspring1, offspring2
+```
+
+#### 5. Mutation
+Function for mutating bitstrings by flipping bits based on a mutation probability:
+
+```python
+def bitflip_mutation(bitstring, prob):
+    return ['1' if (bit == '0' and random.random() < prob) else '0' if (bit == '1' and random.random() < prob) else bit for bit in bitstring]
+```
+
+#### 6. Replacement
+Function to implement elitism by mixing the best of the old population into the new one:
+
+```python
+def replace_population(old_pop, new_pop, elitism_count=1):
+    sorted_old_pop = sorted(old_pop, key=evaluate_fitness, reverse=True)
+    new_pop[-elitism_count:] = sorted_old_pop[:elitism_count]
+    return new_pop
+```
+
+#### 7. GA Loop
+The main loop to run the genetic algorithm:
+
+```python
+def genetic_algorithm(pop_size, bitstring_length, generations):
+    population = initialize_population(pop_size, bitstring_length)
+    best_fitness = 0
+    for generation in range(generations):
+        new_population = []
+        while len(new_population) < pop_size:
+            parent1 = tournament_selection(population, 3)
+            parent2 = tournament_selection(population, 3)
+            offspring1, offspring2 = one_point_crossover(parent1, parent2)
+            offspring1 = bitflip_mutation(offspring1, 0.01)
+            offspring2 = bitflip_mutation(offspring2, 0.01)
+            new_population.extend([offspring1, offspring2])
+        population = replace_population(population, new_population, 2)
+        best_fitness = max(best_fitness, max(evaluate_fitness(ind) for ind in population))
+        print(f"Generation {generation}: Best Fitness {best_fitness}")
+```
+
+Tying this together gives the complete working example:
+
+```python
+import random
+
+def initialize_population(pop_size, bitstring_length):
+    return [['1' if random.random() > 0.5 else '0' for _ in range(bitstring_length)] for _ in range(pop_size)]
+
+def evaluate_fitness(bitstring):
+    return bitstring.count('1')
+
+def tournament_selection(population, tournament_size):
+    tournament = random.sample(population, tournament_size)
+    fittest = max(tournament, key=evaluate_fitness)
+    return fittest
+
+def one_point_crossover(parent1, parent2):
+    point = random.randint(1, len(parent1) - 1)
+    offspring1 = parent1[:point] + parent2[point:]
+    offspring2 = parent2[:point] + parent1[point:]
+    return offspring1, offspring2
+
+def bitflip_mutation(bitstring, prob):
+    return ['1' if (bit == '0' and random.random() < prob) else '0' if (bit == '1' and random.random() < prob) else bit for bit in bitstring]
+
+def replace_population(old_pop, new_pop, elitism_count=1):
+    sorted_old_pop = sorted(old_pop, key=evaluate_fitness, reverse=True)
+    new_pop[-elitism_count:] = sorted_old_pop[:elitism_count]
+    return new_pop
+
+def genetic_algorithm(pop_size, bitstring_length, generations):
+    population = initialize_population(pop_size, bitstring_length)
+    best_fitness = 0
+    for generation in range(generations):
+        new_population = []
+        while len(new_population) < pop_size:
+            parent1 = tournament_selection(population, 3)
+            parent2 = tournament_selection(population, 3)
+            offspring1, offspring2 = one_point_crossover(parent1, parent2)
+            offspring1 = bitflip_mutation(offspring1, 0.01)
+            offspring2 = bitflip_mutation(offspring2, 0.01)
+            new_population.extend([offspring1, offspring2])
+        population = replace_population(population, new_population, 2)
+        best_fitness = max(best_fitness, max(evaluate_fitness(ind) for ind in population))
+        print(f"Generation {generation}: Best Fitness {best_fitness}")
+
+# Run the genetic algorithm
+pop_size = 20
+bitstring_length = 100
+generations = 200
+genetic_algorithm(pop_size, bitstring_length, generations)
+```
+
+### Exercise 2: Experiments and Analysis
+
+#### 1. Population Size Experiment
+First, we need to adapt the main genetic algorithm function to track the number of generations it takes to find the optimal solution:
+
+```python
+def run_ga_population_experiment(bitstring_length, pop_size, generations, trials):
+    results = []
+    for _ in range(trials):
+        population = initialize_population(pop_size, bitstring_length)
+        for generation in range(generations):
+            new_population = []
+            while len(new_population) < pop_size:
+                parent1 = tournament_selection(population, 3)
+                parent2 = tournament_selection(population, 3)
+                offspring1, offspring2 = one_point_crossover(parent1, parent2)
+                offspring1 = bitflip_mutation(offspring1, 0.01)
+                offspring2 = bitflip_mutation(offspring2, 0.01)
+                new_population.extend([offspring1, offspring2])
+            population = replace_population(population, new_population, 2)
+            if max(evaluate_fitness(ind) for ind in population) == bitstring_length:
+                results.append(generation)
+                break
+    return results
+```
+
+This function will be used to gather data for different population sizes. Then, to analyze and plot the results:
+
+```python
+import matplotlib.pyplot as plt
+
+def analyze_population_sizes():
+    bitstring_length = 100
+    population_sizes = [20, 50, 100, 200]
+    trials = 10
+    generations = 200
+    avg_generations = []
+
+    for size in population_sizes:
+        generations_needed = run_ga_population_experiment(bitstring_length, size, generations, trials)
+        avg_generations.append(sum(generations_needed) / len(generations_needed))
+
+    plt.figure(figsize=(10, 5))
+    plt.plot(population_sizes, avg_generations, marker='o')
+    plt.title("Impact of Population Size on Convergence")
+    plt.xlabel("Population Size")
+    plt.ylabel("Average Generations to Solution")
+    plt.grid(True)
+    plt.show()
+
+analyze_population_sizes()
+```
+
+Tying this together, gives the following:
+
+```python
+import random
+import matplotlib.pyplot as plt
+
+def initialize_population(pop_size, bitstring_length):
+    return [['1' if random.random() > 0.5 else '0' for _ in range(bitstring_length)] for _ in range(pop_size)]
+
+def evaluate_fitness(bitstring):
+    return bitstring.count('1')
+
+def tournament_selection(population, tournament_size):
+    tournament = random.sample(population, tournament_size)
+    fittest = max(tournament, key=evaluate_fitness)
+    return fittest
+
+def one_point_crossover(parent1, parent2):
+    point = random.randint(1, len(parent1) - 1)
+    offspring1 = parent1[:point] + parent2[point:]
+    offspring2 = parent2[:point] + parent1[point:]
+    return offspring1, offspring2
+
+def bitflip_mutation(bitstring, prob):
+    return ['1' if (bit == '0' and random.random() < prob) else '0' if (bit == '1' and random.random() < prob) else bit for bit in bitstring]
+
+def replace_population(old_pop, new_pop, elitism_count=1):
+    sorted_old_pop = sorted(old_pop, key=evaluate_fitness, reverse=True)
+    new_pop[-elitism_count:] = sorted_old_pop[:elitism_count]
+    return new_pop
+
+def genetic_algorithm(pop_size, bitstring_length, generations):
+    population = initialize_population(pop_size, bitstring_length)
+    best_fitness = 0
+    for generation in range(generations):
+        new_population = []
+        while len(new_population) < pop_size:
+            parent1 = tournament_selection(population, 3)
+            parent2 = tournament_selection(population, 3)
+            offspring1, offspring2 = one_point_crossover(parent1, parent2)
+            offspring1 = bitflip_mutation(offspring1, 0.01)
+            offspring2 = bitflip_mutation(offspring2, 0.01)
+            new_population.extend([offspring1, offspring2])
+        population = replace_population(population, new_population, 2)
+        best_fitness = max(best_fitness, max(evaluate_fitness(ind) for ind in population))
+        print(f"Generation {generation}: Best Fitness {best_fitness}")
+
+def run_ga_population_experiment(bitstring_length, pop_size, generations, trials):
+    results = []
+    for _ in range(trials):
+        population = initialize_population(pop_size, bitstring_length)
+        for generation in range(generations):
+            new_population = []
+            while len(new_population) < pop_size:
+                parent1 = tournament_selection(population, 3)
+                parent2 = tournament_selection(population, 3)
+                offspring1, offspring2 = one_point_crossover(parent1, parent2)
+                offspring1 = bitflip_mutation(offspring1, 0.01)
+                offspring2 = bitflip_mutation(offspring2, 0.01)
+                new_population.extend([offspring1, offspring2])
+            population = replace_population(population, new_population, 2)
+            if max(evaluate_fitness(ind) for ind in population) == bitstring_length:
+                results.append(generation)
+                break
+    return results
+
+def analyze_population_sizes():
+    bitstring_length = 100
+    population_sizes = [20, 50, 100, 200]
+    trials = 10
+    generations = 200
+    avg_generations = []
+
+    for size in population_sizes:
+        generations_needed = run_ga_population_experiment(bitstring_length, size, generations, trials)
+        avg_generations.append(sum(generations_needed) / len(generations_needed))
+
+    plt.figure(figsize=(10, 5))
+    plt.plot(population_sizes, avg_generations, marker='o')
+    plt.title("Impact of Population Size on Convergence")
+    plt.xlabel("Population Size")
+    plt.ylabel("Average Generations to Solution")
+    plt.grid(True)
+    plt.show()
+
+analyze_population_sizes()
+```
+
+#### 2. Crossover Rate Experiment
+We'll modify the genetic algorithm to vary the crossover rate and analyze its impact:
+
+```python
+def run_ga_crossover_experiment(bitstring_length, pop_size, generations, trials, crossover_rate):
+    results = []
+    for _ in range(trials):
+        population = initialize_population(pop_size, bitstring_length)
+        for generation in range(generations):
+            new_population = []
+            while len(new_population) < pop_size:
+                parent1 = tournament_selection(population, 3)
+                parent2 = tournament_selection(population, 3)
+                if random.random() < crossover_rate:
+                    offspring1, offspring2 = one_point_crossover(parent1, parent2)
+                else:
+                    offspring1, offspring2 = parent1, parent2
+                offspring1 = bitflip_mutation(offspring1, 0.01)
+                offspring2 = bitflip_mutation(offspring2, 0.01)
+                new_population.extend([offspring1, offspring2])
+            population = replace_population(population, new_population, 2)
+            if max(evaluate_fitness(ind) for ind in population) == bitstring_length:
+                results.append(generation)
+                break
+    return results
+
+def analyze_crossover_rates():
+    bitstring_length = 100
+    pop_size = 100
+    crossover_rates = [0.2, 0.4, 0.6, 0.8]
+    trials = 10
+    generations = 200
+    avg_generations = []
+
+    for rate in crossover_rates:
+        generations_needed = run_ga_crossover_experiment(bitstring_length, pop_size, generations, trials, rate)
+        avg_generations.append(sum(generations_needed) / len(generations_needed))
+
+    plt.figure(figsize=(10, 5))
+    plt.plot(crossover_rates, avg_generations, marker='o')
+    plt.title("Impact of Crossover Rate on Convergence")
+    plt.xlabel("Crossover Rate")
+    plt.ylabel("Average Generations to Solution")
+    plt.grid(True)
+    plt.show()
+
+analyze_crossover_rates()
+```
+
+Tying this together, gives the following:
+
+```python
+import random
+import matplotlib.pyplot as plt
+
+def initialize_population(pop_size, bitstring_length):
+    return [['1' if random.random() > 0.5 else '0' for _ in range(bitstring_length)] for _ in range(pop_size)]
+
+def evaluate_fitness(bitstring):
+    return bitstring.count('1')
+
+def tournament_selection(population, tournament_size):
+    tournament = random.sample(population, tournament_size)
+    fittest = max(tournament, key=evaluate_fitness)
+    return fittest
+
+def one_point_crossover(parent1, parent2):
+    point = random.randint(1, len(parent1) - 1)
+    offspring1 = parent1[:point] + parent2[point:]
+    offspring2 = parent2[:point] + parent1[point:]
+    return offspring1, offspring2
+
+def bitflip_mutation(bitstring, prob):
+    return ['1' if (bit == '0' and random.random() < prob) else '0' if (bit == '1' and random.random() < prob) else bit for bit in bitstring]
+
+def replace_population(old_pop, new_pop, elitism_count=1):
+    sorted_old_pop = sorted(old_pop, key=evaluate_fitness, reverse=True)
+    new_pop[-elitism_count:] = sorted_old_pop[:elitism_count]
+    return new_pop
+
+def genetic_algorithm(pop_size, bitstring_length, generations):
+    population = initialize_population(pop_size, bitstring_length)
+    best_fitness = 0
+    for generation in range(generations):
+        new_population = []
+        while len(new_population) < pop_size:
+            parent1 = tournament_selection(population, 3)
+            parent2 = tournament_selection(population, 3)
+            offspring1, offspring2 = one_point_crossover(parent1, parent2)
+            offspring1 = bitflip_mutation(offspring1, 0.01)
+            offspring2 = bitflip_mutation(offspring2, 0.01)
+            new_population.extend([offspring1, offspring2])
+        population = replace_population(population, new_population, 2)
+        best_fitness = max(best_fitness, max(evaluate_fitness(ind) for ind in population))
+        print(f"Generation {generation}: Best Fitness {best_fitness}")
+
+def run_ga_crossover_experiment(bitstring_length, pop_size, generations, trials, crossover_rate):
+    results = []
+    for _ in range(trials):
+        population = initialize_population(pop_size, bitstring_length)
+        for generation in range(generations):
+            new_population = []
+            while len(new_population) < pop_size:
+                parent1 = tournament_selection(population, 3)
+                parent2 = tournament_selection(population, 3)
+                if random.random() < crossover_rate:
+                    offspring1, offspring2 = one_point_crossover(parent1, parent2)
+                else:
+                    offspring1, offspring2 = parent1, parent2
+                offspring1 = bitflip_mutation(offspring1, 0.01)
+                offspring2 = bitflip_mutation(offspring2, 0.01)
+                new_population.extend([offspring1, offspring2])
+            population = replace_population(population, new_population, 2)
+            if max(evaluate_fitness(ind) for ind in population) == bitstring_length:
+                results.append(generation)
+                break
+    return results
+
+def analyze_crossover_rates():
+    bitstring_length = 100
+    pop_size = 100
+    crossover_rates = [0.2, 0.4, 0.6, 0.8]
+    trials = 10
+    generations = 200
+    avg_generations = []
+
+    for rate in crossover_rates:
+        generations_needed = run_ga_crossover_experiment(bitstring_length, pop_size, generations, trials, rate)
+        avg_generations.append(sum(generations_needed) / len(generations_needed))
+
+    plt.figure(figsize=(10, 5))
+    plt.plot(crossover_rates, avg_generations, marker='o')
+    plt.title("Impact of Crossover Rate on Convergence")
+    plt.xlabel("Crossover Rate")
+    plt.ylabel("Average Generations to Solution")
+    plt.grid(True)
+    plt.show()
+
+analyze_crossover_rates()
+```
+
+#### 3. Mutation Rate Experiment
+To adapt the genetic algorithm for varying mutation rates, we need to modify the mutation step:
+
+```python
+def run_ga_mutation_experiment(bitstring_length, pop_size, generations, trials, mutation_rate):
+    results = []
+    for _ in range(trials):
+        population = initialize_population(pop_size, bitstring_length)
+        for generation in range(generations):
+            new_population = []
+            while len(new_population) < pop_size:
+                parent1 = tournament_selection(population, 3)
+                parent2 = tournament_selection(population, 3)
+                offspring1, offspring2 = one_point_crossover(parent1, parent2)
+                offspring1 = bitflip_mutation(offspring1, mutation_rate)
+                offspring2 = bitflip_mutation(offspring2, mutation_rate)
+                new_population.extend([offspring1, offspring2])
+            population = replace_population(population, new_population, 2)
+            # Check if any individual has reached the maximum fitness possible
+            if max(evaluate_fitness(ind) for ind in population) == bitstring_length:
+                results.append(generation)
+                break
+    return results
+```
+
+This function runs multiple trials of the genetic algorithm with a specified mutation rate, collecting data on the number of generations required to find the optimal solution.
+
+Now, to analyze and visualize the impact of different mutation rates:
+
+```python
+def analyze_mutation_rates():
+    bitstring_length = 100
+    pop_size = 100
+    mutation_rates = [0.001, 0.01, 0.05, 0.1]
+    trials = 10
+    generations = 200
+    avg_generations = []
+
+    for rate in mutation_rates:
+        generations_needed = run_ga_mutation_experiment(bitstring_length, pop_size, generations, trials, rate)
+        if len(generations_needed):
+            avg_generations.append(sum(generations_needed) / len(generations_needed))
+        else:
+            avg_generations.append(generations)
+
+    plt.figure(figsize=(10, 5))
+    plt.plot(mutation_rates, avg_generations, marker='o')
+    plt.title("Impact of Mutation Rate on Convergence")
+    plt.xlabel("Mutation Rate")
+    plt.ylabel("Average Generations to Solution")
+    plt.grid(True)
+    plt.show()
+
+analyze_mutation_rates()
+```
+
+This setup will plot how the mutation rate influences the number of generations needed to reach the optimal solution. The plotted results will help in understanding the trade-off between exploration (trying out new gene combinations through mutations) and exploitation (refining existing good solutions). This balance is crucial for the effective performance of genetic algorithms in finding global optima.
+
+Tying this together gives the following:
+
+```python
+import random
+import matplotlib.pyplot as plt
+
+def initialize_population(pop_size, bitstring_length):
+    return [['1' if random.random() > 0.5 else '0' for _ in range(bitstring_length)] for _ in range(pop_size)]
+
+def evaluate_fitness(bitstring):
+    return bitstring.count('1')
+
+def tournament_selection(population, tournament_size):
+    tournament = random.sample(population, tournament_size)
+    fittest = max(tournament, key=evaluate_fitness)
+    return fittest
+
+def one_point_crossover(parent1, parent2):
+    point = random.randint(1, len(parent1) - 1)
+    offspring1 = parent1[:point] + parent2[point:]
+    offspring2 = parent2[:point] + parent1[point:]
+    return offspring1, offspring2
+
+def bitflip_mutation(bitstring, prob):
+    return ['1' if (bit == '0' and random.random() < prob) else '0' if (bit == '1' and random.random() < prob) else bit for bit in bitstring]
+
+def replace_population(old_pop, new_pop, elitism_count=1):
+    sorted_old_pop = sorted(old_pop, key=evaluate_fitness, reverse=True)
+    new_pop[-elitism_count:] = sorted_old_pop[:elitism_count]
+    return new_pop
+
+def genetic_algorithm(pop_size, bitstring_length, generations):
+    population = initialize_population(pop_size, bitstring_length)
+    best_fitness = 0
+    for generation in range(generations):
+        new_population = []
+        while len(new_population) < pop_size:
+            parent1 = tournament_selection(population, 3)
+            parent2 = tournament_selection(population, 3)
+            offspring1, offspring2 = one_point_crossover(parent1, parent2)
+            offspring1 = bitflip_mutation(offspring1, 0.01)
+            offspring2 = bitflip_mutation(offspring2, 0.01)
+            new_population.extend([offspring1, offspring2])
+        population = replace_population(population, new_population, 2)
+        best_fitness = max(best_fitness, max(evaluate_fitness(ind) for ind in population))
+        print(f"Generation {generation}: Best Fitness {best_fitness}")
+
+def run_ga_mutation_experiment(bitstring_length, pop_size, generations, trials, mutation_rate):
+    results = []
+    for _ in range(trials):
+        population = initialize_population(pop_size, bitstring_length)
+        for generation in range(generations):
+            new_population = []
+            while len(new_population) < pop_size:
+                parent1 = tournament_selection(population, 3)
+                parent2 = tournament_selection(population, 3)
+                offspring1, offspring2 = one_point_crossover(parent1, parent2)
+                offspring1 = bitflip_mutation(offspring1, mutation_rate)
+                offspring2 = bitflip_mutation(offspring2, mutation_rate)
+                new_population.extend([offspring1, offspring2])
+            population = replace_population(population, new_population, 2)
+            # Check if any individual has reached the maximum fitness possible
+            if max(evaluate_fitness(ind) for ind in population) == bitstring_length:
+                results.append(generation)
+                break
+    return results
+
+def analyze_mutation_rates():
+    bitstring_length = 100
+    pop_size = 100
+    mutation_rates = [0.001, 0.01, 0.05, 0.1]
+    trials = 10
+    generations = 200
+    avg_generations = []
+
+    for rate in mutation_rates:
+        generations_needed = run_ga_mutation_experiment(bitstring_length, pop_size, generations, trials, rate)
+        if len(generations_needed):
+            avg_generations.append(sum(generations_needed) / len(generations_needed))
+        else:
+            avg_generations.append(generations)
+
+    plt.figure(figsize=(10, 5))
+    plt.plot(mutation_rates, avg_generations, marker='o')
+    plt.title("Impact of Mutation Rate on Convergence")
+    plt.xlabel("Mutation Rate")
+    plt.ylabel("Average Generations to Solution")
+    plt.grid(True)
+    plt.show()
+
+analyze_mutation_rates()
+```
+
+{{< /details >}}
+
 
 
 ## Summary

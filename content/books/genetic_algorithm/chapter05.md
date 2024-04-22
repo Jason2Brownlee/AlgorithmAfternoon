@@ -320,6 +320,244 @@ These exercises will provide a deep understanding of crossover, its role in gene
 
 
 
+## Answers
+{{< details "Show" >}}
+### Exercise 1: Generating Crossover Combinations
+
+#### 1. All Crossover Combinations
+We'll write a Python function to generate all crossover combinations from two extreme bitstrings (`111...1` and `000...0`) of specified length.
+
+```python
+def generate_crossover_combinations(length):
+    combinations = []
+    parent1 = '1' * length
+    parent2 = '0' * length
+    for i in range(length + 1):
+        combination = parent1[:i] + parent2[i:]
+        combinations.append(combination)
+    return combinations
+```
+
+#### 2. Testing Crossover Combinations
+Using the function for lengths of 4, 8, and 12 and counting unique combinations.
+
+```python
+def generate_crossover_combinations(length):
+    combinations = []
+    parent1 = '1' * length
+    parent2 = '0' * length
+    for i in range(length + 1):
+        combination = parent1[:i] + parent2[i:]
+        combinations.append(combination)
+    return combinations
+
+for length in [4, 8, 12]:
+    combinations = generate_crossover_combinations(length)
+    print(f'Length {length}: {len(combinations)} unique combinations.')
+    for c in combinations:
+        print(f'\t{c}')
+```
+
+#### 3. Analyzing Crossover Outcomes
+Calculate and discuss the average number of `1`s in the bitstrings for each tested length.
+
+```python
+def generate_crossover_combinations(length):
+    combinations = []
+    parent1 = '1' * length
+    parent2 = '0' * length
+    for i in range(length + 1):
+        combination = parent1[:i] + parent2[i:]
+        combinations.append(combination)
+    return combinations
+
+for length in [4, 8, 12]:
+    combinations = generate_crossover_combinations(length)
+    average_ones = sum(c.count('1') for c in combinations) / len(combinations)
+    print(f'Length {length}: Average number of 1s = {average_ones}')
+```
+
+### Exercise 2: Implementing One-Point Crossover
+
+#### 1. One-Point Crossover
+Implement a function that performs a one-point crossover at a random point.
+
+```python
+import random
+
+def one_point_crossover(parent1, parent2):
+    point = random.randint(1, len(parent1) - 1)  # Ensure the point is within the string
+    offspring1 = parent1[:point] + parent2[point:]
+    offspring2 = parent2[:point] + parent1[point:]
+    return offspring1, offspring2, point
+```
+
+#### 2. Testing One-Point Crossover
+Test the function on specified pairs and observe the variation.
+
+```python
+import random
+
+def one_point_crossover(parent1, parent2):
+    point = random.randint(1, len(parent1) - 1)  # Ensure the point is within the string
+    offspring1 = parent1[:point] + parent2[point:]
+    offspring2 = parent2[:point] + parent1[point:]
+    return offspring1, offspring2, point
+
+parents = [
+    (['1', '1', '1', '1', '1'], ['0', '0', '0', '0', '0']),
+    (['1', '0', '1', '0', '1'], ['0', '1', '0', '1', '0'])
+]
+
+for parent1, parent2 in parents:
+    print(f"Testing crossover between {parent1} and {parent2}")
+    for _ in range(5):  # Running 5 times to see variations
+        offspring1, offspring2, point = one_point_crossover(parent1, parent2)
+        print(f"Crossover point: {point}, Offspring1: {offspring1}, Offspring2: {offspring2}")
+```
+
+#### 3. Crossover Point Distribution
+Modify the function to track the crossover point and plot a histogram.
+
+```python
+import random
+import matplotlib.pyplot as plt
+
+def one_point_crossover(parent1, parent2):
+    point = random.randint(1, len(parent1) - 1)  # Ensure the point is within the string
+    offspring1 = parent1[:point] + parent2[point:]
+    offspring2 = parent2[:point] + parent1[point:]
+    return offspring1, offspring2, point
+
+def test_crossover_distribution(length, trials):
+    points = []
+    parent1, parent2 = ['1'] * length, ['0'] * length
+    for _ in range(trials):
+        _, _, point = one_point_crossover(parent1, parent2)
+        points.append(point)
+
+    plt.hist(points, bins=length, edgecolor='black')
+    plt.title('Distribution of Crossover Points')
+    plt.xlabel('Crossover Point')
+    plt.ylabel('Frequency')
+    plt.show()
+
+test_crossover_distribution(50, 1000)
+```
+
+### Exercise 3: Building a Crossover-Only Hill Climber for OneMax
+
+#### 1. Crossover-Only Hill Climber
+Implement the algorithm using the previously defined one-point crossover.
+
+```python
+def evaluate_fitness(bitstring):
+    return bitstring.count('1')
+
+def hill_climber(length, population_size, generations):
+    population = [['1' if random.random() > 0.5 else '0' for _ in range(length)] for _ in range(population_size)]
+    for _ in range(generations):
+        parent1, parent2 = random.sample(population, 2)
+        offspring1, offspring2, _ = one_point_crossover(parent1, parent2)
+        population.sort(key=evaluate_fitness)
+        if evaluate_fitness(offspring1) > evaluate_fitness(population[0]):
+            population[0] = offspring1
+        elif evaluate_fitness(offspring2) > evaluate_fitness(population[0]):
+            population[0] = offspring2
+    return max(population, key=evaluate_fitness)
+```
+
+#### 2. Testing the Hill Climber
+Test the algorithm with different bitstring lengths.
+
+```python
+import random
+
+def one_point_crossover(parent1, parent2):
+    point = random.randint(1, len(parent1) - 1)  # Ensure the point is within the string
+    offspring1 = parent1[:point] + parent2[point:]
+    offspring2 = parent2[:point] + parent1[point:]
+    return offspring1, offspring2, point
+
+def evaluate_fitness(bitstring):
+    return bitstring.count('1')
+
+def hill_climber(length, population_size, generations):
+    population = [['1' if random.random() > 0.5 else '0' for _ in range(length)] for _ in range(population_size)]
+    for _ in range(generations):
+        parent1, parent2 = random.sample(population, 2)
+        offspring1, offspring2, _ = one_point_crossover(parent1, parent2)
+        population.sort(key=evaluate_fitness)
+        if evaluate_fitness(offspring1) > evaluate_fitness(population[0]):
+            population[0] = offspring1
+        elif evaluate_fitness(offspring2) > evaluate_fitness(population[0]):
+            population[0] = offspring2
+    return max(population, key=evaluate_fitness)
+
+for length in [50, 100]:
+    results = []
+    for _ in range(10):
+        best = hill_climber(length, 50, 100)
+        results.append(evaluate_fitness(best))
+    print(f"Bitstring length {length}, Best Fitnesses: {results}")
+```
+
+#### 3. Impact of Initial Population Size
+Analyze the impact of population size by varying it and recording the iterations needed.
+
+```python
+def test_population_sizes(length, sizes):
+    for size in sizes:
+        results = []
+        for _ in range(10):
+            best = hill_climber(length, size, 100)
+            results.append(evaluate_fitness(best))
+        average_iterations = sum(results) / len(results)
+        print(f"Population size {size}, Average Best Fitness: {average_iterations}")
+```
+
+#### 4. Diversity and Performance
+Report and discuss the results.
+
+```python
+import random
+
+def one_point_crossover(parent1, parent2):
+    point = random.randint(1, len(parent1) - 1)  # Ensure the point is within the string
+    offspring1 = parent1[:point] + parent2[point:]
+    offspring2 = parent2[:point] + parent1[point:]
+    return offspring1, offspring2, point
+
+def evaluate_fitness(bitstring):
+    return bitstring.count('1')
+
+def hill_climber(length, population_size, generations):
+    population = [['1' if random.random() > 0.5 else '0' for _ in range(length)] for _ in range(population_size)]
+    for _ in range(generations):
+        parent1, parent2 = random.sample(population, 2)
+        offspring1, offspring2, _ = one_point_crossover(parent1, parent2)
+        population.sort(key=evaluate_fitness)
+        if evaluate_fitness(offspring1) > evaluate_fitness(population[0]):
+            population[0] = offspring1
+        elif evaluate_fitness(offspring2) > evaluate_fitness(population[0]):
+            population[0] = offspring2
+    return max(population, key=evaluate_fitness)
+
+def test_population_sizes(length, sizes):
+    for size in sizes:
+        results = []
+        for _ in range(10):
+            best = hill_climber(length, size, 100)
+            results.append(evaluate_fitness(best))
+        average_iterations = sum(results) / len(results)
+        print(f"Population size {size}, Average Best Fitness: {average_iterations}")
+
+population_sizes = [10, 50, 100]
+for size in population_sizes:
+    test_population_sizes(50, [size])
+```
+{{< /details >}}
+
 
 
 ## Summary
@@ -346,8 +584,5 @@ Put your understanding of crossover into practice by implementing the exercises 
 
 ### Next Chapter:
 In [Chapter 6](chapter06.md), we'll venture beyond bitstrings and explore function optimization using genetic algorithms. We'll learn how to decode bitstrings to floats, solve Rastrigin's function in one dimension, and implement Gray code decoding to enhance the GA's performance.
-
-
-
 
 

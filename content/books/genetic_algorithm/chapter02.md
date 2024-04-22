@@ -337,6 +337,134 @@ Observe how the performance of random search varies with the size of the search 
 By completing these exercises, you will gain practical experience in implementing and analyzing random search for the OneMax problem. This foundation will serve as a baseline for understanding the benefits and limitations of random search and motivate the need for more advanced optimization techniques like genetic algorithms.
 
 
+## Answers
+{{< details "Show" >}}
+### Exercise 1: Generating Random Bitstrings
+
+Here's how you can implement a function to generate random bitstrings:
+
+```python
+import random
+
+def generate_random_bitstring(length):
+    # Generate a list of random 0s and 1s using a list comprehension
+    return [random.randint(0, 1) for _ in range(length)]
+
+# Testing the function
+print(generate_random_bitstring(10))  # Example output: [1, 0, 1, 0, 1, 1, 0, 1, 0, 0]
+print(generate_random_bitstring(5))   # Example output: [0, 1, 1, 0, 1]
+```
+
+This function utilizes Python's `random.randint(0, 1)` to generate each bit as either 0 or 1, and it uses a list comprehension to build the entire bitstring of the desired length. Test this function by generating bitstrings of various lengths to ensure they meet the requirements.
+
+### Exercise 2: Evaluating Bitstring Fitness
+
+To evaluate the fitness of a bitstring in the OneMax problem, implement the following function:
+
+```python
+def evaluate_fitness(bitstring):
+    # The fitness is simply the sum of 1s in the bitstring
+    return sum(bitstring)
+
+# Testing the function
+print(evaluate_fitness([1, 0, 1, 0, 1, 1, 0, 1, 0, 0]))  # Expected output: 5
+print(evaluate_fitness([0, 0, 0, 0, 0]))                # Expected output: 0
+```
+
+This function calculates the fitness score by summing the values in the bitstring, as each 1 contributes one point to the score. Tests with various bitstrings confirm that it counts the number of 1s correctly.
+
+### Exercise 3: Implementing Random Search
+
+Here's how you can implement the random search algorithm for the OneMax problem:
+
+```python
+import random
+
+def generate_random_bitstring(length):
+    # Generate a list of random 0s and 1s using a list comprehension
+    return [random.randint(0, 1) for _ in range(length)]
+
+def evaluate_fitness(bitstring):
+    # The fitness is simply the sum of 1s in the bitstring
+    return sum(bitstring)
+
+def random_search(length, max_iterations):
+    best_solution = None
+    best_fitness = -1
+
+    for _ in range(max_iterations):
+        candidate = generate_random_bitstring(length)
+        fitness = evaluate_fitness(candidate)
+
+        if fitness > best_fitness:
+            best_fitness = fitness
+            best_solution = candidate
+
+    return best_solution, best_fitness
+
+# Testing the function
+print(random_search(10, 100))
+```
+
+This function iteratively generates new random bitstrings, evaluates their fitness, and keeps track of the best solution found. Test it by varying the length of the bitstring and the number of iterations.
+
+### Exercise 4: Analyzing Random Search Performance
+
+To analyze the performance of the random search algorithm:
+
+```python
+import random
+import matplotlib.pyplot as plt
+
+def generate_random_bitstring(length):
+    # Generate a list of random 0s and 1s using a list comprehension
+    return [random.randint(0, 1) for _ in range(length)]
+
+def evaluate_fitness(bitstring):
+    # The fitness is simply the sum of 1s in the bitstring
+    return sum(bitstring)
+
+def random_search(length, max_iterations):
+    best_solution = None
+    best_fitness = -1
+
+    for _ in range(max_iterations):
+        candidate = generate_random_bitstring(length)
+        fitness = evaluate_fitness(candidate)
+
+        if fitness > best_fitness:
+            best_fitness = fitness
+            best_solution = candidate
+
+    return best_solution, best_fitness
+
+def analyze_random_search_performance(lengths, iterations, runs):
+    avg_fitness_scores = []
+
+    for length in lengths:
+        scores = []
+        for _ in range(runs):
+            _, best_fitness = random_search(length, iterations)
+            scores.append(best_fitness)
+        avg_fitness = sum(scores) / len(scores)
+        avg_fitness_scores.append(avg_fitness)
+
+    # Plotting the results
+    plt.figure(figsize=(10, 5))
+    plt.plot(lengths, avg_fitness_scores, marker='o')
+    plt.title('Random Search Performance Analysis')
+    plt.xlabel('Bitstring Length')
+    plt.ylabel('Average Best Fitness Score')
+    plt.grid(True)
+    plt.show()
+
+# Example usage
+analyze_random_search_performance([10, 20, 30, 40, 50], 1000, 10)
+```
+
+This script runs the random search multiple times for different bitstring lengths and records the best fitness score for each run, then averages these scores and plots them. Observing the plot will help in understanding how performance varies with bitstring length and iteration count.
+{{< /details >}}
+
 
 ## Summary
 Chapter 2 explore the fundamentals of generating solutions and implementing random search for the OneMax problem. The chapter began by introducing the concept of search spaces, emphasizing their importance in understanding how genetic algorithms navigate the landscape of potential solutions. It then explored the role of randomness in GAs, highlighting the balance between stochastic exploration and deterministic exploitation. The process of generating random bitstrings was explained, along with techniques to ensure diversity in the initial population. A detailed example of implementing a random search algorithm for the OneMax problem was provided, serving as a baseline for comparison with more advanced optimization techniques. The chapter also discussed the concept of fitness and the challenges involved in evaluating solutions, such as computational complexity, noisy environments, and deceptive landscapes. Finally, it introduced the notion of fitness landscapes and how they influence the performance of search algorithms.

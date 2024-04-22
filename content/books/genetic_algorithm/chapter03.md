@@ -242,8 +242,285 @@ These exercises will guide you through implementing key components of genetic al
 
 3. **Population Size and Performance**: Repeat the previous test with different population sizes (e.g., 10, 50, 100). Observe and discuss how the population size affects the performance of the parallel hill climber.
 
-4. **Comparing with the Basic Hill Climber**: Compare the performance of the parallel hill climber with the basic hill climber from Exercise 2. Discuss the advantages and disadvantages of each approach.
+## Answers
+{{< details "Show" >}}
+### Exercise 1: Implementing Bit Flip Mutation
 
+#### 1. Basic Bit Flip
+
+```python
+import random
+
+def bitflip_mutation(bitstring, prob):
+    # Iterate through each bit in the bitstring
+    return [1 - bit if random.random() < prob else bit for bit in bitstring]
+```
+
+#### 2. Testing Bit Flip
+
+```python
+import random
+
+def bitflip_mutation(bitstring, prob):
+    # Iterate through each bit in the bitstring
+    return [1 - bit if random.random() < prob else bit for bit in bitstring]
+
+# Test the bitflip_mutation function with prob = 0.1
+test_bitstring = [1, 0, 1, 0, 1, 0, 1, 0, 1, 0]
+for _ in range(5):  # Run the test multiple times
+    print(bitflip_mutation(test_bitstring, 0.1))
+```
+
+#### 3. Mutation Rate Experiment
+
+```python
+import random
+import matplotlib.pyplot as plt
+import numpy as np
+
+def bitflip_mutation(bitstring, prob):
+    # Iterate through each bit in the bitstring
+    return [1 - bit if random.random() < prob else bit for bit in bitstring]
+
+# Initialize variables
+length = 100
+trials = 1000
+probabilities = np.linspace(0.001, 1.0, 1000)
+average_flips = []
+
+# Run mutation experiment
+for prob in probabilities:
+    flips = [sum(bitflip_mutation([0]*length, prob)) for _ in range(trials)]
+    average_flips.append(np.mean(flips))
+
+# Plotting the results
+plt.figure(figsize=(10, 5))
+plt.plot(probabilities, average_flips, label='Average Number of Bits Flipped')
+plt.xlabel('Mutation Probability')
+plt.ylabel('Average Number of Flips')
+plt.title('Effect of Mutation Probability on Bit Flips')
+plt.legend()
+plt.grid(True)
+plt.show()
+```
+
+### Exercise 2: Building a Hill Climber for OneMax
+
+#### 1. Hill Climber
+
+```python
+def hill_climber(bitstring, mutation_prob, no_improve_limit):
+    current_solution = bitstring[:]
+    current_fitness = evaluate_fitness(current_solution)
+    iterations = 0
+
+    while no_improve_limit > 0:
+        candidate = bitflip_mutation(current_solution[:], mutation_prob)
+        candidate_fitness = evaluate_fitness(candidate)
+        if candidate_fitness > current_fitness:
+            current_solution, current_fitness = candidate, candidate_fitness
+            no_improve_limit = 10  # Reset the limit on seeing improvement
+        else:
+            no_improve_limit -= 1
+        iterations += 1
+
+    return current_solution, current_fitness, iterations
+```
+
+#### 2. Testing the Hill Climber
+
+```python
+import random
+
+def generate_random_bitstring(length):
+    # Generate a list of random 0s and 1s using a list comprehension
+    return [random.randint(0, 1) for _ in range(length)]
+
+def evaluate_fitness(bitstring):
+    # The fitness is simply the sum of 1s in the bitstring
+    return sum(bitstring)
+
+def bitflip_mutation(bitstring, prob):
+    # Iterate through each bit in the bitstring
+    return [1 - bit if random.random() < prob else bit for bit in bitstring]
+
+def hill_climber(bitstring, mutation_prob, no_improve_limit):
+    current_solution = bitstring[:]
+    current_fitness = evaluate_fitness(current_solution)
+    iterations = 0
+
+    while no_improve_limit > 0:
+        candidate = bitflip_mutation(current_solution[:], mutation_prob)
+        candidate_fitness = evaluate_fitness(candidate)
+        if candidate_fitness > current_fitness:
+            current_solution, current_fitness = candidate, candidate_fitness
+            no_improve_limit = 10  # Reset the limit on seeing improvement
+        else:
+            no_improve_limit -= 1
+        iterations += 1
+
+    return current_solution, current_fitness, iterations
+
+# Test the hill climber on different bitstring lengths
+for length in [10, 50, 100]:
+    results = []
+    for _ in range(10):
+        initial_bitstring = generate_random_bitstring(length)
+        result = hill_climber(initial_bitstring, 0.01, 10)
+        results.append(result[2])  # Store the number of iterations
+    print(f"Length {length}, Iterations: {results}")
+```
+
+#### 3. Mutation Rate and Performance
+
+```python
+import random
+import numpy as np
+
+def generate_random_bitstring(length):
+    # Generate a list of random 0s and 1s using a list comprehension
+    return [random.randint(0, 1) for _ in range(length)]
+
+def evaluate_fitness(bitstring):
+    # The fitness is simply the sum of 1s in the bitstring
+    return sum(bitstring)
+
+def bitflip_mutation(bitstring, prob):
+    # Iterate through each bit in the bitstring
+    return [1 - bit if random.random() < prob else bit for bit in bitstring]
+
+def hill_climber(bitstring, mutation_prob, no_improve_limit):
+    current_solution = bitstring[:]
+    current_fitness = evaluate_fitness(current_solution)
+    iterations = 0
+
+    while no_improve_limit > 0:
+        candidate = bitflip_mutation(current_solution[:], mutation_prob)
+        candidate_fitness = evaluate_fitness(candidate)
+        if candidate_fitness > current_fitness:
+            current_solution, current_fitness = candidate, candidate_fitness
+            no_improve_limit = 10  # Reset the limit on seeing improvement
+        else:
+            no_improve_limit -= 1
+        iterations += 1
+
+    return current_solution, current_fitness, iterations
+
+# Test with different mutation rates
+mutation_rates = [0.001, 0.01, 0.1]
+length = 50
+for rate in mutation_rates:
+    results = []
+    for _ in range(10):
+        initial_bitstring = generate_random_bitstring(length)
+        result = hill_climber(initial_bitstring, rate, 10)
+        results.append(result[2])
+    print(f"Mutation rate {rate}, Average Iterations: {np.mean(results)}")
+```
+
+### Exercise 3: Implementing Parallel Hill Climbing for OneMax
+
+#### 1. Parallel Hill Climber
+
+```python
+def parallel_hill_climber(population, mutation_prob, generations):
+    for _ in range(generations):
+        # Apply mutation to each individual
+        mutated_population = [bitflip_mutation(individual, mutation_prob) for individual in population]
+        # Evaluate fitness and select the best
+        fitness_scores = [evaluate_fitness(individual) for individual in mutated_population]
+        best_indices = np.argsort(fitness_scores)[-len(population):]  # Select the best
+        population = [mutated_population[i] for i in best_indices]
+
+    best_fitness = max(fitness_scores)
+    best_individual = mutated_population[fitness_scores.index(best_fitness)]
+    return best_individual, best_fitness
+```
+
+#### 2. Testing the Parallel Hill Climber
+
+```python
+import random
+import numpy as np
+
+def generate_random_bitstring(length):
+    # Generate a list of random 0s and 1s using a list comprehension
+    return [random.randint(0, 1) for _ in range(length)]
+
+def evaluate_fitness(bitstring):
+    # The fitness is simply the sum of 1s in the bitstring
+    return sum(bitstring)
+
+def bitflip_mutation(bitstring, prob):
+    # Iterate through each bit in the bitstring
+    return [1 - bit if random.random() < prob else bit for bit in bitstring]
+
+def parallel_hill_climber(population, mutation_prob, generations):
+    for _ in range(generations):
+        # Apply mutation to each individual
+        mutated_population = [bitflip_mutation(individual, mutation_prob) for individual in population]
+        # Evaluate fitness and select the best
+        fitness_scores = [evaluate_fitness(individual) for individual in mutated_population]
+        best_indices = np.argsort(fitness_scores)[-len(population):]  # Select the best
+        population = [mutated_population[i] for i in best_indices]
+
+    best_fitness = max(fitness_scores)
+    best_individual = mutated_population[fitness_scores.index(best_fitness)]
+    return best_individual, best_fitness
+
+# Testing on bitstring lengths
+for length in [10, 50, 100]:
+    results = []
+    for _ in range(10):
+        initial_population = [generate_random_bitstring(length) for _ in range(50)]  # Population of 50
+        _, best_fitness = parallel_hill_climber(initial_population, 0.01, 100)
+        results.append(best_fitness)
+    print(f"Results for length {length}: {np.mean(results)}")
+```
+
+#### 3. Population Size and Performance
+
+```python
+import random
+import numpy as np
+
+def generate_random_bitstring(length):
+    # Generate a list of random 0s and 1s using a list comprehension
+    return [random.randint(0, 1) for _ in range(length)]
+
+def evaluate_fitness(bitstring):
+    # The fitness is simply the sum of 1s in the bitstring
+    return sum(bitstring)
+
+def bitflip_mutation(bitstring, prob):
+    # Iterate through each bit in the bitstring
+    return [1 - bit if random.random() < prob else bit for bit in bitstring]
+
+def parallel_hill_climber(population, mutation_prob, generations):
+    for _ in range(generations):
+        # Apply mutation to each individual
+        mutated_population = [bitflip_mutation(individual, mutation_prob) for individual in population]
+        # Evaluate fitness and select the best
+        fitness_scores = [evaluate_fitness(individual) for individual in mutated_population]
+        best_indices = np.argsort(fitness_scores)[-len(population):]  # Select the best
+        population = [mutated_population[i] for i in best_indices]
+
+    best_fitness = max(fitness_scores)
+    best_individual = mutated_population[fitness_scores.index(best_fitness)]
+    return best_individual, best_fitness
+
+# Test different population sizes
+population_sizes = [10, 50, 100]
+length = 50
+for size in population_sizes:
+    results = []
+    for _ in range(10):
+        initial_population = [generate_random_bitstring(length) for _ in range(size)]
+        _, result = parallel_hill_climber(initial_population, 0.01, 100)
+        results.append(result)
+    print(f"Population size {size}, Results: {np.mean(results)}")
+```
+{{< /details >}}
 
 
 ## Summary
