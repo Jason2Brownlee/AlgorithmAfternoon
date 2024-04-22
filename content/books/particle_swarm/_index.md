@@ -13,6 +13,7 @@ A mini-book dedicated to the genetic algorithm.
 
 ## Table of Contents
 
+* [Introduction](chapter00.md)
 * [Chapter 1: Introduction to Particle Swarm Optimization](chapter01.md)
 * [Chapter 2: Personal Best and Velocity Update](chapter02.md)
 * [Chapter 3: Global Best and Social Interaction](chapter03.md)
