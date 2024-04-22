@@ -292,7 +292,6 @@ Remember to document your code, including comments explaining the purpose of eac
 
 ## Answers
 {{< details "Show" >}}
-Let's start by implementing the functions and modifications required for Exercise 1 and then proceed through Exercises 2 and 3.
 
 ### Exercise 1: Performance Metrics
 
