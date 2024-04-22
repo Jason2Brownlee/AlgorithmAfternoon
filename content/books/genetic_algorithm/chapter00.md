@@ -16,9 +16,7 @@ Our mission is clear: to equip you with the knowledge and skills necessary to ha
 
 2. **Implement in Python**: Get your hands dirty with practical coding exercises and projects. You'll learn how to translate genetic algorithm concepts into efficient Python code, leveraging the power of libraries like NumPy and Matplotlib to bring your algorithms to life.
 
-3. **Apply to Real-World Problems**: Witness the versatility of genetic algorithms as we apply them to a wide range of optimization and search problems. From bitstring optimization to continuous function landscapes, you'll gain the skills to adapt genetic algorithms to various domains and tackle real-world challenges head-on.
-
-4. **Develop Intuition and Mastery**: Dive deeper into the art of parameter tuning and troubleshooting. You'll develop an intuition for setting population sizes, mutation rates, and selection pressures. We'll explore common pitfalls and equip you with the tools to identify and overcome them, ensuring your genetic algorithms converge towards optimal solutions.
+3. **Develop Intuition and Mastery**: Dive deeper into the art of parameter tuning and troubleshooting. You'll develop an intuition for setting population sizes, mutation rates, and selection pressures. We'll explore common pitfalls and equip you with the tools to identify and overcome them, ensuring your genetic algorithms converge towards optimal solutions.
 
 ## Structure of the Book
 

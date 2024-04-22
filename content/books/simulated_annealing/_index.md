@@ -13,6 +13,7 @@ A mini-book dedicated to the simulated annealing.
 
 ## Table of Contents
 
+* [Introduction](chapter00.md)
 * [Chapter 1: Introduction to Simulated Annealing](chapter01.md)
 * [Chapter 2: Temperature and Cooling Schedules](chapter02.md)
 * [Chapter 3: Generating Solutions and Acceptance Criteria](chapter03.md)
