@@ -791,6 +791,6 @@ Put your skills to the test by implementing performance metrics, conducting para
 ### End
 This was the last chapter of the book. Well done, you made it!
 
-[Review](./) how far you have come.
+[Review](chapter06.md) how far you have come.
 
 

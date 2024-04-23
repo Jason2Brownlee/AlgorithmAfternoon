@@ -21,6 +21,7 @@ See on [Amazon](https://amzn.to/49MVXhy) and [Goodreads](https://www.goodreads.c
 * [Chapter 3: Generating Solutions and Acceptance Criteria](chapter03.md)
 * [Chapter 4: Integrating Components into the Algorithm](chapter04.md)
 * [Chapter 5: Analyzing and Refining the Algorithm](chapter05.md)
+* [Conclusions](chapter06.md)
 
 ## Synopsis
 
