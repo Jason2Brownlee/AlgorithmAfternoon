@@ -179,7 +179,7 @@ Put your newfound knowledge of PSO parameter tuning into practice by conducting 
 ### End
 This was the last chapter of the book. Well done, you made it!
 
-[Review](./) how far you have come.
+[Review](chapter05.md) how far you have come.
 
 
 

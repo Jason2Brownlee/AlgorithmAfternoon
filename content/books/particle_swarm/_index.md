@@ -20,6 +20,7 @@ See on [Amazon](https://amzn.to/3U2Xkmk) and [Goodreads](https://www.goodreads.c
 * [Chapter 2: Personal Best and Velocity Update](chapter02.md)
 * [Chapter 3: Global Best and Social Interaction](chapter03.md)
 * [Chapter 4: Parameter Tuning and Its Effects](chapter04.md)
+* [Conclusions](chapter05.md)
 
 ## Synopsis
 
