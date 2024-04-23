@@ -9,6 +9,8 @@ bookCollapseSection: true
 
 A mini-book dedicated to the simulated annealing.
 
+See on [Amazon](https://amzn.to/49MVXhy) and [Goodreads](https://www.goodreads.com/book/show/212008335-simulated-annealing-afternoon).
+
 ![Simulated Annealing Afternoon](/book_sa_cover.png)
 
 ## Table of Contents

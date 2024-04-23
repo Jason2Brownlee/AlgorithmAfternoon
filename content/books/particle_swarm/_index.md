@@ -9,6 +9,8 @@ bookCollapseSection: true
 
 A mini-book dedicated to the genetic algorithm.
 
+See on [Amazon](https://amzn.to/3U2Xkmk) and [Goodreads](https://www.goodreads.com/book/show/212008109-particle-swarm-afternoon).
+
 ![Particle Swarm Afternoon](/book_pso_cover.png)
 
 ## Table of Contents

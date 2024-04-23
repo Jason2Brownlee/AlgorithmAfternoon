@@ -582,4 +582,4 @@ Take on the challenge of implementing binary and Gray code encoding/decoding fun
 ### End
 This was the last chapter of the book. Well done, you made it!
 
-[Review](./) how far you have come.
+[Review](chapter08.md) how far you have come.

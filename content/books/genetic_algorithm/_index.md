@@ -9,6 +9,8 @@ bookCollapseSection: true
 
 A mini-book dedicated to the genetic algorithm.
 
+See on [Amazon](https://amzn.to/3U9N8IS) and [Goodreads](https://www.goodreads.com/book/show/212008080-genetic-algorithm-afternoon).
+
 ![Genetic Algorithm Afternoon](/book_ga_cover.png)
 
 ## Table of Contents
@@ -21,6 +23,7 @@ A mini-book dedicated to the genetic algorithm.
 * [Chapter 5: Crossover and Its Effects](chapter05.md)
 * [Chapter 6: Implementing the Genetic Algorithm](chapter06.md)
 * [Chapter 7: Continuous Function Optimization](chapter07.md)
+* [Conclusions](chapter08.md)
 
 ## Synopsis
 
