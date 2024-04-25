@@ -16,6 +16,11 @@ Can't choose? Try: [Simulated Annealing](/physical/simulated_annealing/), or [Ge
 
 If you get stuck, see the [help section](/help/).
 
+## Praise
+
+[![Praise](/praise_top.png)](praise.md)
+[Read more praise](praise.md)
+
 ## Algorithms
 
 Hi I'm **Jason Brownlee** and I'm an **algorithm geek** like you. [Learn more](/about/).
