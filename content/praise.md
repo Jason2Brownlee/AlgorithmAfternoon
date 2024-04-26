@@ -28,3 +28,14 @@ Snippets of praise collected from comments, tweets, etc.
 ![praise4](/praise4.png)
 
 > This is gold. Thanks for sharing!
+
+
+## Books
+
+### Genetic Algorithm Afternoon
+
+Amazon #1
+
+![GA amazon 1](/book_ga_amazon1.gif)
+
+![GA amazon 1](/book_ga_amazon2.gif)
