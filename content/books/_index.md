@@ -1,5 +1,5 @@
 ---
-title: Mini-Books
+title: Books
 bookCollapseSection: true
 weight: 3
 ---

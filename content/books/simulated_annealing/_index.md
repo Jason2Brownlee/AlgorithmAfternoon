@@ -23,6 +23,12 @@ See on [Amazon](https://amzn.to/49MVXhy) and [Goodreads](https://www.goodreads.c
 * [Chapter 5: Analyzing and Refining the Algorithm](chapter05.md)
 * [Conclusions](chapter06.md)
 
+## Praise
+
+"Simulated Annealing Afternoon" is an **Amazon Best Seller**:
+
+![SA amazon 1](/book_sa_amazon2_small.gif)
+
 ## Synopsis
 
 Are you a software developer looking to harness the power of simulated annealing to solve complex optimization problems? "**Simulated Annealing Afternoon: A Practical Guide for Software Developers**" is your go-to resource for mastering this innovative and powerful technique. Whether you're a beginner or an experienced programmer, this book will guide you through the fundamental concepts and practical applications of simulated annealing, empowering you to enhance the efficiency and performance of your software projects.

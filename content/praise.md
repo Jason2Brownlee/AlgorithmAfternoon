@@ -39,3 +39,19 @@ Amazon #1
 ![GA amazon 1](/book_ga_amazon1.gif)
 
 ![GA amazon 1](/book_ga_amazon2.gif)
+
+### Particle Swarm Afternoon
+
+Amazon #1
+
+![PSO amazon 1](/book_pso_amazon1.gif)
+
+
+
+### Simulated Annealing Afternoon
+
+Amazon #1
+
+![SA amazon 1](/book_sa_amazon1.gif)
+
+![SA amazon 1](/book_sa_amazon2.gif)
