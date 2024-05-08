@@ -22,6 +22,13 @@ See on [Amazon](https://amzn.to/3U2Xkmk) and [Goodreads](https://www.goodreads.c
 * [Chapter 4: Parameter Tuning and Its Effects](chapter04.md)
 * [Conclusions](chapter05.md)
 
+
+## Praise
+
+"Particle Swarm Afternoon" is an **Amazon Best Seller**:
+
+![PSO amazon 1](/book_pso_amazon2.gif)
+
 ## Synopsis
 
 Are you a software developer looking to harness the power of particle swarm optimization (PSO) to solve complex optimization problems? "**Particle Swarm Afternoon: A Practical Guide for Software Developers**" is your go-to resource for mastering this innovative and powerful technique. Whether you're a beginner or an experienced programmer, this book will guide you through the fundamental concepts and practical applications of PSO, empowering you to enhance the efficiency and performance of your software projects.

@@ -25,6 +25,12 @@ See on [Amazon](https://amzn.to/3U9N8IS) and [Goodreads](https://www.goodreads.c
 * [Chapter 7: Continuous Function Optimization](chapter07.md)
 * [Conclusions](chapter08.md)
 
+## Praise
+
+"Particle Swarm Afternoon" is an **Amazon Best Seller**:
+
+![GA amazon 1](/book_ga_amazon3.gif)
+
 ## Synopsis
 
 Are you a software developer looking to harness the power of genetic algorithms to solve complex optimization problems? "**Genetic Algorithm Afternoon: A Practical Guide for Software Developers**" is your go-to resource for mastering this innovative and powerful technique. Whether you're a beginner or an experienced programmer, this book will guide you through the fundamental concepts and practical applications of genetic algorithms, empowering you to enhance the efficiency and performance of your software projects.

@@ -36,13 +36,19 @@ Snippets of praise collected from comments, tweets, etc.
 
 Amazon #1
 
+![GA amazon 1](/book_ga_amazon3.gif)
+
 ![GA amazon 1](/book_ga_amazon1.gif)
 
 ![GA amazon 1](/book_ga_amazon2.gif)
 
+
+
 ### Particle Swarm Afternoon
 
 Amazon #1
+
+![PSO amazon 1](/book_pso_amazon2.gif)
 
 ![PSO amazon 1](/book_pso_amazon1.gif)
 
